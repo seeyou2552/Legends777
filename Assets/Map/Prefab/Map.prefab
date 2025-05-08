@@ -63,6 +63,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: -15, y: -4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -10, y: -1, z: 0}
     second:
       serializedVersion: 2
@@ -107,11 +117,15 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 6
     m_Data: {fileID: 11400000, guid: b599808c2743e484da4d8b799fc95dae, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: ba767fecb9eb4a447a535b0fa9d80ccb, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 6
     m_Data: {fileID: 21300000, guid: aabe4ae9b1a7d6048bc232d62cfb69c9, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 5b4b74a6ebccb5c4cbeb6429d663b513, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 6
+  - m_RefCount: 7
     m_Data:
       e00: 1
       e01: 0
@@ -130,13 +144,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 6
+  - m_RefCount: 7
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_Origin: {x: -10, y: -6, z: 0}
-  m_Size: {x: 20, y: 7, z: 1}
+  m_Origin: {x: -15, y: -6, z: 0}
+  m_Size: {x: 25, y: 7, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -1069,7 +1083,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 30
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1569,7 +1583,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 30
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -3587,6 +3601,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6929b4b12d81d44936db01516d6bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclePrefab: {fileID: 5434631426817345812, guid: aaa2d2d9fe0b6f342ad128610a682745, type: 3}
+  questNpcPrefab: {fileID: 81508078571944616, guid: 447035427880f0d4ba2cfa99125a352d, type: 3}
+  storeNpcPrefab: {fileID: 81508078571944616, guid: 5d5308da764f6764a920aceea28d6aa0, type: 3}
+  itemPrefab: {fileID: 8064183575077674007, guid: 97abd242ad6870441a522413a41c1732, type: 3}
+  minX: -8.8
+  maxX: 8.8
+  minY: -3.9
+  maxY: 3.7
+  obstacleSize: {x: 1.7, y: 1.7}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  minDistance: 2
+  stage: 0
+  dungeonType: 0
 --- !u!1 &5306775915247718060
 GameObject:
   m_ObjectHideFlags: 0
@@ -4545,7 +4574,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 30
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

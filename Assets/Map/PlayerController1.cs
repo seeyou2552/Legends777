@@ -38,4 +38,16 @@ public class PlayerController1 : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         movementDirection = new Vector2(horizontal, vertical).normalized;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Entrance"))
+        {
+            MapController map = GameObject.Find("Map").GetComponent<MapController>();
+            map.CreateRandomMap();
+
+            //캐릭터 위치도 왼쪽 > 오른쪽 , 오른쪽 > 왼쪽 또는? 그냥 중앙으로 이동되도록 하면 좋을 것 같은데
+            transform.position = new Vector2(0, 0);
+        }
+    }
 }
