@@ -8,8 +8,8 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class PlayerController : Player
 {
-
     public static PlayerController Instance { get; set; }
+
     public Rigidbody2D rigid;
     public SpriteRenderer render;
     protected AnimationHandle animationHandler;
@@ -61,9 +61,12 @@ public class PlayerController : Player
         private set { gold = value; }
     }
 
-    public bool MinusGold(int gold) {
+    public bool MinusGold(int gold)
+    {
         if (gold <= Gold) { Gold -= gold; return true; }
-        else { return false; } }
+        else { return false; }
+    }
+
 
     public WeaponController Equip
     {
@@ -73,14 +76,11 @@ public class PlayerController : Player
 
     public void EquipWeapon(WeaponController weaponController, GameObject gameObject)
     {
-        Equip = weaponController; 
+        Equip = weaponController;
 
         if (weaponPivot != null) { Destroy(weaponPivot); }
         weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
     }
-        
-
-
 
     public void PlayerMove()
     {
@@ -112,6 +112,7 @@ public class PlayerController : Player
         rigid.velocity = new Vector2(direction.x, direction.y);
         animationHandler.Move(direction);
     }
-
-
 }
+
+
+
