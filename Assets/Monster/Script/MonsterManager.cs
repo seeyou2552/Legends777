@@ -7,7 +7,7 @@ using UnityEngine.VFX;
 public class MonsterManager : MonoBehaviour
 {
     private Coroutine waveRoutine;
-
+    private bool waveStarted = false;
     [SerializeField]
     private List<GameObject> enemyPrefabs; // 생성할 적 프리팹 리스트
 
@@ -17,6 +17,15 @@ public class MonsterManager : MonoBehaviour
 
     [SerializeField] private float timeBetweenSpawns = 0.2f;
     [SerializeField] private float timeBetweenWaves = 1f;
+
+    public void Init(int stage)
+    {
+        if (!waveStarted /* && 조건을 추가할 수도 있음 */)
+        {
+            waveStarted = true;
+            StartWave(10);
+        }
+    }
 
     public void StartWave(int waveCount)
     {
@@ -69,9 +78,7 @@ public class MonsterManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartWave(1);
-        }
+        
+
     }
 }
