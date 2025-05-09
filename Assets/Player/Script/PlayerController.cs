@@ -8,6 +8,8 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class PlayerController : Player
 {
+
+    public static PlayerController Instance { get; set; }
     public Rigidbody2D rigid;
     public SpriteRenderer render;
     protected AnimationHandle animationHandler;
@@ -24,6 +26,14 @@ public class PlayerController : Player
         render = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
         speed = 10;
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
 
@@ -67,6 +77,7 @@ public class PlayerController : Player
 
         if (weaponPivot != null) { Destroy(weaponPivot); }
         weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
+    }
         
 
 
