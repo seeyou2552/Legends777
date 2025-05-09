@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c87247463c93ca4bb4a4306de66a3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 7340590990921052861, guid: b53b3d29a6041a44989f737d7ec19c6c, type: 3}
   monsterSpeed: 2.5
-  target: {fileID: 6770145404549136016, guid: 518de06771694be4883d1e33da248f32, type: 3}
 --- !u!1 &7824254773508741426
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 120
   m_Sprite: {fileID: 21300000, guid: 38ae2835ee00db64389e1403eb5df325, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
