@@ -36,6 +36,7 @@ public class MapController : MonoBehaviour
     #endregion
 
     [SerializeField] private int stage;
+    public int Stage { get { return stage; } }
     [SerializeField] private DungeonType dungeonType;
 
     private GameObject Root
