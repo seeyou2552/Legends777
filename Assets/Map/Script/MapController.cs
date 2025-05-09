@@ -36,8 +36,7 @@ public class MapController : MonoBehaviour
     #endregion
 
     private int stage;
-
-    [SerializeField] private DungeonType dungeonType;
+    private DungeonType dungeonType;
 
 
     private GameObject Root
@@ -83,7 +82,7 @@ public class MapController : MonoBehaviour
     {
         ClearMap();
 
-        this.dungeonType = dungeonType;
+        GameManager.instance.DungeonType = dungeonType;
         //stage 정보 받아오기?
 
         stage = GameManager.instance.Stage;
