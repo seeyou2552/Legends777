@@ -60,9 +60,6 @@ public class MapController : MonoBehaviour
     {
         int type = GetRandomType();
 
-
-        Debug.Log("Go to" + (DungeonType)type);
-
         GameManager.instance.Stage++;
         Init((DungeonType)type);
     }
@@ -73,8 +70,10 @@ public class MapController : MonoBehaviour
         while (true)
         {
             type = Random.Range(1, 5);
-            if (type != (int)dungeonType)
+            if (type != (int)GameManager.instance.DungeonType)
+            {
                 return type;
+            }
         }
     }
 
@@ -83,8 +82,10 @@ public class MapController : MonoBehaviour
         ClearMap();
 
         GameManager.instance.DungeonType = dungeonType;
-        //stage 정보 받아오기?
+        this.dungeonType = dungeonType;
 
+
+        //stage 정보 받아오기?
         stage = GameManager.instance.Stage;
 
         switch (dungeonType)
@@ -178,6 +179,7 @@ public class MapController : MonoBehaviour
             go.transform.position = spawnPos;
         }
 
+        spawnedPositions.Clear();
     }
 
     private Vector3 GetRandomNonOverlappingPosition(int i)
