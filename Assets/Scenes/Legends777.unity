@@ -983,6 +983,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonsterManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5901961164950237923, guid: f406707e14568004587c91d85cd15c31, type: 3}
+      propertyPath: enemyPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901961164950237923, guid: f406707e14568004587c91d85cd15c31, type: 3}
+      propertyPath: enemyPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 5122632228228011870, guid: 8a83a825f8ded7d4ba15d6f7011075c5, type: 3}
+    - target: {fileID: 5901961164950237923, guid: f406707e14568004587c91d85cd15c31, type: 3}
+      propertyPath: enemyPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1191863804139708594, guid: 62bd9c877c2e0bd4b8517d5629d16080, type: 3}
+    - target: {fileID: 5901961164950237923, guid: f406707e14568004587c91d85cd15c31, type: 3}
+      propertyPath: enemyPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 5765580840981555153, guid: d2ae8001538894e4eb13bd1911b077b5, type: 3}
+    - target: {fileID: 5901961164950237923, guid: f406707e14568004587c91d85cd15c31, type: 3}
+      propertyPath: enemyPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 3372828776858603809, guid: 9a87534f18b143647a1c4872098b8093, type: 3}
     - target: {fileID: 6095385330183645640, guid: f406707e14568004587c91d85cd15c31, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

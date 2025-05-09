@@ -25,7 +25,6 @@ public class MeleeWeaponHandler : MonsterWeaponHandler
         if (hit != null)
         {
             hit.GetComponent<Player>().hp -= Controller.gameObject.GetComponent<MonsterStatHandler>().Atk;
-            Debug.Log(hit.GetComponent<Player>().hp);
         }
     }
 

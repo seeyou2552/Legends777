@@ -153,7 +153,10 @@ public class MonsterController : MonoBehaviour
     private void HandleAttackDelay()
     {
         if (weaponHandler == null)
+        {
+            Debug.Log("Handler null");
             return;
+        }
 
         //공격이 쿨다운 중이면 시간 누적
         if (timeSinceLastAttack <= weaponHandler.Delay)
@@ -173,6 +176,7 @@ public class MonsterController : MonoBehaviour
 
     protected virtual void Attack()
     {
+        Debug.Log("Attack");
         //바라보는 방향이 있을 때만 공격
         if (lookDirection != Vector2.zero)
             weaponHandler.Attack();

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1800648712977998698}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalPosition: {x: 0.35, y: -0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1141697709590680518}
   - component: {fileID: 7436482653273195065}
   - component: {fileID: 4333643876389280116}
+  - component: {fileID: 7875186698270870008}
   m_Layer: 0
   m_Name: OrcWarrior_Far
   m_TagString: Untagged
@@ -99,7 +100,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.259245, y: -0.24730134}
+  m_Offset: {x: 0.06, y: -0.24}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -152,9 +153,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  weaponPivot: {fileID: 0}
-  WeaponPrefab: {fileID: 3691708426402175664, guid: 2499f5e85b7da864294f43f2cb9273db, type: 3}
+  weaponPivot: {fileID: 4335549068718854711}
+  WeaponPrefab: {fileID: 5902986904580995877, guid: a44ee58e256160a449bb20597ef2e869, type: 3}
   weaponHandler: {fileID: 0}
+--- !u!114 &7875186698270870008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5122632228228011870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d4aa386f8f5a14e905d3eaa6a4e615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  speed: 3
+  atk: 10
 --- !u!1 &6927327786299484554
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +198,7 @@ Transform:
   m_GameObject: {fileID: 6927327786299484554}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.18, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6846977296785914081}
-  - component: {fileID: 3691708426402175664}
+  - component: {fileID: 9046220589385327885}
   m_Layer: 0
   m_Name: Monster_Spear_Weapon
   m_TagString: Untagged
@@ -140,7 +140,7 @@ Transform:
   - {fileID: 5329424932844718260}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3691708426402175664
+--- !u!114 &9046220589385327885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,24 +149,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 7275921798393997153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 027c3605a5e3acf4292aa7b3705abe74, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fa84ec24e07d324abcbd3128f6ca0c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 3
-  weaponSize: 0.6
+  delay: 1
+  weaponSize: 0.8
   speed: 1
-  attackRange: 10
+  attackRange: 1.2
   isOnKnockback: 0
   knockbackPower: 0.1
   knockbackTime: 0.5
-  projectileSpawnPosition: {fileID: 5329424932844718260}
-  bulletIndex: 1
-  bulletSize: 1
-  duration: 10
-  spread: 1
-  numberOfProjectilesPerShot: 1
-  multipleProjectileAngle: 1
-  projectileColor: {r: 0, g: 0, b: 0, a: 0}
+  colliderBoxSize: {x: 1, y: 1}
+  target:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8607773781342504928
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 8607773781342504928}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.23, y: 0.639, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

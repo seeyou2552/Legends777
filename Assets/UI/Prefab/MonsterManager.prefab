@@ -48,7 +48,9 @@ MonoBehaviour:
   - {fileID: 3372828776858603809, guid: 9a87534f18b143647a1c4872098b8093, type: 3}
   - {fileID: 1191863804139708594, guid: 62bd9c877c2e0bd4b8517d5629d16080, type: 3}
   - {fileID: 5765580840981555153, guid: d2ae8001538894e4eb13bd1911b077b5, type: 3}
+  - {fileID: 5122632228228011870, guid: 8a83a825f8ded7d4ba15d6f7011075c5, type: 3}
   timeBetweenSpawns: 0.2
   waveMonsterCount: 0
   projectilePrefabs:
   - {fileID: 5366627631893128057, guid: 8bbf7f521bbcf6c4a87a821bca1822f6, type: 3}
+  - {fileID: 3659856363287226689, guid: 8caf7de7f1a4e444896cc98ed1699c26, type: 3}
