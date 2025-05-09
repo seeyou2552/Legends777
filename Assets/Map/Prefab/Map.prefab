@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4065148865938032536}
   - component: {fileID: 8708942407047349438}
   - component: {fileID: 5124540979952362722}
+  - component: {fileID: 7789701932341059447}
   m_Layer: 0
   m_Name: Entrance
   m_TagString: Entrance
@@ -255,6 +256,18 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!114 &7789701932341059447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979474315997795587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d93fe0ba1aa0954c9edf1794f3d38b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1040268998427857027
 GameObject:
   m_ObjectHideFlags: 0

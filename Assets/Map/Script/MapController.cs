@@ -57,9 +57,20 @@ public class MapController : MonoBehaviour
 
     public void CreateRandomMap()
     {
-        int type = Random.Range(1, 5);
+        int type = GetRandomType();
         Debug.Log("Go to" + (DungeonType)type);
         Init((DungeonType)type);
+    }
+
+    private int GetRandomType()
+    {
+        int type;
+        while (true)
+        {
+            type = Random.Range(1, 5);
+            if (type != (int)dungeonType)
+                return type;
+        }
     }
 
     public void Init(DungeonType dungeonType)
@@ -176,7 +187,7 @@ public class MapController : MonoBehaviour
             bool overlapsWithSpawned = false;
             foreach (Vector2 spawnedPos in spawnedPositions)
             {
-                if (Vector2.Distance(randomPos, spawnedPos) < 2.0f)
+                if (Vector2.Distance(randomPos, spawnedPos) < minDistance)
                 {
                     overlapsWithSpawned = true;
                     break;
