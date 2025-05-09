@@ -53,7 +53,7 @@ public class MapController : MonoBehaviour
     private void Start()
     {
         GameManager.instance.Stage = 0;
-        Init(DungeonType.Lobby);
+        Init(DungeonType.Monster);
     }
 
     public void CreateRandomMap()
@@ -73,8 +73,12 @@ public class MapController : MonoBehaviour
         while (true)
         {
             type = Random.Range(1, 5);
-            if (type != (int)dungeonType)
+            Debug.Log("now dungeonType: " + (DungeonType)type);
+            if (type != (int)GameManager.instance.DungeonType)
+            {
+                Debug.Log("after dungeonType: " + (DungeonType)type);
                 return type;
+            }
         }
     }
 
@@ -83,6 +87,7 @@ public class MapController : MonoBehaviour
         ClearMap();
 
         GameManager.instance.DungeonType = dungeonType;
+        this.dungeonType = dungeonType;
         //stage 정보 받아오기?
 
         stage = GameManager.instance.Stage;
@@ -178,6 +183,7 @@ public class MapController : MonoBehaviour
             go.transform.position = spawnPos;
         }
 
+        spawnedPositions.Clear();
     }
 
     private Vector3 GetRandomNonOverlappingPosition(int i)

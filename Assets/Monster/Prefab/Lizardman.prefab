@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8159430529340555632}
   - component: {fileID: 8017367547663068864}
   - component: {fileID: 6903259528790442913}
+  - component: {fileID: 9217572840920554873}
   m_Layer: 0
   m_Name: Lizardman
   m_TagString: Untagged
@@ -33,6 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 81283413913386399}
+  - {fileID: 8945193416200082937}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8159430529340555632
@@ -46,7 +48,7 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  m_UseAutoMass: 1
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
@@ -120,7 +122,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  monsterSpeed: 3
+  weaponPivot: {fileID: 8945193416200082937}
+  WeaponPrefab: {fileID: 4398425465364510115, guid: 1b65f4314ddde1c4994d3d730eece271, type: 3}
+  weaponHandler: {fileID: 0}
+--- !u!114 &9217572840920554873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191863804139708594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d4aa386f8f5a14e905d3eaa6a4e615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  speed: 3
+  atk: 10
 --- !u!1 &1830928363940599865
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +152,7 @@ GameObject:
   - component: {fileID: 5429847323685266461}
   - component: {fileID: 6290638890034631950}
   m_Layer: 0
-  m_Name: LizardmanSprite
+  m_Name: MainSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,3 +246,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4327954696667243751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8945193416200082937}
+  m_Layer: 0
+  m_Name: WeaponPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8945193416200082937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327954696667243751}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4682106799149192619}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1397110854936259863}
   - component: {fileID: 3658239389561813953}
   m_Layer: 0
-  m_Name: StaffSprite
+  m_Name: MainSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,6 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2594574018512650821}
+  - component: {fileID: 2513006113550272752}
   m_Layer: 0
   m_Name: Monster_Staff_Weapon
   m_TagString: Untagged
@@ -139,6 +140,33 @@ Transform:
   - {fileID: 4148039945551305434}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2513006113550272752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897869833595324438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027c3605a5e3acf4292aa7b3705abe74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
+  weaponSize: 1
+  speed: 10
+  attackRange: 10
+  isOnKnockback: 0
+  knockbackPower: 0.1
+  knockbackTime: 0.5
+  projectileSpawnPosition: {fileID: 4148039945551305434}
+  bulletIndex: 1
+  bulletSize: 1
+  duration: 10
+  spread: 1
+  numberOfProjectilesPerShot: 1
+  multipleProjectileAngle: 1
+  projectileColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &4145450478662677197
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 4145450478662677197}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.234, y: 0.613, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

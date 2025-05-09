@@ -32,17 +32,20 @@ public class ArrowManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Monster"))
+        MonsterController monster = other.GetComponent<MonsterController>();
+        if (monster != null)
         {
-            Debug.Log("적중");
-            // addBurn 효과
+            Debug.Log("monster attack");
+            monster.OnDamaged(Player.Instance.power);
+            // addBurn ?�과
             if(skill.addBurn)
             {
                 SpriteRenderer otherRenderer = other.gameObject.GetComponent<SpriteRenderer>();
                 otherRenderer.color = new Color(1f, 0f, 0f, 0.4f);
             }
             
-            if(!skill.addPenetrates) Destroy(this.gameObject); // 비관통
+            if(!skill.addPenetrates) 
+                Destroy(this.gameObject); // 비�???
         }
 
         if(other.gameObject.CompareTag("Wall"))
