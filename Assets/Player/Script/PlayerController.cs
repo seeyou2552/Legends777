@@ -54,6 +54,7 @@ public class PlayerController : Player
     public bool MinusGold(int gold) {
         if (gold <= Gold) { Gold -= gold; return true; }
         else { return false; } }
+    }
 
     public WeaponController Equip
     {
@@ -67,6 +68,7 @@ public class PlayerController : Player
 
         if (weaponPivot != null) { Destroy(weaponPivot); }
         weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
+    }
         
 
 
