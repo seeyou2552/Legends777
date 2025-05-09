@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 
 public class MonsterManager : MonoBehaviour
 {
+    public static MonsterManager Instance; // 추가 내용
     private Coroutine waveRoutine;
     private bool waveStarted = false;
     [SerializeField]
@@ -18,6 +19,10 @@ public class MonsterManager : MonoBehaviour
     [SerializeField] private float timeBetweenSpawns = 0.2f;
     [SerializeField] private float timeBetweenWaves = 1f;
 
+    private void Awake() // 추가 내용
+    {
+        Instance = this;
+    }
 
     public void StartWave(int waveCount)
     {
@@ -44,7 +49,7 @@ public class MonsterManager : MonoBehaviour
         enemySpawnComplite = true;
     }
 
-    private void SpawnRandomMonster()
+    public void SpawnRandomMonster()
     {
         if (enemyPrefabs.Count == 0)
         {

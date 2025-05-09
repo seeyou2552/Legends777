@@ -4,23 +4,148 @@ using UnityEngine;
 
 public class BossSkillManager : MonoBehaviour
 {
-    //기본 패턴
-    // 보스의 기본공격은 파이어볼을 하나씩 2번날리고 3번째에 사방으로 파이어볼 발사 루틴 파이어 볼은 한번 벽에 튕기고 2번째 벽에 닿으면 파괴
-    // 스킬 시전이 끝나고 2초 동안 움직임x
-    // 보스 몹과 충돌시 데미지
+    public GameObject fireballPrefab;
+    public GameObject redGround;
+    public GameObject RedLazer1;
+    public GameObject RedLazer2;
+    private Camera Boss_Camera;
+    public Transform firePoint;
+    public Transform target;
+    public float fireRate = 5f;
+    public float defaultBulletSpeed = 15f;
 
-    //스킬 및 관문별 사용 가능 스킬
-    // 스킬 시전은 5초마다 한번씩 진행
-    // 플레이어에게 빠르게 돌진 1 ~
-    // 잡몹들 소환 3
+    private float currentBulletSpeed;
+    private float nextFireTime = 0f;
+    private int attackCount = 1;
 
-    // 점프하는 순간 플레이어가 있던 위치로 착지후 범위 데미지 4 ~
-    // 레이저(빨강) 십자가 발사 후 1초 뒤 x자로 발사 이건 벽을 관통 6
+    private List<System.Func<IEnumerator>> skillFuncs = new List<System.Func<IEnumerator>>(); // 코루틴을 담기 위한 리스트
+    private int currentSkillIndex = 0;
 
-    // 구체를 자신의 몸주위로 빠르게 돌리다가 한번에 발사 7 ~
-    // 파이어볼 연속으로 5초간 연사 플레이어를 조준하면서 9
+    private void Start()
+    {
+        Boss_Camera = Camera.main;
+        currentBulletSpeed = defaultBulletSpeed;
+        skillFuncs.Add(MoveFast);
+        skillFuncs.Add(MakeMonster);
+        skillFuncs.Add(CameraReversal);
+        skillFuncs.Add(ShootFast);
+        skillFuncs.Add(RedGround);
+        skillFuncs.Add(LazerPattern);
+        StartCoroutine(UseSkillsRoutine());
+    }
+    
 
-    // 화면을 빨강색으로 바꿔서 공격 및 지형이 보이지 않게 10초간 유지 이건 이미지로 맵을 덮어씌우든 예슬님 맵 구현 끝나시면 내가 수정 10 ~ 
-    // 카메라 반전 효과 10초간 유지
-    // 구현 가능하면 피 절반 일떄 분열 피가 50%면 둘다 피 50%를 가진상태로 분열
+    void Update()
+    {
+        if (target != null && Time.time >= nextFireTime)
+        {
+            MakeFireBall();
+            nextFireTime = Time.time + 1f / fireRate;
+        }
+    }
+
+    void ShootFireball(Vector2 direction)
+    {
+        Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f); // 거리 조절
+        GameObject fireball = Instantiate(fireballPrefab, spawnPos, Quaternion.identity);
+
+        Collider2D bossCol = GetComponent<Collider2D>(); // 각각의 공격 과 보스는 무시
+        Collider2D fireballCol = fireball.GetComponent<Collider2D>();
+        if (fireballCol != null && bossCol != null)
+        {
+            Physics2D.IgnoreCollision(fireballCol, bossCol);
+        }
+
+        Boss_FireBall fireballScript = fireball.GetComponent<Boss_FireBall>();
+        fireballScript.SetDirection(direction.normalized);
+        fireballScript.speed = currentBulletSpeed;
+    }
+
+    void MakeFireBall()
+    {
+        if (attackCount % 3 != 0) 
+        {
+            Vector2 direction = (target.position - firePoint.position).normalized;
+            ShootFireball(direction);
+            attackCount++;
+        }
+        else
+        {
+            attackCount = 1;
+            int bulletCount = 8;
+            float angleStep = 360f / bulletCount;
+
+            for (int i = 0; i < bulletCount; i++)
+            {
+                float angle = i * angleStep * Mathf.Deg2Rad;
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                ShootFireball(direction);
+            }
+        }
+    }
+
+    private IEnumerator UseSkillsRoutine()
+    {
+        yield return new WaitForSeconds(5f); // 5초 대기
+        while (true)
+        {
+            if (skillFuncs.Count > 0)
+            {
+                yield return StartCoroutine(skillFuncs[currentSkillIndex]());
+                int num = Random.Range(0, skillFuncs.Count);
+                currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count; // 다음 스킬 인덱스 계산
+            }
+
+            yield return new WaitForSeconds(2f); // 5초 대기
+        }
+    }
+
+    private IEnumerator MoveFast()//플레이어에게 빠르게 돌진
+    {
+        BossManager.Instance.MonsterSpeed = 8;
+        yield return new WaitForSeconds(5f);
+        BossManager.Instance.MonsterSpeed = 3;
+    }
+
+    private IEnumerator MakeMonster()// 잡몹들 소환
+    {
+        MonsterManager.Instance.SpawnRandomMonster();
+        yield return null;
+    }
+
+    private IEnumerator CameraReversal() // 카메라 반전
+    {
+        Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 180);
+        yield return new WaitForSeconds(10f);
+        Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    private IEnumerator ShootFast()
+    {
+        fireRate = 15;
+        currentBulletSpeed = 25f;  // 총알 속도 빠르게
+        yield return new WaitForSeconds(5f);
+        currentBulletSpeed = defaultBulletSpeed; // 다시 기본 속도
+        fireRate = 5;
+    }
+
+    private IEnumerator RedGround()
+    {
+        GameObject Red = Instantiate(redGround);
+        yield return new WaitForSeconds(10f);
+        Destroy(Red);
+    }
+
+    private IEnumerator LazerPattern()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject Lazer = Instantiate(RedLazer1);
+            yield return new WaitForSeconds(0.1f);
+            Destroy(Lazer);
+            Lazer = Instantiate(RedLazer2);
+            yield return new WaitForSeconds(0.1f);
+            Destroy(Lazer);
+        }
+    }
 }
