@@ -84,7 +84,6 @@ public class PlayerController : Player
 
     public void QuestClear(int gold) { Gold += gold; }
 
-
     public void PlayerMove()
     {
         Vector2 direction = Vector2.zero;

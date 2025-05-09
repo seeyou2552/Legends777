@@ -35,8 +35,9 @@ public class MapController : MonoBehaviour
     private int maxAttempts = 30;
     #endregion
 
-    [SerializeField] private int stage;
-    [SerializeField] private DungeonType dungeonType;
+    private int stage;
+    private DungeonType dungeonType;
+
 
     private GameObject Root
     {
@@ -51,14 +52,18 @@ public class MapController : MonoBehaviour
 
     private void Start()
     {
-        stage = 1;
+        GameManager.instance.Stage = 0;
         Init(DungeonType.Lobby);
     }
 
     public void CreateRandomMap()
     {
         int type = GetRandomType();
+
+
         Debug.Log("Go to" + (DungeonType)type);
+
+        GameManager.instance.Stage++;
         Init((DungeonType)type);
     }
 
@@ -77,8 +82,10 @@ public class MapController : MonoBehaviour
     {
         ClearMap();
 
-        this.dungeonType = dungeonType;
+        GameManager.instance.DungeonType = dungeonType;
         //stage 정보 받아오기?
+
+        stage = GameManager.instance.Stage;
 
         switch (dungeonType)
         {
