@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8255881341450001566}
   - component: {fileID: 8322020908052889851}
   - component: {fileID: 7055302709145672481}
+  - component: {fileID: -775666939267158464}
   m_Layer: 0
   m_Name: Close_Moster
   m_TagString: Untagged
@@ -58,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 3372828776858603809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -3, z: 0}
+  m_LocalPosition: {x: -9, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -138,6 +139,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7057681, y: 1.0135798}
   m_EdgeRadius: 0
+--- !u!114 &-775666939267158464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3372828776858603809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c87247463c93ca4bb4a4306de66a3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterSpeed: 2.5
+  target: {fileID: 6770145404549136016, guid: 518de06771694be4883d1e33da248f32, type: 3}
 --- !u!1 &7824254773508741426
 GameObject:
   m_ObjectHideFlags: 0
