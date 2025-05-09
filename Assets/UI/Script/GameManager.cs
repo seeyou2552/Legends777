@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public Action OnStageUpdated;
+    public Action OnDungeonTypeMonsterUpdated;
+    public Action OnDungeonTypeBossUpdated;
     
     private int stage;
     public int Stage 
@@ -17,6 +19,26 @@ public class GameManager : MonoBehaviour
         {
             stage = value;
             OnStageUpdated?.Invoke();
+        }
+    }
+
+    private DungeonType dungeonType;
+    public DungeonType DungeonType
+    {
+        get { return dungeonType; }
+        set
+        {
+            dungeonType = value;
+            if (dungeonType == DungeonType.Monster)
+            {
+                Debug.Log("Monster changed");
+                OnDungeonTypeMonsterUpdated?.Invoke();
+            }
+            else if (dungeonType == DungeonType.Boss)
+            {
+                Debug.Log("Boss changed");
+                OnDungeonTypeBossUpdated?.Invoke();
+            }
         }
     }
 
