@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    private MonsterManager monsterManager;
+    public GameObject weaponprefabs;
     public Rigidbody2D target; // 타겟 확인
 
     [SerializeField] private float monsterSpeed = 3; // 몬스터 속도
-    
 
     private bool isAlive; // 살았는지 죽었는지 체크
 
@@ -25,6 +24,11 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (spriter.name.Contains("Far")) // 원거리는 움직이지 않게
+        {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
         Vector2 direction = target.position - rigid.position; // 타겟과 몬스터의 위치 길이 구하기
         
         float stopDistance = 1.5f; // 타겟과의 최소 거리
@@ -49,6 +53,6 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
-        //target = 플레이어
+        target = PlayerController.Instance.GetComponent<Rigidbody2D>();
     }
 }

@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c87247463c93ca4bb4a4306de66a3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 7340590990921052861, guid: b53b3d29a6041a44989f737d7ec19c6c, type: 3}
+  target: {fileID: 0}
   monsterSpeed: 3
 --- !u!1 &1830928363940599865
 GameObject:
