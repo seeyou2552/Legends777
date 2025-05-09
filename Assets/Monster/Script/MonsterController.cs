@@ -152,9 +152,9 @@ public class MonsterController : MonoBehaviour
 
     private void HandleAttackDelay()
     {
+
         if (weaponHandler == null)
         {
-            Debug.Log("Handler null");
             return;
         }
 
@@ -176,7 +176,6 @@ public class MonsterController : MonoBehaviour
 
     protected virtual void Attack()
     {
-        Debug.Log("Attack");
         //바라보는 방향이 있을 때만 공격
         if (lookDirection != Vector2.zero)
             weaponHandler.Attack();
@@ -196,7 +195,6 @@ public class MonsterController : MonoBehaviour
 
     public void OnDead()
     {
-        Debug.Log(this.name+" Dead!!");
         GameManager.instance.KillCount++;
 
         //움직임 정지
@@ -228,8 +226,6 @@ public class MonsterController : MonoBehaviour
 
         //지정된 위치에 투사체 생성
         GameObject obj = Instantiate(origin, startPosition, Quaternion.identity);
-
-        Debug.Log(obj.name);
 
         //투사체에 초기 정보 전달 (방향, 무기 데이터)
         ProjectileController projectileController = obj.GetComponent<ProjectileController>();

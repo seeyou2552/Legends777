@@ -35,7 +35,6 @@ public class ArrowManager : MonoBehaviour
         MonsterController monster = other.GetComponent<MonsterController>();
         if (monster != null)
         {
-            Debug.Log("monster attack");
             monster.OnDamaged(Player.Instance.power);
             // addBurn ?¨ê³¼
             if(skill.addBurn)

@@ -37,8 +37,6 @@ public class RangeWeaponHandler : MonsterWeaponHandler
     {
         base.Attack();
 
-        Debug.Log("attack");
-
         float projectileAngleSpace = multipleProjectileAngle;       //총알 간 각도 간격
         int numberOfProjectilePerShot = numberOfProjectilesPerShot; //발사할 총알 수
 

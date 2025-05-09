@@ -53,15 +53,12 @@ public class MapController : MonoBehaviour
     private void Start()
     {
         GameManager.instance.Stage = 0;
-        Init(DungeonType.Monster);
+        Init(DungeonType.Lobby);
     }
 
     public void CreateRandomMap()
     {
         int type = GetRandomType();
-
-
-        Debug.Log("Go to" + (DungeonType)type);
 
         GameManager.instance.Stage++;
         Init((DungeonType)type);
@@ -73,10 +70,8 @@ public class MapController : MonoBehaviour
         while (true)
         {
             type = Random.Range(1, 5);
-            Debug.Log("now dungeonType: " + (DungeonType)type);
             if (type != (int)GameManager.instance.DungeonType)
             {
-                Debug.Log("after dungeonType: " + (DungeonType)type);
                 return type;
             }
         }
