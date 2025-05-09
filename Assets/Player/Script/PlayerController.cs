@@ -82,7 +82,7 @@ public class PlayerController : Player
         weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
     }
 
-
+    public void QuestClear(int gold) { Gold += gold; }
 
 
     public void PlayerMove()
