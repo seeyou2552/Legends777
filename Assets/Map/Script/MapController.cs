@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,7 +52,7 @@ public class MapController : MonoBehaviour
 
     private void Start()
     {
-        GameManager.instance.Stage = 0;
+        GameManager.instance.Stage = 1;
         Init(DungeonType.Lobby);
     }
 
@@ -83,8 +83,9 @@ public class MapController : MonoBehaviour
 
         GameManager.instance.DungeonType = dungeonType;
         this.dungeonType = dungeonType;
-        //stage Á¤º¸ ¹Ş¾Æ¿À±â?
 
+
+        //stage ì •ë³´ ë°›ì•„ì˜¤ê¸°?
         stage = GameManager.instance.Stage;
 
         switch (dungeonType)
@@ -109,30 +110,30 @@ public class MapController : MonoBehaviour
 
     private void InitLobbyMap()
     {
-        //quest npc »ı¼º
+        //quest npc ìƒì„±
         SpawnNpcOrBox();
     }
 
     private void InitMonsterMap()
     {
-        //Àå¾Ö¹° ·£´ıÀ¸·Î »ı¼º
+        //ì¥ì• ë¬¼ ëœë¤ìœ¼ë¡œ ìƒì„±
         CreateObstacle(stage);
     }
 
     private void InitBossMap()
     {
-        //¾Æ¹«°Íµµ ¾ø´Â »óÅÂ
+        //ì•„ë¬´ê²ƒë„ ì—†ëŠ” ìƒíƒœ
     }
 
     private void InitItemMap()
     {
-        //¾ÆÀÌÅÛ »ı¼º
+        //ì•„ì´í…œ ìƒì„±
         SpawnNpcOrBox();
     }
 
     private void InitStoreMap()
     {
-        //store npc »ı¼º
+        //store npc ìƒì„±
         SpawnNpcOrBox();
     }
 
@@ -164,13 +165,13 @@ public class MapController : MonoBehaviour
         }
     }
 
-    //Àå¾Ö¹° ·£´ıÀ¸·Î »ı¼º
+    //ì¥ì• ë¬¼ ëœë¤ìœ¼ë¡œ ìƒì„±
     private void CreateObstacle(int stage)
     {
-        //·£´ı °³¼ö
+        //ëœë¤ ê°œìˆ˜
         int obstacleNum = Random.Range(stage - 1, stage + 1);
 
-        //·£´ı À§Ä¡
+        //ëœë¤ ìœ„ì¹˜
         for (int i = 0; i < obstacleNum; i++)
         {
             Vector2 spawnPos = GetRandomNonOverlappingPosition(i);
@@ -188,10 +189,10 @@ public class MapController : MonoBehaviour
         {
             Vector2 randomPos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
 
-            //Àå¾Ö¹°°ú °ãÄ¡´ÂÁö È®ÀÎ
+            //ì¥ì• ë¬¼ê³¼ ê²¹ì¹˜ëŠ”ì§€ í™•ì¸
             Collider2D hit = Physics2D.OverlapBox(randomPos, obstacleSize, 0f, obstacleLayer);
 
-            //ÀÌ¹Ì »ı¼ºµÈ À§Ä¡µé°ú °ãÄ¡´ÂÁö È®ÀÎ
+            //ì´ë¯¸ ìƒì„±ëœ ìœ„ì¹˜ë“¤ê³¼ ê²¹ì¹˜ëŠ”ì§€ í™•ì¸
             bool overlapsWithSpawned = false;
             foreach (Vector2 spawnedPos in spawnedPositions)
             {
@@ -202,18 +203,18 @@ public class MapController : MonoBehaviour
                 }
             }
 
-            //°ãÄ¡Áö ¾Ê¾Ò´Ù¸é ÇØ´ç À§Ä¡ ¹İÈ¯
+            //ê²¹ì¹˜ì§€ ì•Šì•˜ë‹¤ë©´ í•´ë‹¹ ìœ„ì¹˜ ë°˜í™˜
             if (hit == null && !overlapsWithSpawned)
             {
                 spawnedPositions.Add(randomPos);
                 return randomPos;
             }
 
-            //½Ãµµ ¹İº¹
+            //ì‹œë„ ë°˜ë³µ
             attempts++;
         }
 
-        //ÃÖ´ë ½Ãµµ È½¼ö±îÁö ¹İº¹Çß´Âµ¥µµ ¾È µÇ¸é ±×³É ·£´ı À§Ä¡ ¹İÈ¯ (°ãÃÄµµ ¾îÂ¿ ¼ö ¾øÁö?)
+        //ìµœëŒ€ ì‹œë„ íšŸìˆ˜ê¹Œì§€ ë°˜ë³µí–ˆëŠ”ë°ë„ ì•ˆ ë˜ë©´ ê·¸ëƒ¥ ëœë¤ ìœ„ì¹˜ ë°˜í™˜ (ê²¹ì³ë„ ì–´ì©” ìˆ˜ ì—†ì§€?)
         return new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
     }
 }
