@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    private MonsterManager monsterManager;
+    public GameObject weaponprefabs;
     public Rigidbody2D target; // 타겟 확인
 
     [SerializeField] private float monsterSpeed = 3; // 몬스터 속도
-    
 
     private bool isAlive; // 살았는지 죽었는지 체크
 
@@ -54,6 +53,6 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
-        target = Player.Instance.GetComponent<Rigidbody2D>();
+        target = PlayerController.Instance.GetComponent<Rigidbody2D>();
     }
 }

@@ -34,7 +34,6 @@ public class MapController : MonoBehaviour
 
     private int maxAttempts = 30;
     #endregion
-
     [SerializeField] private int stage;
     [SerializeField] private DungeonType dungeonType;
 
@@ -110,11 +109,13 @@ public class MapController : MonoBehaviour
     {
         //장애물 랜덤으로 생성
         CreateObstacle(stage);
+
     }
 
     private void InitBossMap()
     {
         //아무것도 없는 상태
+
     }
 
     private void InitItemMap()

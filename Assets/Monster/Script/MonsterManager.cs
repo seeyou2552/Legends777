@@ -18,14 +18,6 @@ public class MonsterManager : MonoBehaviour
     [SerializeField] private float timeBetweenSpawns = 0.2f;
     [SerializeField] private float timeBetweenWaves = 1f;
 
-    public void Init(int stage)
-    {
-        if (!waveStarted /* && 조건을 추가할 수도 있음 */)
-        {
-            waveStarted = true;
-            StartWave(10);
-        }
-    }
 
     public void StartWave(int waveCount)
     {
@@ -74,11 +66,5 @@ public class MonsterManager : MonoBehaviour
         Monster enemyController = spawnedEnemy.GetComponent<Monster>();
 
         activeEnemies.Add(enemyController);
-    }
-
-    private void Update()
-    {
-        
-
     }
 }
