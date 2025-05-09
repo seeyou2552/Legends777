@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Player
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        power = 2;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

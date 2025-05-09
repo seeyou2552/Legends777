@@ -9,6 +9,7 @@ public class SkillManager : Skill
     public GameObject bowPrefab;
     public GameObject target;
     public float shootInterval = 2f;
+    public float chaseRadius = 0f;
     public float timer;
     public bool createBow = false;
 
@@ -24,6 +25,7 @@ public class SkillManager : Skill
 
     void AutoAttack()
     {
+        Debug.Log(timer);
         if (timer >= shootInterval)
         {
             if (createBow)
@@ -32,7 +34,9 @@ public class SkillManager : Skill
             }
             else if (addGhost) GhostShoot();
             else ShootArrow();
-            
+
+            // if(addSword)
+
             timer = 0f;
         }
     }
@@ -93,4 +97,6 @@ public class SkillManager : Skill
         addGhost = true;
         createBow = false;
     }
+    
+
 }

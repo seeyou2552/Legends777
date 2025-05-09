@@ -8,6 +8,8 @@ public class ArrowManager : MonoBehaviour
     float timer;
     public float destroyTime;
     SkillManager skill;
+    MonsterStatManager monster;
+
 
     SpriteRenderer renderer;
 
@@ -35,13 +37,19 @@ public class ArrowManager : MonoBehaviour
         if(other.gameObject.CompareTag("Monster"))
         {
             Debug.Log("적중");
+            GameObject enemy = other.gameObject;
+            monster = enemy.GetComponent<MonsterStatManager>();
+
+            monster.Health -= Player.Instance.power;
+
             // addBurn 효과
             if(skill.addBurn)
             {
-                SpriteRenderer otherRenderer = other.gameObject.GetComponent<SpriteRenderer>();
+                SpriteRenderer otherRenderer = other.gameObject.GetComponentInChildren<SpriteRenderer>();
+                Debug.Log(otherRenderer);
                 otherRenderer.color = new Color(1f, 0f, 0f, 0.4f);
             }
-            
+
             if(!skill.addPenetrates) Destroy(this.gameObject); // 비관통
         }
 
@@ -54,5 +62,10 @@ public class ArrowManager : MonoBehaviour
     void BurnArrow()
     {
         renderer.color = new Color(1f, 0f, 0f, 0.5f);
+    }
+
+    void ChaseMonster()
+    {
+            
     }
 }

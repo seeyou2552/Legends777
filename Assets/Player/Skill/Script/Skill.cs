@@ -13,4 +13,5 @@ public class Skill : MonoBehaviour
     // ArrowManager
     public bool addBurn = false; // 불 화살 
     public bool addPenetrates = false; // 관통
+    public bool addChase = false;
 }
