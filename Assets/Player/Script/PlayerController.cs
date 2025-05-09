@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class PlayerController : SingleTon<PlayerController>
 {
     private int gold = 1000;
     private WeaponController weapon;
-
+    private GameObject weaponPivot;
 
 
     private void Update()
@@ -26,11 +27,18 @@ public class PlayerController : SingleTon<PlayerController>
         if (gold <= Gold) { Gold -= gold; return true; }
         else { return false; } }
 
-    //public void Equip(WeaponController weapon) { this.weapon = weapon; }
-
     public WeaponController Equip
     {
         get { return weapon; }
-        set { weapon = value; }
+        private set { weapon = value; }
+    }
+
+    public void EquipWeapon(WeaponController weaponController, GameObject gameObject)
+    {
+        Equip = weaponController; 
+
+        if (weaponPivot != null) { Destroy(weaponPivot); }
+        weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
+        
     }
 }

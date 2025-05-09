@@ -368,6 +368,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4065148865938032536, guid: 6de2d7a924267624494de630db4e8e92, type: 3}
+      propertyPath: m_TileSpriteArray.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065148865938032536, guid: 6de2d7a924267624494de630db4e8e92, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[0].m_Data
       value: 
       objectReference: {fileID: 21300000, guid: aabe4ae9b1a7d6048bc232d62cfb69c9, type: 3}
@@ -393,7 +397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4065148865938032536, guid: 6de2d7a924267624494de630db4e8e92, type: 3}
       propertyPath: m_Tiles.Array.data[2].second.m_TileSpriteIndex
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4065148865938032536, guid: 6de2d7a924267624494de630db4e8e92, type: 3}
       propertyPath: m_Tiles.Array.data[3].second.m_TileSpriteIndex
@@ -1908,6 +1912,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: StoreNPC
       objectReference: {fileID: 0}
+    - target: {fileID: 1508031355345157590, guid: 5d5308da764f6764a920aceea28d6aa0, type: 3}
+      propertyPath: Weapon_1
+      value: 
+      objectReference: {fileID: 5322993450342628646, guid: 2468aa66bb3e4dc45adba3a1f3be49a0, type: 3}
+    - target: {fileID: 1508031355345157590, guid: 5d5308da764f6764a920aceea28d6aa0, type: 3}
+      propertyPath: Weapon_2
+      value: 
+      objectReference: {fileID: 4078331678849587747, guid: aa8337b9ff975a442907fb1d1ea7ef42, type: 3}
+    - target: {fileID: 1508031355345157590, guid: 5d5308da764f6764a920aceea28d6aa0, type: 3}
+      propertyPath: Weapon_3
+      value: 
+      objectReference: {fileID: 8127644214335458342, guid: 95b7d36258328214d8610c956ffc262a, type: 3}
+    - target: {fileID: 1508031355345157590, guid: 5d5308da764f6764a920aceea28d6aa0, type: 3}
+      propertyPath: BaseWeapon
+      value: 
+      objectReference: {fileID: 7187748011426267415, guid: 2f11a25468b9fc84c8e7fcc0ce15a090, type: 3}
+    - target: {fileID: 1508031355345157590, guid: 5d5308da764f6764a920aceea28d6aa0, type: 3}
+      propertyPath: BasicWeapon
+      value: 
+      objectReference: {fileID: 7187748011426267415, guid: 2f11a25468b9fc84c8e7fcc0ce15a090, type: 3}
     - target: {fileID: 8929564921513141786, guid: 5d5308da764f6764a920aceea28d6aa0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.09

@@ -10,13 +10,18 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private Button Button1;
     [SerializeField] private Button Button2;
     [SerializeField] private Button Button3;
+    [SerializeField] private Button BaseWeaponButton;
 
     [SerializeField] private TextMeshProUGUI button11;
     [SerializeField] private TextMeshProUGUI button22;
     [SerializeField] private TextMeshProUGUI button33;
 
+    [SerializeField] private GameObject BasicWeapon;
+    [SerializeField] private GameObject Weapon_1;
+    [SerializeField] private GameObject Weapon_2;
+    [SerializeField] private GameObject Weapon_3;
 
-    [SerializeField] Button BaseWeaponButton;
+
 
 
     List<WeaponController> weapons;
@@ -91,9 +96,23 @@ public class ShopManager : MonoBehaviour
     private void EquipWeapon(int num)
     {
         if (inventory[num]) {
-            PlayerController.Instance.Equip = weapons[num]; 
 
-            //weapon prefab을 플레이어에게 부착
+            switch (num)
+            {
+                case 0:
+                    PlayerController.Instance.EquipWeapon(weapons[num], BasicWeapon);
+                    break;
+                case 1:
+                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_1);
+                    break;
+                case 2:
+                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_2);
+                    break;
+                case 3:
+                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_3);
+                    break;
+            }
+
         
         }
     }
