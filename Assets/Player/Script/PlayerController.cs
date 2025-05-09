@@ -12,9 +12,11 @@ public class PlayerController : Player
     public SpriteRenderer render;
     protected AnimationHandle animationHandler;
     private Camera mainCamera;
-    private int gold = 1000;
     private WeaponController weapon;
     private GameObject weaponPivot;
+
+    private int gold = 1000;
+
 
 
     void Awake()
@@ -63,12 +65,12 @@ public class PlayerController : Player
 
     public void EquipWeapon(WeaponController weaponController, GameObject gameObject)
     {
-        Equip = weaponController; 
+        Equip = weaponController;
 
         if (weaponPivot != null) { Destroy(weaponPivot); }
         weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
-        
 
+    }
 
 
     public void PlayerMove()
