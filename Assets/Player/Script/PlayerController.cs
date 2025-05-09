@@ -12,7 +12,7 @@ public class PlayerController : SingleTon<PlayerController>
 
     private void Update()
     {
-        Debug.Log(Equip.Num());
+        //Debug.Log(Equip.Num());
     }
 
 

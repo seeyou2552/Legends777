@@ -93,7 +93,7 @@ public class ShopManager : MonoBehaviour
         if (inventory[num]) {
             PlayerController.Instance.Equip = weapons[num]; 
 
-            //weapon prefab 부착
+            //weapon prefab을 플레이어에게 부착
         
         }
     }
