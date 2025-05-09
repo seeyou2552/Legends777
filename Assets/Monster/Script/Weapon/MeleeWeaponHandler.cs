@@ -18,7 +18,8 @@ public class MeleeWeaponHandler : MonsterWeaponHandler
         base.Attack();
 
         Vector2 boxCenter = (Vector2)transform.position + Controller.LookDirection * colliderBoxSize.x;
-        Collider2D hit = Physics2D.OverlapBox(boxCenter, colliderBoxSize, 0f, target);
+        Collider2D hit = Physics2D.OverlapBox(boxCenter, colliderBoxSize, 0, target);
+
 
         //Å¸°Ù°ú Ãæµ¹
         if (hit != null)
