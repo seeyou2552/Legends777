@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
-    public static BossManager Instance;
     [Range(1, 1000)][SerializeField] private int bossHealth = 10;
     public int Health
     {
@@ -19,7 +18,7 @@ public class BossManager : MonoBehaviour
         set => bossSpeed = Mathf.Clamp(value, 0, 20);
     }
 
-    public Rigidbody2D target; // ≈∏∞Ÿ »Æ¿Œ
+    private Rigidbody2D target; // ≈∏∞Ÿ »Æ¿Œ
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
@@ -27,7 +26,6 @@ public class BossManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
@@ -60,4 +58,6 @@ public class BossManager : MonoBehaviour
     {
         target = PlayerController.Instance.GetComponent<Rigidbody2D>();
     }
+
+    
 }

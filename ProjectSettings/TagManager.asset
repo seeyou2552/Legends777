@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Monster
+  - FireBall
+  - Obstacle
+  - Entrance
+  - Wall
+  - Arrow
   layers:
   - Default
   - TransparentFX

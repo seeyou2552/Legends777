@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 
 public class MonsterManager : MonoBehaviour
 {
+
     public static MonsterManager Instance;
 
     //웨이브
@@ -39,11 +40,6 @@ public class MonsterManager : MonoBehaviour
         //Stage Type이 Monster로 변경되면 몬스터 스폰 (웨이브 시작)
         waveMonsterCount = 5;
         GameManager.instance.OnDungeonTypeMonsterUpdated += StartWave;
-    }
-
-    private void Awake() // 추가 내용
-    {
-        Instance = this;
     }
 
     public void StartWave()

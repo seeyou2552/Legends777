@@ -8,6 +8,7 @@ public class LazerHit : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Player.Instance.hp -= 20;
             Debug.Log("hit"); // 데미지 처리 변경 예정
         }
     }

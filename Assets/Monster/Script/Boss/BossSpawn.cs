@@ -9,7 +9,11 @@ public class BossSpawn : MonoBehaviour
 
     private void Start()
     {
-        GameObject bossInstance = Instantiate(bossPrefab);
-        bossInstance.SetActive(true); // 일단 비활성화
+        GameManager.instance.OnDungeonTypeBossUpdated += SpawnBoss;
+    }
+
+    public void SpawnBoss()
+    {
+        Instantiate(bossPrefab);
     }
 }
