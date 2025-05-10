@@ -228,7 +228,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossHealth: 1000
   bossSpeed: 3
-  target: {fileID: 0}
 --- !u!114 &-6838238381144533660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,11 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac164c43da49e0449cf447d0bcd10bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 7186770006740362830, guid: a247e4bf2159fef4a9a789d694c0c9db, type: 3}
-  redGround: {fileID: 1269801886388852520, guid: 5d1f1eeca9520e040acea7c5bdf0918d, type: 3}
-  RedLazer1: {fileID: 870706149212126173, guid: dd4bfde7c15090640b5c4484cd5240fa, type: 3}
-  RedLazer2: {fileID: 3050512512278836327, guid: f8de47090d6ff844ba57bf6081b9aa75, type: 3}
+  redBackGround: {fileID: 2747213633161331068, guid: b06b4fb5eabdc3d46812013ba790cece, type: 3}
   firePoint: {fileID: 672466838232044130}
-  target: {fileID: 0}
   fireRate: 5
   defaultBulletSpeed: 10

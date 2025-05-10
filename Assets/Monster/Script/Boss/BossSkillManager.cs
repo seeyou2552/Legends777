@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEditorInternal.VersionControl.ListControl;
 
 public class BossSkillManager : MonoBehaviour
 {
+    public GameObject redBackGround;
+    private bool isHalf = false;
     public Transform firePoint;
     private Transform target;
     private Camera Boss_Camera;
@@ -128,7 +132,7 @@ public class BossSkillManager : MonoBehaviour
             if (skillFuncs.Count > 0)
             {
                 yield return StartCoroutine(skillFuncs[currentSkillIndex]());
-                int num = Random.Range(0, skillFuncs.Count);
+                int num = UnityEngine.Random.Range(0, skillFuncs.Count);
                 currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
             }
 
@@ -222,6 +226,13 @@ public class BossSkillManager : MonoBehaviour
         {
             bossManager.Health -= Player.Instance.power;
             Debug.Log(bossManager.Health);
+
+            if (BossManager.instance.Health <= 500 && !isHalf)
+            {
+                CameraShake.instance.StartShake();
+                Instantiate(redBackGround, transform);
+                isHalf = true;
+            }
             if (bossManager.Health <= 0)
             {
                 // 스킬 오브젝트 정리

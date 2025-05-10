@@ -24,12 +24,17 @@ public class BossManager : MonoBehaviour
     SpriteRenderer spriter;
     Animator animator;
 
+    public static BossManager instance;
+
     private void Awake()
     {
+        if (instance == null) instance = this;
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
     }
+
+    
 
     private void FixedUpdate()
     {
