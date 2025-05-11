@@ -158,11 +158,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootSpeed: 10
   arrowCount: 1
-  addBurn: 0
   addGhost: 0
-  isPenetrates: 0
+  addBomb: 0
+  addBurn: 0
+  addPenetrates: 0
+  addSpread: 0
+  addChase: 0
   arrowPrefab: {fileID: 3232422438051106584, guid: 858266ffb3ffed94691ea163491dcc20, type: 3}
   bowPrefab: {fileID: 3954478961486385109}
+  bombPrefab: {fileID: 0}
   target: {fileID: 0}
   shootInterval: 2
+  chaseRadius: 2
   timer: 0
+  createBow: 0

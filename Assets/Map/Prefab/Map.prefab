@@ -3615,10 +3615,8 @@ MonoBehaviour:
   obstacleSize: {x: 1.7, y: 1.7}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 0
   minDistance: 2
-  stage: 0
-  dungeonType: 0
 --- !u!1 &5306775915247718060
 GameObject:
   m_ObjectHideFlags: 0
