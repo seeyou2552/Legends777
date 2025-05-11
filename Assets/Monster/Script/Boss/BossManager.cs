@@ -21,9 +21,13 @@ public class BossManager : MonoBehaviour
     }
 
     private Rigidbody2D target; // 타겟 확인
+    public Rigidbody2D Target => target;
 
     private Rigidbody2D rigid;
     public Rigidbody2D Rigid => rigid;
+
+    private GameObject playerTarget;
+    public GameObject PlayerTarget => playerTarget;
 
     SpriteRenderer spriter;
     Animator animator;
@@ -47,6 +51,7 @@ public class BossManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(target == null) return;
         Vector2 direction = target.position - rigid.position; // 타겟과 몬스터의 위치 길이 구하기
 
         float stopDistance = 1.5f; // 타겟과의 최소 거리
@@ -65,12 +70,14 @@ public class BossManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (target == null) return;
         spriter.flipX = target.position.x < rigid.position.x; // 몬스터가 플레이어보다 x위치가 다르면 방향 변경
     }
 
     private void OnEnable()
     {
         target = PlayerController.Instance.GetComponent<Rigidbody2D>();
+        playerTarget = Player.Instance.gameObject;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

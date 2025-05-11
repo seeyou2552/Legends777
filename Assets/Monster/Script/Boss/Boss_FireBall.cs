@@ -36,6 +36,10 @@ public class Boss_FireBall : MonoBehaviour
         {
             Player.Instance.hp -= 10;
             Debug.Log("Player HP: " + Player.Instance.hp);
+            if(Player.Instance.hp <= 0)
+            {
+                Destroy(BossManager.instance.PlayerTarget);
+            }
             ReturnToPool();
         }
         // 몬스터나 다른 파이어볼과 충돌하지 않았을 때에만 반환
