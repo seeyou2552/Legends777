@@ -29,9 +29,9 @@ public class ArrowManager : MonoBehaviour
 
         if (skill.addBurn) BurnArrow();
 
-        if (skill.addBomb && this.gameObject.name == "Weapon_Bomb(Clone)") StartCoroutine(Spread());
+        if (skill.addBomb > 0 && this.gameObject.name == "Weapon_Bomb(Clone)") StartCoroutine(Spread());
 
-        if (skill.addSpread && this.gameObject.name == "Weapon_Arrow(Clone)") StartCoroutine(Spread());
+        if (skill.addSpread > 0 && this.gameObject.name == "Weapon_Arrow(Clone)") StartCoroutine(Spread());
 
     }
 
@@ -65,11 +65,14 @@ public class ArrowManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         GameObject weapon;
+        int count;
+        if(this.gameObject.name == "Weapon_Bomb(Clone)") count = skill.addBomb + 2;
+        else count = skill.addSpread + 2;
 
-        float angleStep = 360f / skill.arrowCount;
+        float angleStep = 360f / count;
 
 
-        for (int i = 0; i < skill.arrowCount + 2; i++)
+        for (int i = 0; i < count; i++)
         {
             float angle = i * angleStep;
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
