@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 175954116140470836}
   - component: {fileID: 1288119784805007813}
   - component: {fileID: 1433732445528377322}
-  - component: {fileID: 6800589411218848859}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -251,6 +250,18 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+      propertyPath: addBomb
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+      propertyPath: arrowCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+      propertyPath: bombPrefab
+      value: 
+      objectReference: {fileID: 3381832541229528075, guid: f341928f02e00204b84dcb265797d5d5, type: 3}
     - target: {fileID: 3778447634019247780, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -294,6 +305,10 @@ PrefabInstance:
     - target: {fileID: 3954478961486385109, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: m_Name
       value: Weapon_Bow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954478961486385109, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
