@@ -35,7 +35,7 @@ public class SkillManager : Skill
             else if (addGhost) GhostShoot();
             else ShootArrow();
 
-            if(addBomb && this.transform.parent != null) CreateBomb();
+            if(addBomb > 0 && this.transform.parent != null) CreateBomb();
             timer = 0f;
         }
     }
@@ -101,7 +101,7 @@ public class SkillManager : Skill
 
     void CreateBomb()
     {
-        if(addBomb) Instantiate(bombPrefab, target.transform.position, Quaternion.Euler(0f, 0f, 0f));
+        Instantiate(bombPrefab, target.transform.position, Quaternion.Euler(0f, 0f, 0f));
     }
 
 }

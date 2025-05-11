@@ -8,14 +8,14 @@ public class Skill : MonoBehaviour
     public float shootSpeed = 10f;
     public int arrowCount = 1;
     public bool addGhost = false; 
-    public bool addBomb = false; // í­íƒ„
+    public int addBomb = 0; // 폭탄
     
     
     // ArrowManager
-    public bool addBurn = false; // ë¶ˆ í™”ì‚´ 
-    public bool addPenetrates = false; // ê´€í†µ
-    public bool addSpread = false; // í™•ì‚°
-
+    public bool addBurn = false; // 불 화살 
+    public bool addPenetrates = false; // 관통
+    public int addSpread = 0; // 확산
+    
     // ChaseMonster
-    public bool addChase = false; // ìœ ë„
+    public bool addChase = false; // 유도 기능
 }
