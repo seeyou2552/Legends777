@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c87247463c93ca4bb4a4306de66a3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponprefabs: {fileID: 0}
   target: {fileID: 0}
   monsterSpeed: 3
 --- !u!1 &1830928363940599865
