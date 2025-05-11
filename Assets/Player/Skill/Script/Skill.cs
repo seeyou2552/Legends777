@@ -15,7 +15,7 @@ public class Skill : MonoBehaviour
     public bool addBurn = false; // 불 화살 
     public bool addPenetrates = false; // 관통
     public int addSpread = 0; // 확산
-
+    
     // ChaseMonster
-    public bool addChase = false; // 유도
+    public bool addChase = false; // 유도 기능
 }
