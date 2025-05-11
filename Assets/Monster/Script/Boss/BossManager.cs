@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BossManager : MonoBehaviour
@@ -20,9 +22,15 @@ public class BossManager : MonoBehaviour
 
     private Rigidbody2D target; // 타겟 확인
 
-    Rigidbody2D rigid;
+    private Rigidbody2D rigid;
+    public Rigidbody2D Rigid => rigid;
+
     SpriteRenderer spriter;
     Animator animator;
+
+    private bool isHalf = false;
+    public GameObject redBackGround;
+    private Camera Boss_Camera;
 
     public static BossManager instance;
 
@@ -32,6 +40,7 @@ public class BossManager : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
+        Boss_Camera = Camera.main;
     }
 
     
@@ -64,5 +73,35 @@ public class BossManager : MonoBehaviour
         target = PlayerController.Instance.GetComponent<Rigidbody2D>();
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Arrow"))
+        {
+            Health -= Player.Instance.power;
+            animator.SetTrigger("isHit");
+            Debug.Log(Health);
+
+            if (BossManager.instance.Health <= 500 && !isHalf)
+            {
+                CameraShake.instance.StartShake();
+                Instantiate(redBackGround, transform);
+                isHalf = true;
+            }
+            if (Health <= 0)
+            {
+                // 스킬 오브젝트 정리
+                foreach (GameObject obj in BossSkillManager.Instance.ActiveSkillObjects)
+                {
+                    if (obj != null && obj.activeSelf)
+                    {
+                        BossObjectPoolManager.Instance.ReturnToPool(obj.tag, obj);
+                    }
+                }
+                BossSkillManager.Instance.ActiveSkillObjects.Clear();
+
+                Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
+                Destroy(gameObject);  // 보스 오브젝트 파괴
+            }
+        }
+    }
 }

@@ -77,3 +77,6 @@ MonoBehaviour:
   - tag: item
     prefab: {fileID: 6848506248765371469, guid: 854bc9c02eaf27343987d047a4b21f81, type: 3}
     size: 3
+  - tag: Teleport
+    prefab: {fileID: 6624941901174875307, guid: a921185b8b483df4594f1194dd7fb4e2, type: 3}
+    size: 2

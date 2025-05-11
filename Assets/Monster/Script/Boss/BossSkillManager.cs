@@ -4,13 +4,14 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEditorInternal.VersionControl.ListControl;
 
 public class BossSkillManager : MonoBehaviour
 {
-    public GameObject redBackGround;
-    private bool isHalf = false;
-    public Transform firePoint;
+    public static BossSkillManager Instance;
+
+    public Transform firePoint; // 보스 위치 가져오기
     private Transform target;
     private Camera Boss_Camera;
 
@@ -25,16 +26,22 @@ public class BossSkillManager : MonoBehaviour
     private int currentSkillIndex = 0;
 
     private List<GameObject> activeSkillObjects = new List<GameObject>(); // 따로 생성되는 오브젝트를 보스가 죽을시 삭제하기 위해 저장해두는 리스트
+    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // 인스펙터 창에서 안보이고 스크립트에서 참조할수있게
 
     BossManager bossManager;
     GameManager gameManager;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         gameManager = GameManager.instance;
         bossManager = GetComponent<BossManager>();
         Boss_Camera = Camera.main;
         currentBulletSpeed = defaultBulletSpeed;
-
 
         gameManager.OnStageUpdated += SkillsForStage; // 스테이지 이벤트 사용
         SkillsForStage();
@@ -49,7 +56,6 @@ public class BossSkillManager : MonoBehaviour
             MakeFireBall();
             nextFireTime = Time.time + 1f / fireRate;
         }
-        //transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
     }
     private void SkillsForStage() // 사용할 스킬등록함수
     {
@@ -59,6 +65,7 @@ public class BossSkillManager : MonoBehaviour
         // 사용할 스킬들 등록
         if (gameManager.Stage < 5)
         {
+            //skillFuncs.Add(CirCleFireball);
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(MakeMonster);
@@ -70,7 +77,7 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(CameraReversal);
             skillFuncs.Add(ShootFast);
-            skillFuncs.Add(MakeBossItem);
+            skillFuncs.Add(Teleport);
         }
         else if (gameManager.Stage < 15)
         {
@@ -79,10 +86,10 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(CameraReversal);
             skillFuncs.Add(ShootFast);
+            skillFuncs.Add(Teleport);
             skillFuncs.Add(MakeBossItem);
             skillFuncs.Add(LazerPattern);
             skillFuncs.Add(RedGround);
-            //skillFuncs.Add(CirCleFireball);
         }
     }
 
@@ -222,7 +229,10 @@ public class BossSkillManager : MonoBehaviour
             float y = UnityEngine.Random.Range(-4, 4.1f);
             float z = UnityEngine.Random.Range(-180, 180);
             GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z));
-
+            if (!activeSkillObjects.Contains(rLazer))
+            {
+                activeSkillObjects.Add(rLazer);
+            }
             SpriteRenderer sr = rLazer.GetComponent<SpriteRenderer>();
             Color color = sr.color;
 
@@ -257,6 +267,22 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
+    private IEnumerator Teleport()
+    {
+        GameObject[] teleport = new GameObject[2];
+        for (int i = 0; i < 2; i++)
+        {
+            float x = UnityEngine.Random.Range(-9, 9.1f);
+            float y = UnityEngine.Random.Range(-4, 4.1f);
+            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity);
+        }
+        yield return new WaitForSeconds(5f);
+        for(int i = 0;i < 2; i++)
+        {
+            BossObjectPoolManager.Instance.ReturnToPool("Teleport", teleport[i]);
+        }
+    }
+
     //private IEnumerator CirCleFireball()
     //{
     //    int bulletCount = 8; // 발사할 파이어볼의 개수
@@ -264,45 +290,19 @@ public class BossSkillManager : MonoBehaviour
 
     //    for (int i = 0; i < bulletCount; i++)
     //    {
-    //        float angle = i * angleStep * Mathf.Deg2Rad; //라디안 각도로 변환
-    //        Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos는 x축 방향, Sin은 y축 방향 이걸로 unit circle상의 방향을 계산
+    //        float angle = i * angleStep; // 파이어볼이 위치할 각도
+    //        Vector3 offset = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0f) * 2f; // 반지름 2로 파이어볼 위치 계산
 
+    //        // 파이어볼 생성
+    //        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("CircleFireball", firePoint.position +  offset, Quaternion.identity);
+    //        Boss_FIreBallCIrcle fireballScript = fireball.GetComponent<Boss_FIreBallCIrcle>();
+    //        fireballScript.boss = firePoint; // 보스를 파이어볼에 연결
     //    }
     //    yield return null;
     //}
+
     private void OnEnable()
     {
         target = PlayerController.Instance.transform;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Arrow"))
-        {
-            bossManager.Health -= Player.Instance.power;
-            Debug.Log(bossManager.Health);
-
-            if (BossManager.instance.Health <= 500 && !isHalf)
-            {
-                CameraShake.instance.StartShake();
-                Instantiate(redBackGround, transform);
-                isHalf = true;
-            }
-            if (bossManager.Health <= 0)
-            {
-                // 스킬 오브젝트 정리
-                foreach (GameObject obj in activeSkillObjects)
-                {
-                    if (obj != null && obj.activeSelf)
-                    {
-                        BossObjectPoolManager.Instance.ReturnToPool(obj.tag, obj);
-                    }
-                }
-                activeSkillObjects.Clear();
-
-                Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
-                Destroy(gameObject);  // 보스 오브젝트 파괴
-            }
-        }
     }
 }
