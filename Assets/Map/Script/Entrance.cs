@@ -6,7 +6,7 @@ public class Entrance : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerController1 player = collision.GetComponent<PlayerController1>();
+        PlayerController player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
             MapController map = GameObject.Find("Map").GetComponent<MapController>();
