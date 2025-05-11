@@ -71,3 +71,9 @@ MonoBehaviour:
   - tag: redLazer2
     prefab: {fileID: 3050512512278836327, guid: f8de47090d6ff844ba57bf6081b9aa75, type: 3}
     size: 1
+  - tag: rLazer
+    prefab: {fileID: 2526082647480330863, guid: db0dab620b3b94b429dfa792733e6a21, type: 3}
+    size: 10
+  - tag: item
+    prefab: {fileID: 6848506248765371469, guid: 854bc9c02eaf27343987d047a4b21f81, type: 3}
+    size: 3

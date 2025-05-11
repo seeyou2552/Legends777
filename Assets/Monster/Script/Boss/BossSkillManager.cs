@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -59,15 +60,26 @@ public class BossSkillManager : MonoBehaviour
         if (gameManager.Stage < 5)
         {
             skillFuncs.Add(MoveFast);
+            skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(MakeMonster);
         }
         else if (gameManager.Stage < 10)
         {
+            skillFuncs.Add(MoveFast);
+            skillFuncs.Add(MakeMonster);
+            skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(CameraReversal);
             skillFuncs.Add(ShootFast);
+            skillFuncs.Add(MakeBossItem);
         }
         else if (gameManager.Stage < 15)
         {
+            skillFuncs.Add(MoveFast);
+            skillFuncs.Add(MakeMonster);
+            skillFuncs.Add(LazerPatten2);
+            skillFuncs.Add(CameraReversal);
+            skillFuncs.Add(ShootFast);
+            skillFuncs.Add(MakeBossItem);
             skillFuncs.Add(LazerPattern);
             skillFuncs.Add(RedGround);
             //skillFuncs.Add(CirCleFireball);
@@ -162,7 +174,7 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator ShootFast()
     {
-        fireRate = 15;
+        fireRate = 10;
         currentBulletSpeed = 25f;
         yield return new WaitForSeconds(5f);
         currentBulletSpeed = defaultBulletSpeed;
@@ -199,6 +211,49 @@ public class BossSkillManager : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             BossObjectPoolManager.Instance.ReturnToPool("redLazer2", lazer2);
+        }
+    }
+
+    private IEnumerator LazerPatten2()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            float x = UnityEngine.Random.Range(-9, 9.1f);
+            float y = UnityEngine.Random.Range(-4, 4.1f);
+            float z = UnityEngine.Random.Range(-180, 180);
+            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z));
+
+            SpriteRenderer sr = rLazer.GetComponent<SpriteRenderer>();
+            Color color = sr.color;
+
+            for(int j = 0; j < 5; j++)
+            {
+                color.a -= 0.2f;
+                sr.color = color;
+                yield return new WaitForSeconds(0.1f);
+            }
+            color.a = 1f;
+            sr.color = color;
+            BossObjectPoolManager.Instance.ReturnToPool("rLazer", rLazer);
+        }
+    }
+
+    private IEnumerator MakeBossItem()
+    {
+        GameObject[] item = new GameObject[3];
+        for(int i = 0;i < 3;i++)
+        {
+            float x = UnityEngine.Random.Range(-9, 9.1f);
+            float y = UnityEngine.Random.Range(-4, 4.1f);
+            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity);
+        }
+        yield return new WaitForSeconds(5f);
+        for (int i = 0; i < 3; i++)
+        {
+            if (item[i].activeSelf)
+            {
+                BossObjectPoolManager.Instance.ReturnToPool("item", item[i]);
+            }
         }
     }
 
