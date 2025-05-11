@@ -12,7 +12,7 @@ public class PlayerController : Player
 
     public Rigidbody2D rigid;
     public SpriteRenderer render;
-    protected AnimationHandle animationHandler;
+    protected Animator animation;
     private Camera mainCamera;
     private int gold = 1000;
     private WeaponController weapon;
@@ -21,7 +21,7 @@ public class PlayerController : Player
 
     void Awake()
     {
-        animationHandler = GetComponent<AnimationHandle>();
+        animation = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         render = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
@@ -90,7 +90,6 @@ public class PlayerController : Player
         {
             direction += Vector2.left * speed;
             render.flipX = true;
-
         }
 
         if (Input.GetKey(KeyCode.D))
@@ -110,7 +109,14 @@ public class PlayerController : Player
         }
 
         rigid.velocity = new Vector2(direction.x, direction.y);
-        animationHandler.Move(direction);
+        if (direction != Vector2.zero)
+        {
+            animation.SetBool("IsRun", true);
+        }
+        else
+        {
+            animation.SetBool("IsRun", false);
+        }
     }
 }
 

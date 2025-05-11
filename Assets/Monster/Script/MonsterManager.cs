@@ -7,7 +7,7 @@ using UnityEngine.VFX;
 public class MonsterManager : MonoBehaviour
 {
     private Coroutine waveRoutine;
-
+    private bool waveStarted = false;
     [SerializeField]
     private List<GameObject> enemyPrefabs; // 积己且 利 橇府普 府胶飘
 
@@ -17,6 +17,7 @@ public class MonsterManager : MonoBehaviour
 
     [SerializeField] private float timeBetweenSpawns = 0.2f;
     [SerializeField] private float timeBetweenWaves = 1f;
+
 
     public void StartWave(int waveCount)
     {
@@ -65,13 +66,5 @@ public class MonsterManager : MonoBehaviour
         Monster enemyController = spawnedEnemy.GetComponent<Monster>();
 
         activeEnemies.Add(enemyController);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartWave(1);
-        }
     }
 }

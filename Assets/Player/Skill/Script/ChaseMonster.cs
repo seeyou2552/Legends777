@@ -15,14 +15,14 @@ public class ChaseMonster : MonoBehaviour
         GameObject bow = GameObject.Find("Weapon_Bow");
         skill = bow.GetComponent<SkillManager>();
         arrowRigid = transform.parent.GetComponent<Rigidbody2D>();
-        // collider = this.gameObject.GetComponent<CircleCollider2D>();
-        // collider.radius = skill.chaseRadius;
+        collider = this.gameObject.GetComponent<CircleCollider2D>();
+        collider.radius = skill.chaseRadius;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (skill.addChase == false) return;
-        if (other.gameObject.CompareTag("Monster") && skill.addChase)
+        if (skill.addChase && other.gameObject.CompareTag("Monster"))
         {
             target = other.gameObject.transform;
         }
@@ -32,10 +32,6 @@ public class ChaseMonster : MonoBehaviour
     {
         if (target != null && arrowRigid != null)
         {
-            // Vector2 direction = ((Vector2)target.position - arrowRigid.position).normalized;
-            // arrowRigid.velocity = direction * skill.shootSpeed;
-            // target.position을 Vector3로 취급 (z축도 포함)
-
             Vector3 direction3D = (target.position - arrowRigid.transform.position).normalized;
 
             // 화살이 목표를 향하도록 회전 (z축을 포함하여 회전)
@@ -44,7 +40,7 @@ public class ChaseMonster : MonoBehaviour
             // 화살의 회전 값 설정
             arrowRigid.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90f));
 
-            // 속도 설정 (y, x는 맞추고, z는 무시)
+            // 속도 설정
             arrowRigid.velocity = direction3D * skill.shootSpeed;
         }
     }

@@ -7,6 +7,7 @@ public class SkillManager : Skill
 {
     public GameObject arrowPrefab;
     public GameObject bowPrefab;
+    public GameObject bombPrefab;
     public GameObject target;
     public float shootInterval = 2f;
     public float chaseRadius = 0f;
@@ -25,7 +26,6 @@ public class SkillManager : Skill
 
     void AutoAttack()
     {
-        Debug.Log(timer);
         if (timer >= shootInterval)
         {
             if (createBow)
@@ -35,8 +35,7 @@ public class SkillManager : Skill
             else if (addGhost) GhostShoot();
             else ShootArrow();
 
-            // if(addSword)
-
+            if(addBomb && this.transform.parent != null) CreateBomb();
             timer = 0f;
         }
     }
@@ -65,6 +64,8 @@ public class SkillManager : Skill
             float zRotation = Mathf.Atan2(rotatedDirection.y, rotatedDirection.x) * Mathf.Rad2Deg - 90f;
 
             GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.Euler(0f, 0f, zRotation));
+
+            
 
             SpriteRenderer renderer = arrow.GetComponent<SpriteRenderer>();
 
@@ -97,6 +98,10 @@ public class SkillManager : Skill
         addGhost = true;
         createBow = false;
     }
-    
+
+    void CreateBomb()
+    {
+        if(addBomb) Instantiate(bombPrefab, target.transform.position, Quaternion.Euler(0f, 0f, 0f));
+    }
 
 }
