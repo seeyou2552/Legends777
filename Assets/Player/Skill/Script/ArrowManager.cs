@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class ArrowManager : MonoBehaviour
 {
-    float timer;
-    public float destroyTime;
+    float timer = 0;
+    public float destroyTime = 3f;
+    public GameObject swordPrefab;
+    public GameObject arrowPrefab;
     SkillManager skill;
-
     SpriteRenderer renderer;
 
     void Awake()
@@ -21,31 +22,35 @@ public class ArrowManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(timer >= destroyTime)
+        if (timer >= destroyTime)
         {
             Destroy(this.gameObject);
         }
 
-        if(skill.addBurn) BurnArrow();
-        
+        if (skill.addBurn) BurnArrow();
+
+        if (skill.addBomb && this.gameObject.name == "Weapon_Bomb(Clone)") StartCoroutine(Spread());
+
+        if (skill.addSpread && this.gameObject.name == "Weapon_Arrow(Clone)") StartCoroutine(Spread());
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Monster"))
+        if (other.gameObject.CompareTag("Monster"))
         {
             Debug.Log("적중");
             // addBurn 효과
-            if(skill.addBurn)
+            if (skill.addBurn)
             {
                 SpriteRenderer otherRenderer = other.gameObject.GetComponent<SpriteRenderer>();
                 otherRenderer.color = new Color(1f, 0f, 0f, 0.4f);
             }
-            
-            if(!skill.addPenetrates) Destroy(this.gameObject); // 비관통
+
+            if (!skill.addPenetrates) Destroy(this.gameObject); // 비관통
         }
 
-        if(other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("Wall"))
         {
             Destroy(this.gameObject);
         }
@@ -54,5 +59,37 @@ public class ArrowManager : MonoBehaviour
     void BurnArrow()
     {
         renderer.color = new Color(1f, 0f, 0f, 0.5f);
+    }
+
+    IEnumerator Spread()
+    {
+        yield return new WaitForSeconds(1f);
+        GameObject weapon;
+
+        float angleStep = 360f / skill.arrowCount;
+
+
+        for (int i = 0; i < skill.arrowCount + 2; i++)
+        {
+            float angle = i * angleStep;
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
+
+            if (this.gameObject.name == "Weapon_Arrow(Clone)")
+            {
+                weapon = Instantiate(swordPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                weapon = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+            }
+
+            Rigidbody2D rigid = weapon.GetComponent<Rigidbody2D>();
+            rigid.velocity = direction * skill.shootSpeed;
+
+            float zRot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            weapon.transform.rotation = Quaternion.Euler(0f, 0f, zRot - 90f);
+        }
+        Destroy(this.gameObject);
+
     }
 }
