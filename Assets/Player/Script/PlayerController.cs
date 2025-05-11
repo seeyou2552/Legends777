@@ -55,34 +55,35 @@ public class PlayerController : Player
     }
 
 
-    public int Gold
+    public int Gold  
     {
         get { return gold; }
         private set { gold = value; }
     }
 
-    public bool MinusGold(int gold)
+    public bool MinusGold(int gold) // 무기 구매시 골드가 충분한지 확인, 골드 감소
     {
         if (gold <= Gold) { Gold -= gold; return true; }
         else { return false; }
     }
 
 
-    public WeaponController Equip
+    public WeaponController Equip // 무기 프로퍼티
     {
         get { return weapon; }
         private set { weapon = value; }
     }
 
-    public void EquipWeapon(WeaponController weaponController, GameObject gameObject)
+    public void EquipWeapon(WeaponController weaponController, GameObject gameObject)  //무기 장착, 무기 공격력 -> weaponController.Atk();
     {
-        Equip = weaponController;
+        Equip = weaponController;   //무기 장착
 
-        if (weaponPivot != null) { Destroy(weaponPivot); }
-        weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
+        //무기 프리팹 부착 코드 자리
+        //if (weaponPivot != null) { Destroy(weaponPivot); }
+        //weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
     }
 
-    public void QuestClear(int gold) { Gold += gold; }
+    public void QuestClear(int gold) { Gold += gold; }  //퀘스트 클리어시 골드 획득
 
     public void PlayerMove()
     {
