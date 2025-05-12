@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -53,7 +53,7 @@ public class QuestManager : SingleTon<QuestManager>
 
         UICanvas.gameObject.SetActive(true);
 
-        foreach (var quest in questController) 
+        foreach (var quest in questController)
         {
             if (quest.Clear) { QuestClear(quest.Num); }  // 클리어 상태일 때 처리
         }
@@ -64,15 +64,16 @@ public class QuestManager : SingleTon<QuestManager>
 
     private void QuestOn()   //퀘스트 수락상태로 초기화
     {
-        foreach(var quest in questController) { quest.OnOff = true; }
+        foreach (var quest in questController) { quest.OnOff = true; }
     }
-    
+
     public void QuestCheck(int num) //퀘스트 조건 체크(클리어 확인)
     {
-        if (questController[num].OnOff) { //퀘스트 수락상태일 때
+        if (questController[num].OnOff)
+        { //퀘스트 수락상태일 때
             questController[num].PlusCount = questController[num].PlusCount + 1;
 
-            if(questController[num].PlusCount == questController[num].Goal)
+            if (questController[num].PlusCount == questController[num].Goal)
             {
                 questController[num].QuestClear(true);
             }
@@ -81,17 +82,18 @@ public class QuestManager : SingleTon<QuestManager>
 
     private void QuestClear(int num) // 퀘스트를 클리어하고 NPC와 접촉해 완료 처리
     {
-        if (questController[num].Clear) { 
+        if (questController[num].Clear)
+        {
             PlayerController.Instance.QuestClear(questController[num].Gold); //클리어 보상 주기
             questController[num].QuestReset();        //퀘스트 객체 리셋
         }
 
-        Debug.Log("플레이어의 골드 : "+PlayerController.Instance.Gold);
+        Debug.Log("플레이어의 골드 : " + PlayerController.Instance.Gold);
     }
 
     public bool QuestClearCheck()
     {
-        foreach (var quest in questController) {  if (quest.Clear) { return true; }  }
+        foreach (var quest in questController) { if (quest.Clear) { return true; } }
         return false;
     }
 }
