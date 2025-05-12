@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
@@ -87,7 +87,7 @@ public class PlayerController : Player
         private set { weapon = value; }
     }
 
-    public void EquipWeapon(WeaponController weaponController, GameObject gameObject)  //무기 장착, 무기 공격력 -> weaponController.Atk();
+    public void EquipWeapon(WeaponController weaponController/*, GameObject gameObject*/)  //무기 장착, 무기 공격력 -> weaponController.Atk();
     {
         Equip = weaponController;   //무기 장착
 
