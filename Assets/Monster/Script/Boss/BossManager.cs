@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
-    [Range(1, 1000)][SerializeField] private int bossHealth = 10;
+    [Range(1, 3000)][SerializeField] private int bossHealth = 10;
     public int Health
     {
         get => bossHealth;
-        set => bossHealth = Mathf.Clamp(value, 0, 1000);
+        set => bossHealth = Mathf.Clamp(value, 0, 3000);
     }
 
     [Range(1f, 20f)][SerializeField] private float bossSpeed = 3f;
