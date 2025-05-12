@@ -8,9 +8,8 @@ public class LazerHit : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Player.Instance.hp -= 20;
-            Destroy(BossManager.instance.PlayerTarget);
-            Debug.Log("hit"); // µ¥¹ÌÁö Ã³¸® º¯°æ ¿¹Á¤
+            PlayerManager.Instance.ApplyDamage(20);
+            Debug.Log("hit"); // ÂµÂ¥Â¹ÃŒÃÃ¶ ÃƒÂ³Â¸Â® ÂºÂ¯Â°Ã¦ Â¿Â¹ÃÂ¤
         }
     }
 }

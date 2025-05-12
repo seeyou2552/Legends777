@@ -1,35 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditorInternal.VersionControl.ListControl;
+using System;
+using TMPro;
 
 public class BossSkillManager : MonoBehaviour
 {
     public static BossSkillManager Instance;
 
-    public Transform firePoint; // º¸½º À§Ä¡ °¡Á®¿À±â
+    public Transform firePoint; // ë³´ìŠ¤ ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
     private Transform target;
     private Camera Boss_Camera;
+    public TextMeshProUGUI EffectText;
 
-    public float fireRate = 5f;
+    public float fireRate = 3f;
     public float defaultBulletSpeed = 15f;
 
     private float currentBulletSpeed;
     private float nextFireTime = 0f;
     private int attackCount = 1;
 
-    private List<System.Func<IEnumerator>> skillFuncs = new List<System.Func<IEnumerator>>();
+    private List<Func<IEnumerator>> skillFuncs = new List<Func<IEnumerator>>();
     private int currentSkillIndex = 0;
 
-    private List<GameObject> activeSkillObjects = new List<GameObject>(); // µû·Î »ı¼ºµÇ´Â ¿ÀºêÁ§Æ®¸¦ º¸½º°¡ Á×À»½Ã »èÁ¦ÇÏ±â À§ÇØ ÀúÀåÇØµÎ´Â ¸®½ºÆ®
-    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ÀÎ½ºÆåÅÍ Ã¢¿¡¼­ ¾Èº¸ÀÌ°í ½ºÅ©¸³Æ®¿¡¼­ ÂüÁ¶ÇÒ¼öÀÖ°Ô
+    private List<GameObject> activeSkillObjects = new List<GameObject>(); // ë”°ë¡œ ìƒì„±ë˜ëŠ” ì˜¤ë¸Œì íŠ¸ë¥¼ ë³´ìŠ¤ê°€ ì£½ì„ì‹œ ì‚­ì œí•˜ê¸° ìœ„í•´ ì €ì¥í•´ë‘ëŠ” ë¦¬ìŠ¤íŠ¸
+    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ì¸ìŠ¤í™í„° ì°½ì—ì„œ ì•ˆë³´ì´ê³  ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ì°¸ì¡°í• ìˆ˜ìˆê²Œ
+
+    public string[] sHowEffect = { "ì²´ë ¥ x 2", "ê³µê²©ë ¥ x 2", "ì†ë„ x 2", "ê³µì† x 2", "ì²´ë ¥ / 2", "ê³µê²©ë ¥ / 2", "ì†ë„ / 2", "ê³µì† / 2" };
+    int getStr;
 
     BossManager bossManager;
     GameManager gameManager;
+    Player player;
 
     private void Awake()
     {
@@ -38,13 +40,14 @@ public class BossSkillManager : MonoBehaviour
 
     private void Start()
     {
+        player = Player.Instance;
         gameManager = GameManager.instance;
         bossManager = GetComponent<BossManager>();
         Boss_Camera = Camera.main;
         currentBulletSpeed = defaultBulletSpeed;
 
-        gameManager.OnStageUpdated += SkillsForStage; // ½ºÅ×ÀÌÁö ÀÌº¥Æ® »ç¿ë
         SkillsForStage();
+        gameManager.OnStageUpdated += SkillsForStage; // ìŠ¤í…Œì´ì§€ ì´ë²¤íŠ¸ ì‚¬ìš©
 
         StartCoroutine(UseSkillsRoutine());
     }
@@ -57,20 +60,19 @@ public class BossSkillManager : MonoBehaviour
             nextFireTime = Time.time + 1f / fireRate;
         }
     }
-    private void SkillsForStage() // »ç¿ëÇÒ ½ºÅ³µî·ÏÇÔ¼ö
+    private void SkillsForStage() // ì‚¬ìš©í•  ìŠ¤í‚¬ë“±ë¡í•¨ìˆ˜
     {
         int stage = gameManager.Stage;
         skillFuncs.Clear();
 
-        // »ç¿ëÇÒ ½ºÅ³µé µî·Ï
-        if (gameManager.Stage < 5)
+        // ì‚¬ìš©í•  ìŠ¤í‚¬ë“¤ ë“±ë¡
+        if (gameManager.Stage < 4)
         {
-            //skillFuncs.Add(CirCleFireball);
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(MakeMonster);
         }
-        else if (gameManager.Stage < 10)
+        else if (gameManager.Stage < 6)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -79,7 +81,7 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(ShootFast);
             skillFuncs.Add(Teleport);
         }
-        else if (gameManager.Stage < 15)
+        else if (gameManager.Stage < 8)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -97,15 +99,14 @@ public class BossSkillManager : MonoBehaviour
     {
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
-        // ¿ÀºêÁ§Æ® Ç®¿¡¼­ ÆÄÀÌ¾îº¼ ²¨³»±â
-        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity);
-        if (fireball == null) // ÆÄ±«µÈ ¿ÀºêÁ§Æ®ÀÎ °æ¿ì
+        // ì˜¤ë¸Œì íŠ¸ í’€ì—ì„œ íŒŒì´ì–´ë³¼ êº¼ë‚´ê¸°
+        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity, this.transform);
+        if (fireball == null) // íŒŒê´´ëœ ì˜¤ë¸Œì íŠ¸ì¸ ê²½ìš°
         {
-            return; // ÇØ´ç ¿ÀºêÁ§Æ®´Â ´õ ÀÌ»ó »ç¿ëÇÒ ¼ö ¾øÀ¸¹Ç·Î Á¾·á
+            return; // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ëŠ” ë” ì´ìƒ ì‚¬ìš©í•  ìˆ˜ ì—†ìœ¼ë¯€ë¡œ ì¢…ë£Œ
         }
 
-        fireball.transform.SetParent(this.transform);
-        // Ãæµ¹ Ã³¸® - º¸½º¿Í ÆÄÀÌ¾îº¼ÀÌ Ãæµ¹ÇÏÁö ¾Êµµ·Ï ¼³Á¤
+        // ì¶©ëŒ ì²˜ë¦¬ - ë³´ìŠ¤ì™€ íŒŒì´ì–´ë³¼ì´ ì¶©ëŒí•˜ì§€ ì•Šë„ë¡ ì„¤ì •
         Collider2D bossCol = GetComponent<Collider2D>();
         Collider2D fireballCol = fireball.GetComponent<Collider2D>();
         if (fireballCol != null && bossCol != null)
@@ -113,7 +114,7 @@ public class BossSkillManager : MonoBehaviour
             Physics2D.IgnoreCollision(fireballCol, bossCol);
         }
 
-        // ÆÄÀÌ¾îº¼¿¡ ½ºÅ©¸³Æ® ¿¬°á ¹× ¹æÇâ, ¼Óµµ ¼³Á¤
+        // íŒŒì´ì–´ë³¼ì— ìŠ¤í¬ë¦½íŠ¸ ì—°ê²° ë° ë°©í–¥, ì†ë„ ì„¤ì •
         Boss_FireBall fireballScript = fireball.GetComponent<Boss_FireBall>();
         fireballScript.SetDirection(direction.normalized);
         fireballScript.speed = currentBulletSpeed;
@@ -130,27 +131,36 @@ public class BossSkillManager : MonoBehaviour
         else
         {
             attackCount = 1;
-            int bulletCount = 8; // ¹ß»çÇÒ ÆÄÀÌ¾îº¼ÀÇ °³¼ö
-            float angleStep = 360f / bulletCount; //ÃÑ 360µµ¸¦ bulletCount·Î ³ª´©¾î¼­ 45µµ °£°İÀ¸·Î ¹ß»ç
+            int bulletCount = 8; // ë°œì‚¬í•  íŒŒì´ì–´ë³¼ì˜ ê°œìˆ˜
+            float angleStep = 360f / bulletCount; //ì´ 360ë„ë¥¼ bulletCountë¡œ ë‚˜ëˆ„ì–´ì„œ 45ë„ ê°„ê²©ìœ¼ë¡œ ë°œì‚¬
 
             for (int i = 0; i < bulletCount; i++)
             {
-                float angle = i * angleStep * Mathf.Deg2Rad; //¶óµğ¾È °¢µµ·Î º¯È¯
-                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos´Â xÃà ¹æÇâ, SinÀº yÃà ¹æÇâ ÀÌ°É·Î unit circle»óÀÇ ¹æÇâÀ» °è»ê
+                float angle = i * angleStep * Mathf.Deg2Rad; //ë¼ë””ì•ˆ ê°ë„ë¡œ ë³€í™˜
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //CosëŠ” xì¶• ë°©í–¥, Sinì€ yì¶• ë°©í–¥ ì´ê±¸ë¡œ unit circleìƒì˜ ë°©í–¥ì„ ê³„ì‚°
                 ShootFireball(direction);
             }
         }
     }
 
+    //í”Œë ˆì´ì–´ê°€ ì¡´ì¬í•˜ëŠ”ì§€ ì²´í¬í•˜ê³  ìŠ¤í‚¬ì‚¬ìš© ìœ ë¬´ íŒë‹¨
+    private bool CanUseSkill(Func<IEnumerator> _) => BossManager.instance.PlayerTarget != null;
+
     private IEnumerator UseSkillsRoutine()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
 
         while (true)
         {
             if (skillFuncs.Count > 0)
             {
-                yield return StartCoroutine(skillFuncs[currentSkillIndex]());
+                var nextSkill = skillFuncs[currentSkillIndex];
+
+                if (CanUseSkill(nextSkill))
+                {
+                    yield return StartCoroutine(nextSkill());
+                }
+
                 int num = UnityEngine.Random.Range(0, skillFuncs.Count);
                 currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
             }
@@ -161,7 +171,7 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator MoveFast()
     {
-        bossManager.MonsterSpeed = 8;
+        bossManager.MonsterSpeed = 6;
         yield return new WaitForSeconds(5f);
         bossManager.MonsterSpeed = 3;
     }
@@ -181,16 +191,16 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator ShootFast()
     {
-        fireRate = 10;
+        fireRate = 6;
         currentBulletSpeed = 25f;
         yield return new WaitForSeconds(5f);
         currentBulletSpeed = defaultBulletSpeed;
-        fireRate = 5;
+        fireRate = 3;
     }
 
     private IEnumerator RedGround()
     {
-        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", Vector2.zero, Quaternion.identity);
+        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", Vector2.zero, Quaternion.identity, this.transform);
         if (!activeSkillObjects.Contains(red))
         {
             activeSkillObjects.Add(red);
@@ -203,7 +213,7 @@ public class BossSkillManager : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity);
+            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity, this.transform);
             if(!activeSkillObjects.Contains(lazer1))
             {
                 activeSkillObjects.Add(lazer1);
@@ -211,7 +221,7 @@ public class BossSkillManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             BossObjectPoolManager.Instance.ReturnToPool("redLazer1", lazer1);
 
-            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity);
+            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity, this.transform);
             if (!activeSkillObjects.Contains(lazer2))
             {
                 activeSkillObjects.Add(lazer2);
@@ -228,7 +238,7 @@ public class BossSkillManager : MonoBehaviour
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
             float z = UnityEngine.Random.Range(-180, 180);
-            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z));
+            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z), this.transform);
             if (!activeSkillObjects.Contains(rLazer))
             {
                 activeSkillObjects.Add(rLazer);
@@ -248,6 +258,22 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
+    private IEnumerator Teleport()
+    {
+        GameObject[] teleport = new GameObject[2];
+        for (int i = 0; i < 2; i++)
+        {
+            float x = UnityEngine.Random.Range(-9, 9.1f);
+            float y = UnityEngine.Random.Range(-4, 4.1f);
+            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity, this.transform);
+        }
+        yield return new WaitForSeconds(5f);
+        for (int i = 0; i < 2; i++)
+        {
+            BossObjectPoolManager.Instance.ReturnToPool("Teleport", teleport[i]);
+        }
+    }
+
     private IEnumerator MakeBossItem()
     {
         GameObject[] item = new GameObject[3];
@@ -255,7 +281,7 @@ public class BossSkillManager : MonoBehaviour
         {
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
-            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity);
+            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity, this.transform);
         }
         yield return new WaitForSeconds(5f);
         for (int i = 0; i < 3; i++)
@@ -267,42 +293,95 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Teleport()
+    public IEnumerator MakeRandomEffect()
     {
-        GameObject[] teleport = new GameObject[2];
-        for (int i = 0; i < 2; i++)
+        int random = UnityEngine.Random.Range(0, 4);
+
+        Action ApplyEffect = null;
+        Action RemoveEffect = null;
+        float duration = 5f;
+        switch (random)
         {
-            float x = UnityEngine.Random.Range(-9, 9.1f);
-            float y = UnityEngine.Random.Range(-4, 4.1f);
-            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity);
+            case 0:
+                ApplyEffect = () => { player.attackSpeed *= 2; Debug.Log("+asp"); };
+                RemoveEffect = () => { player.attackSpeed /= 2; };
+                getStr = 0;
+                break;
+            case 1:
+                ApplyEffect = () => { player.speed *= 2; Debug.Log("+sp"); };
+                RemoveEffect = () => { player.speed /= 2; };
+                getStr = 1;
+                break;
+            case 2:
+                ApplyEffect = () => { player.hp *= 2; Debug.Log("+hp"); };
+                duration = 0f;
+                getStr = 2;
+                break;
+            case 3:
+                ApplyEffect = () => { player.power *= 2; Debug.Log("+po"); };
+                RemoveEffect = () => { player.power /= 2; };
+                getStr = 3;
+                break;
+            default:
+                Debug.LogError("noEffect");
+                break;
         }
-        yield return new WaitForSeconds(5f);
-        for(int i = 0;i < 2; i++)
+
+        ApplyEffect?.Invoke();
+        EffectText.text = sHowEffect[getStr];
+
+        if (duration > 0 && RemoveEffect != null)
         {
-            BossObjectPoolManager.Instance.ReturnToPool("Teleport", teleport[i]);
+            yield return new WaitForSeconds(duration);
+            RemoveEffect();
         }
     }
 
-    //private IEnumerator CirCleFireball()
-    //{
-    //    int bulletCount = 8; // ¹ß»çÇÒ ÆÄÀÌ¾îº¼ÀÇ °³¼ö
-    //    float angleStep = 360f / bulletCount; //ÃÑ 360µµ¸¦ bulletCount·Î ³ª´©¾î¼­ 45µµ °£°İÀ¸·Î ¹ß»ç
+    public IEnumerator MakeRandomBedEffect()
+    {
+        int random = UnityEngine.Random.Range(0, 4);
 
-    //    for (int i = 0; i < bulletCount; i++)
-    //    {
-    //        float angle = i * angleStep; // ÆÄÀÌ¾îº¼ÀÌ À§Ä¡ÇÒ °¢µµ
-    //        Vector3 offset = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0f) * 2f; // ¹İÁö¸§ 2·Î ÆÄÀÌ¾îº¼ À§Ä¡ °è»ê
+        Action ApplyEffect = null;
+        Action RemoveEffect = null;
+        float duration = 5f;
+        switch (random)
+        {
+            case 0:
+                ApplyEffect = () => { player.attackSpeed /= 2; };
+                RemoveEffect = () => { player.attackSpeed *= 2; };
+                getStr = 4;
+                break;
+            case 1:
+                ApplyEffect = () => { player.speed /= 2; Debug.Log("-sp"); };
+                RemoveEffect = () => { player.speed *= 2; };
+                getStr = 5;
+                break;
+            case 2:
+                ApplyEffect = () => { player.hp /= 2; Debug.Log("-hp"); };
+                duration = 0f;
+                getStr = 6;
+                break;
+            case 3:
+                ApplyEffect = () => { player.power /= 2; Debug.Log("-po"); };
+                RemoveEffect = () => { player.power *= 2; };
+                getStr = 7;
+                break;
+            default:
+                Debug.LogError("noBedEffect");
+                break;
+        }
 
-    //        // ÆÄÀÌ¾îº¼ »ı¼º
-    //        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("CircleFireball", firePoint.position +  offset, Quaternion.identity);
-    //        Boss_FIreBallCIrcle fireballScript = fireball.GetComponent<Boss_FIreBallCIrcle>();
-    //        fireballScript.boss = firePoint; // º¸½º¸¦ ÆÄÀÌ¾îº¼¿¡ ¿¬°á
-    //    }
-    //    yield return null;
-    //}
-
+        ApplyEffect?.Invoke();
+        EffectText.text = sHowEffect[getStr];
+        if (duration > 0 && RemoveEffect != null)
+        {
+            yield return new WaitForSeconds(duration);
+            RemoveEffect();
+        }
+    }
     private void OnEnable()
     {
-        target = PlayerController.Instance.transform;
+        if (PlayerController.Instance != null)
+            target = PlayerController.Instance.transform;
     }
 }

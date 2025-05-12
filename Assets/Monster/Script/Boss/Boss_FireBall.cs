@@ -4,37 +4,33 @@ using UnityEngine;
 
 public class Boss_FireBall : MonoBehaviour
 {
-    //±âº» ÆĞÅÏ
-    // º¸½ºÀÇ ±âº»°ø°İÀº ÆÄÀÌ¾îº¼À» ÇÏ³ª¾¿ 2¹ø³¯¸®°í 3¹øÂ°¿¡ »ç¹æÀ¸·Î ÆÄÀÌ¾îº¼ ¹ß»ç ·çÆ¾ ÆÄÀÌ¾î º¼Àº ÇÑ¹ø º®¿¡ Æ¨±â°í 2¹øÂ° º®¿¡ ´êÀ¸¸é ÆÄ±«
-    // ½ºÅ³ ½ÃÀüÀÌ ³¡³ª°í 2ÃÊ µ¿¾È ¿òÁ÷ÀÓx
-    // º¸½º ¸÷°ú Ãæµ¹½Ã µ¥¹ÌÁö // ¹Ì±¸Çö
     public float speed = 15f;
     private Vector2 direction;
 
-    // ¹æÇâ ¼³Á¤ ÇÔ¼ö
+    // ë°©í–¥ ì„¤ì • í•¨ìˆ˜
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
     }
 
-    // ¸Å ÇÁ·¹ÀÓ ÀÌµ¿ Ã³¸®
+    // ë§¤ í”„ë ˆì„ ì´ë™ ì²˜ë¦¬
     private void Update()
     {
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
-    // È­¸é ¹ÛÀ¸·Î ³ª°¡¸é Ç®·Î ¹İÈ¯
+    // í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ í’€ë¡œ ë°˜í™˜
     private void OnBecameInvisible()
     {
         ReturnToPool();
     }
 
-    // Ãæµ¹ ½Ã Ã³¸®
+    // ì¶©ëŒ ì‹œ ì²˜ë¦¬
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Player.Instance.hp -= 10;
+            PlayerManager.Instance.ApplyDamage(5);
             Debug.Log("Player HP: " + Player.Instance.hp);
             if(Player.Instance.hp <= 0)
             {
@@ -42,31 +38,16 @@ public class Boss_FireBall : MonoBehaviour
             }
             ReturnToPool();
         }
-        // ¸ó½ºÅÍ³ª ´Ù¸¥ ÆÄÀÌ¾îº¼°ú Ãæµ¹ÇÏÁö ¾Ê¾ÒÀ» ¶§¿¡¸¸ ¹İÈ¯
+        // ëª¬ìŠ¤í„°ë‚˜ ë‹¤ë¥¸ íŒŒì´ì–´ë³¼ê³¼ ì¶©ëŒí•˜ì§€ ì•Šì•˜ì„ ë•Œì—ë§Œ ë°˜í™˜
         else if (!collision.gameObject.CompareTag("Monster") && !collision.gameObject.CompareTag("FireBall"))
         {
             ReturnToPool();
         }
     }
 
-    // ¿ÀºêÁ§Æ® Ç®·Î ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    // ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     private void ReturnToPool()
     {
         BossObjectPoolManager.Instance.ReturnToPool("Fireball", gameObject);
     }
-
-
-    // ½ºÅ³ ¹× °ü¹®º° »ç¿ë °¡´É ½ºÅ³
-    // ½ºÅ³ ½ÃÀüÀº 5ÃÊ¸¶´Ù ÇÑ¹ø¾¿ ÁøÇà
-    // ÇÃ·¹ÀÌ¾î¿¡°Ô ºü¸£°Ô µ¹Áø 1 ~ ¿Ï
-    // Àâ¸÷µé ¼ÒÈ¯ 3 ¿Ï
-
-    // ÆÄÀÌ¾îº¼ ¿¬¼ÓÀ¸·Î 5ÃÊ°£ ¿¬»ç ÇÃ·¹ÀÌ¾î¸¦ Á¶ÁØÇÏ¸é¼­ 4 ~ ¿Ï
-    // ·¹ÀÌÀú(»¡°­) ½ÊÀÚ°¡ ¹ß»ç ÈÄ 1ÃÊ µÚ xÀÚ·Î ¹ß»ç ÀÌ°Ç º®À» °üÅë 6 ¿Ï
-
-    // ±¸Ã¼¸¦ ÀÚ½ÅÀÇ ¸öÁÖÀ§·Î ºü¸£°Ô µ¹¸®´Ù°¡ ÇÑ¹ø¿¡ ¹ß»ç 7 ~
-    // Ä«¸Ş¶ó ¹İÀü È¿°ú 10ÃÊ°£ À¯Áö 9 ¿Ï
-
-    // È­¸éÀ» »¡°­»öÀ¸·Î ¹Ù²ã¼­ °ø°İ ¹× ÁöÇüÀÌ º¸ÀÌÁö ¾Ê°Ô 10ÃÊ°£ À¯Áö 10 ~ ¿Ï
-    // ±¸Çö °¡´ÉÇÏ¸é ÇÇ Àı¹İ ÀÏ‹š ºĞ¿­ ÇÇ°¡ 50%¸é µÑ´Ù ÇÇ 50%¸¦ °¡Áø»óÅÂ·Î ºĞ¿­ 
 }

@@ -8,7 +8,7 @@ public class UI_GameScene : MonoBehaviour
 {
     public TextMeshProUGUI stageText;
     public Button optionButton;
-    public Button statusButton;
+    //public Button statusButton;
 
     [Header("UI Prefabs (Resources/UI)")]
     
@@ -16,10 +16,23 @@ public class UI_GameScene : MonoBehaviour
     public string healthBarName = "UI_HealthBar";
 
     private UI_QuestList questList;
-    private UI_HealthBar healthBar;
+
+    public Slider healthSlider;
+    public TextMeshProUGUI healthText;
+    private PlayerManager player;
 
     private void Start()
     {
+        player = FindObjectOfType<PlayerManager>();
+        if (player == null)
+        {
+            Debug.LogError("PlayerManager not found in the scene.");
+            return;
+        }
+        player.OnHealthChanged += SetHealth;
+        player.OnPlayerDie += ShowFailPopup;
+        SetHealth(player.CurrentHealth, player.MaxHealth);
+
         SetInfo();
     }
 
@@ -29,12 +42,10 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnStageUpdated += OnStageUpdated;
 
         optionButton.onClick.AddListener(OnClickOptionButton);
-        statusButton.onClick.AddListener(OnClickStatusButton);
+        //statusButton.onClick.AddListener(OnClickStatusButton);
 
         //questList = UIManager.Instance.ShowPopup<UI_QuestList>(questListName);
-        //questList.Init();
-
-        //healthBar = UIManager.Instance.ShowPopup<UI_HealthBar>(healthBarName);
+        //questList.Init();      
 
         //var stat = PlayerStat.Instance;
         //healthBar.SetHealth(stat.CurrentHealth, statMaxHealth: stat.MaxHealth);
@@ -53,12 +64,12 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: ¥Ÿ∏• UI ø‰º“ ∏Æ«¡∑πΩ√ »£√‚
+        // TODO: Îã§Î•∏ UI ÏöîÏÜå Î¶¨ÌîÑÎ†àÏãú Ìò∏Ï∂ú
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "Ω∫≈◊¿Ã¡ˆ " + GameManager.instance.Stage.ToString();
+        stageText.text = "Ïä§ÌÖåÏù¥ÏßÄ " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()
@@ -67,9 +78,21 @@ public class UI_GameScene : MonoBehaviour
         optionPopup.Init();
     }
 
-    void OnClickStatusButton()
+    //void OnClickStatusButton()
+    //{
+    //    UI_StatsPopup statusPopup = UIManager.Instance.ShowPopup<UI_StatsPopup>("UI_StatsPopup");
+    //    statusPopup.Init();
+    //}
+    public void SetHealth(int current, int max)
     {
-        UI_StatsPopup statusPopup = UIManager.Instance.ShowPopup<UI_StatsPopup>("UI_StatsPopup");
-        statusPopup.Init();
+        healthSlider.maxValue = max;
+        healthSlider.value = current;
+        healthText.text = $"{current}/{max}";
+    }
+
+    private void ShowFailPopup()
+    {
+        var popup = UIManager.Instance.ShowPopup<UI_StageFailPopup>("UI_StageFailPopup");
+        popup.Init();
     }
 }

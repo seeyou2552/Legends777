@@ -11,6 +11,7 @@ public class ArrowManager : MonoBehaviour
     public GameObject swordPrefab;
     public GameObject arrowPrefab;
     SkillManager skill;
+    Player player;
     SpriteRenderer renderer;
     private AudioSource audio;
 
@@ -18,6 +19,8 @@ public class ArrowManager : MonoBehaviour
     {
         GameObject bow = GameObject.Find("Weapon_Bow");
         skill = bow.GetComponent<SkillManager>();
+        GameObject target = GameObject.Find("Player");
+        player = target.GetComponent<Player>();
         renderer = GetComponent<SpriteRenderer>();
         audio = GetComponent<AudioSource>();
     }

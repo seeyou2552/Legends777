@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -6,11 +7,27 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
-    [Range(1, 1000)][SerializeField] private int bossHealth = 10;
+    [Range(1, 5000)][SerializeField] private int initialHealth = 10;
+    public int MaxHealth { get; private set; }
+
+    public event Action<int, int> OnHealthChanged;
+    public event Action Ondead;
+
+    private int health;
     public int Health
     {
-        get => bossHealth;
-        set => bossHealth = Mathf.Clamp(value, 0, 1000);
+        get => health;
+        set
+        {
+            health = Mathf.Clamp(value, 0, MaxHealth);
+            OnHealthChanged?.Invoke(health, MaxHealth);
+            if(health <= 0)
+            {
+                Ondead?.Invoke();
+                Destroy(gameObject);
+            }
+        }
+
     }
 
     [Range(1f, 20f)][SerializeField] private float bossSpeed = 3f;
@@ -35,11 +52,15 @@ public class BossManager : MonoBehaviour
     private bool isHalf = false;
     public GameObject redBackGround;
     private Camera Boss_Camera;
+    private int firstHp;
 
     public static BossManager instance;
 
     private void Awake()
     {
+        MaxHealth = initialHealth;
+        Health = MaxHealth;
+
         if (instance == null) instance = this;
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponentInChildren<SpriteRenderer>();
@@ -47,7 +68,10 @@ public class BossManager : MonoBehaviour
         Boss_Camera = Camera.main;
     }
 
-    
+    private void Start()
+    {
+        firstHp = Health;
+    }
 
     private void FixedUpdate()
     {
@@ -88,7 +112,7 @@ public class BossManager : MonoBehaviour
             animator.SetTrigger("isHit");
             Debug.Log(Health);
 
-            if (BossManager.instance.Health <= 500 && !isHalf)
+            if (Health <= firstHp / 2 && !isHalf)
             {
                 CameraShake.instance.StartShake();
                 Instantiate(redBackGround, transform);
@@ -110,6 +134,7 @@ public class BossManager : MonoBehaviour
 
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
                 Destroy(gameObject);  // ���� ������Ʈ �ı�
+                QuestManager.Instance.QuestCheck(1);
             }
         }
     }

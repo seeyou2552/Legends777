@@ -22,9 +22,11 @@ public class MeleeWeaponHandler : MonsterWeaponHandler
 
 
         //Å¸°Ù°ú Ãæµ¹
-        if (hit != null)
+        if (hit != null && hit.CompareTag("Player") )
         {
-            hit.GetComponent<Player>().hp -= Controller.gameObject.GetComponent<MonsterStatHandler>().Atk;
+            //hit.GetComponent<Player>().hp -= Controller.gameObject.GetComponent<MonsterStatHandler>().Atk;
+            int dmg = Controller.GetComponent<MonsterStatHandler>().Atk;
+            PlayerManager.Instance.ApplyDamage(dmg);
         }
     }
 
