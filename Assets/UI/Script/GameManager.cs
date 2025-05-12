@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
     
-    private int stage;
+    [SerializeField] private int stage;
     public int Stage 
     { 
         get { return stage; } 
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private DungeonType dungeonType;
+    [SerializeField] private DungeonType dungeonType;
     public DungeonType DungeonType
     {
         get { return dungeonType; }
@@ -40,10 +40,14 @@ public class GameManager : MonoBehaviour
                 isStageClear = false;
                 OnDungeonTypeBossUpdated?.Invoke();
             }
+            else
+            {
+                isStageClear = true;
+            }
         }
     }
 
-    private bool isStageClear;
+    [SerializeField] private bool isStageClear;
     public bool IsStageClear { get { return isStageClear; } }
 
     private void Awake()
@@ -78,6 +82,7 @@ public class GameManager : MonoBehaviour
 
     public void EndOfWave()
     {
+        Debug.Log("End OF Wave");
         StartNextWave();
     }
 }
