@@ -13,22 +13,13 @@ public class QuestManager : SingleTon<QuestManager>
 {
     private List<QuestController> questController;
 
-
     [SerializeField] private Canvas UICanvas;
     [SerializeField] private TextMeshProUGUI questUIText1; //퀘스트UI(화면 왼쪽에 뜨는 퀘스트 정보)
     [SerializeField] private TextMeshProUGUI questUIText2;
     [SerializeField] private TextMeshProUGUI count;
     [SerializeField] private TextMeshProUGUI goal;
 
-    int questProgress = 0;   //퀘스트 진행도
-    int[] numbers;  //퀘스트 진행 순서
-
-    protected override void Awake()
-    {
-        base.Awake();
-        //questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); 
-        //goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
-    }
+    protected override void Awake() { base.Awake(); }
 
     public void Init()
     {
@@ -40,21 +31,11 @@ public class QuestManager : SingleTon<QuestManager>
         questController.Add(new QuestController(i, "Kill the boss", 1, 200)); i++;
         questController.Add(new QuestController(i, "Clear the room", 1, 400)); i++;
         //questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
-
-
-        //numbers = Enumerable.Range(0, i).OrderBy(x => Random.value).ToArray(); //퀘스트 진행 순서 섞기
-        //questText.text = questController[numbers[questProgress]].Text;
-
-        
     }
 
     private void Update()      //퀘스트 진행사항 퀘스트UI에 반영
     {
-        //count.text = (questController[numbers[questProgress]].PlusCount).ToString();   //퀘스트 진행 상황 UI에 반영
-
-        //if (questController[numbers[questProgress]].Clear) { acceptButton.text = "Clear!"; }
-
-
+        count.text = (questController[0].PlusCount).ToString();  //퀘스트 진행 상황 UI에 반영
 
 
         if (Input.GetKeyDown(KeyCode.M))   //테스트용 퀘스트 클리어 버튼
@@ -65,8 +46,6 @@ public class QuestManager : SingleTon<QuestManager>
             }
         }
     }
-
-    
 
     public void ButtonPressed() //버튼을 눌렀을 때
     {
@@ -79,9 +58,9 @@ public class QuestManager : SingleTon<QuestManager>
             if (quest.Clear) { QuestClear(quest.Num); }  // 클리어 상태일 때 처리
         }
 
+        questUIText1.text = questController[0].Text; goal.text = (questController[0].Goal).ToString();
 
     }
-
 
     private void QuestOn()   //퀘스트 수락상태로 초기화
     {
@@ -102,14 +81,9 @@ public class QuestManager : SingleTon<QuestManager>
 
     private void QuestClear(int num) // 퀘스트를 클리어하고 NPC와 접촉해 완료 처리
     {
-
-
         if (questController[num].Clear) { 
             PlayerController.Instance.QuestClear(questController[num].Gold); //클리어 보상 주기
             questController[num].QuestReset();        //퀘스트 객체 리셋
-
-            //questText.text = questController[num].Text;    //퀘스트NPC의 UI 초기화
-            //questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
         }
 
         Debug.Log("플레이어의 골드 : "+PlayerController.Instance.Gold);
