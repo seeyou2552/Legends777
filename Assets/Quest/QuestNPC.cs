@@ -16,7 +16,6 @@ public class QuestNPC : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("asd");
         UICanvas.gameObject.SetActive(false);
 
         acceptButton.onClick.AddListener(() => ButtonPressed());
@@ -24,7 +23,7 @@ public class QuestNPC : MonoBehaviour
         //acceptButton.text = "Accept";
     }
 
-    private void OnCollisionEnter(Collision collision) { UICanvas.gameObject.SetActive(true); }
+    private void OnCollisionEnter2D(Collision2D collision) { UICanvas.gameObject.SetActive(true); }
 
     private void ButtonPressed()
     {

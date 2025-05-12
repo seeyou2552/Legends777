@@ -37,7 +37,6 @@ public class SingleTon<T> : MonoBehaviour where T : MonoBehaviour
     protected virtual void Awake()
     {
         InitializeSingleton();
-        Debug.Log("zzzzzz");
     }
 
     /// <summary>

@@ -141,7 +141,6 @@ public class MapController : MonoBehaviour
     {
         if (dungeonType == DungeonType.Lobby)
         {
-            Debug.Log("go");
             QuestManager.Instance.Init();
             GameObject go = Instantiate<GameObject>(questNpcPrefab, Root.transform);
             

@@ -30,8 +30,6 @@ public class QuestManager : SingleTon<QuestManager>
 
     public void Init()
     {
-
-        Debug.Log("asd");
         questController = new List<QuestController>(); int i = 0;
 
         // QuestController 초기화, num = 0, 몬스터 처치, num = 1, 보스 처치, num = 2, 퍼즐 기믹 해결 (아이템 획득), num = 3, 아무방 클리어
@@ -105,7 +103,7 @@ public class QuestManager : SingleTon<QuestManager>
             questController[num].QuestReset();        //퀘스트 객체 리셋
 
             //questText.text = questController[num].Text;    //퀘스트NPC의 UI 초기화
-            questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
+            //questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
         }
 
         Debug.Log("플레이어의 골드 : "+PlayerController.Instance.Gold);

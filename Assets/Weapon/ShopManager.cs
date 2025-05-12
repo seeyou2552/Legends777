@@ -78,7 +78,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision) { UICanvas.gameObject.SetActive(true); }
+    void OnCollisionEnter2D(Collision2D collision) { UICanvas.gameObject.SetActive(true); }
 
     private WeaponController searchWeapon(int num) {   //무기를 찾아 리턴, 무기번호에 맞는 무기가 없다면 null 리턴
         foreach (WeaponController weapon in weapons) {

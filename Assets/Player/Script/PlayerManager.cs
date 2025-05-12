@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -28,7 +28,6 @@ public class PlayerManager : Player
     {
         animation = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
-        Debug.Log("PlayerManager Awake");
         maxHealth = Player.Instance.hp;
         currentHealth = maxHealth;
         prevRawHp = Player.Instance.hp;
