@@ -31,18 +31,20 @@ public class GameManager : MonoBehaviour
             dungeonType = value;
             if (dungeonType == DungeonType.Monster)
             {
-                Debug.Log("Monster changed");
-                OnDungeonTypeMonsterUpdated?.Invoke();
+                isStageClear = false;
+                currentWaveIndex = 0;
+                StartMonsterStage();
             }
             else if (dungeonType == DungeonType.Boss)
             {
-                Debug.Log("Boss changed");
+                isStageClear = false;
                 OnDungeonTypeBossUpdated?.Invoke();
             }
         }
     }
 
-
+    private bool isStageClear;
+    public bool IsStageClear { get { return isStageClear; } }
 
     private void Awake()
     {
@@ -52,5 +54,30 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 
+    }
+
+
+    int currentWaveIndex;
+
+    void StartMonsterStage()
+    {
+        StartNextWave();
+    }
+
+    void StartNextWave()
+    {
+        currentWaveIndex++;
+        if (currentWaveIndex > stage)
+        {
+            isStageClear = true;
+            return;
+        }
+
+        MonsterManager.Instance.StartWave(currentWaveIndex);
+    }
+
+    public void EndOfWave()
+    {
+        StartNextWave();
     }
 }
