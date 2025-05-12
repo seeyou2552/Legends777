@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,9 +43,7 @@ public class QuestController
 
     public int Goal { get { return goal; } }
 
-    public bool Clear { get { return clear; } private set { clear = value; } }
+    public bool Clear { get { return clear; } }
 
-    public void QuestClear(bool Bool) { Clear = Bool; }
-
-    public void QuestReset() { this.onOff = true; this.clear = false; this.count = 0; }
+    public void QuestReset() { this.onOff = false; this.clear = false; this.count = 0; }
 }

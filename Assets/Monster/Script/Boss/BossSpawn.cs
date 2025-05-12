@@ -6,7 +6,6 @@ using UnityEngine;
 public class BossSpawn : MonoBehaviour
 {
     public GameObject bossPrefab;
-    public GameObject bossHealthBar;
 
     private void Start()
     {
@@ -15,12 +14,6 @@ public class BossSpawn : MonoBehaviour
 
     public void SpawnBoss()
     {
-        GameObject bossGo = Instantiate(bossPrefab);
-
-        BossManager bossMgr = bossGo.GetComponent<BossManager>();
-        GameObject healthBarPrefab = Instantiate(bossHealthBar);
-        
-        UI_BossHealthBar healthBar = healthBarPrefab.GetComponent<UI_BossHealthBar>();
-        healthBar.Init(bossMgr);
+        Instantiate(bossPrefab);
     }
 }

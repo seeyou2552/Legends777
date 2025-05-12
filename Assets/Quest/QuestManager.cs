@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -6,30 +6,50 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-// QuestController 초기화, num = 0 몬스터 처치, num = 1 보스 처치, num = 2 아무방 클리어, num = 3 퍼즐 기믹 해결
-// 상황에 맞게 QuestManager.Instance.QuestCheck( ); 추가
+// QuestController 초기화, num = 0, 몬스터 처치, num = 1, 보스 처치, num = 2, 퍼즐 기믹 해결 (아이템 획득), num = 3, 아무방 클리어
+// 상황에 맞게 QuestManager.instance.QuestCheck( ); 추가
 
 public class QuestManager : SingleTon<QuestManager>
 {
-    private List<QuestController> questController;
+    [SerializeField] private Canvas UICanvas;             //퀘스트NPC의 UI
+    [SerializeField] private Button Button1;
+    [SerializeField] private Button ExitButton;
+    [SerializeField] private TextMeshProUGUI acceptButton;
+    [SerializeField] private TextMeshProUGUI questText; 
 
+<<<<<<< HEAD
     [SerializeField] private Canvas UICanvas;
+=======
+>>>>>>> parent of 86f4e1e (Merge branch 'develop' into feature/Boss)
     [SerializeField] private TextMeshProUGUI questUIText1; //퀘스트UI(화면 왼쪽에 뜨는 퀘스트 정보)
     [SerializeField] private TextMeshProUGUI questUIText2;
     [SerializeField] private TextMeshProUGUI count;
     [SerializeField] private TextMeshProUGUI goal;
 
+<<<<<<< HEAD
     protected override void Awake() { base.Awake(); }
 
     public void Init()
+=======
+
+    private List<QuestController> questController; 
+
+    int questProgress = 0;   //퀘스트 진행도
+    int[] numbers;  //퀘스트 진행 순서
+
+    private void Start()
+>>>>>>> parent of 86f4e1e (Merge branch 'develop' into feature/Boss)
     {
+        UICanvas.gameObject.SetActive(false);
         questController = new List<QuestController>(); int i = 0;
 
         // QuestController 초기화, num = 0, 몬스터 처치, num = 1, 보스 처치, num = 2, 퍼즐 기믹 해결 (아이템 획득), num = 3, 아무방 클리어
         // QuestController(int num, string text, int goal, int gold)
         questController.Add(new QuestController(i, "Kill the monster", 1, 100)); i++;
         questController.Add(new QuestController(i, "Kill the boss", 1, 200)); i++;
+        questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
         questController.Add(new QuestController(i, "Clear the room", 1, 400)); i++;
+<<<<<<< HEAD
         //questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
     }
 
@@ -44,54 +64,91 @@ public class QuestManager : SingleTon<QuestManager>
             {
                 quest.QuestClear(true);
             }
+=======
+
+        numbers = Enumerable.Range(0, i).OrderBy(x => Random.value).ToArray(); //퀘스트 진행 순서 섞기
+        acceptButton.text = "Accept"; questText.text = questController[numbers[questProgress]].Text;
+
+        if (!questController[numbers[questProgress]].OnOff) {
+            questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
+>>>>>>> parent of 86f4e1e (Merge branch 'develop' into feature/Boss)
         }
+
+        Button1.onClick.AddListener(() => ButtonPressed());
+        ExitButton.onClick.AddListener(()=>UICanvas.gameObject.SetActive(false));
     }
 
+<<<<<<< HEAD
     public void ButtonPressed() //버튼을 눌렀을 때
+=======
+    private void Update()
+>>>>>>> parent of 86f4e1e (Merge branch 'develop' into feature/Boss)
     {
-        QuestOn();  //퀘스트 수락상태로 초기화
+        count.text = (questController[numbers[questProgress]].PlusCount).ToString();   //퀘스트 진행 상황 UI에 반영
 
-        UICanvas.gameObject.SetActive(true);
+        if (questController[numbers[questProgress]].Clear) { acceptButton.text = "Clear!"; }
+    }
 
-        foreach (var quest in questController) 
-        {
-            if (quest.Clear) { QuestClear(quest.Num); }  // 클리어 상태일 때 처리
+    void OnCollisionEnter(Collision collision) { UICanvas.gameObject.SetActive(true); }
+
+    private void ButtonPressed() //버튼을 눌렀을 때
+    {
+        UICanvas.gameObject.SetActive(false);
+        if (!questController[numbers[questProgress]].OnOff) { //questProgress 순서의 퀘스트가 수락 안돼있을 때
+            QuestOn();    //퀘스트 수락상태로 초기화
+
+            questUIText1.text = questController[numbers[questProgress]].Text;             //퀘스트 UI 초기화
+            count.text = (questController[numbers[questProgress]].PlusCount).ToString();
+            goal.text = (questController[numbers[questProgress]].Goal).ToString();
+
+            questUIText1.gameObject.SetActive(true); count.gameObject.SetActive(true); goal.gameObject.SetActive(true); questUIText2.gameObject.SetActive(true);
+            acceptButton.text = "Accepted";
+            UICanvas.gameObject.SetActive(false);  //퀘스트UI on, 퀘스트NPC의 UI off
         }
 
         questUIText1.text = questController[0].Text; goal.text = (questController[0].Goal).ToString();
 
+        if (questController[numbers[questProgress]].Clear) {   //클리어 상태일 때
+            QuestClear();     // 클리어 시 처리
+            UICanvas.gameObject.SetActive(false); //퀘스트NPC의 UI 끄기
+        }
     }
 
     private void QuestOn()   //퀘스트 수락상태로 초기화
     {
-        foreach(var quest in questController) { quest.OnOff = true; }
+        if (questController[numbers[questProgress]] != null) { 
+            questController[numbers[questProgress]].OnOff = true;
+        }
     }
     
     public void QuestCheck(int num) //퀘스트 조건 체크(클리어 확인)
     {
-        if (questController[num].OnOff) { //퀘스트 수락상태일 때
-            questController[num].PlusCount = questController[num].PlusCount + 1;
-
-            if(questController[num].PlusCount == questController[num].Goal)
-            {
-                questController[num].QuestClear(true);
-            }
-        }
+        if (questController[questProgress].OnOff && questProgress == num) { //퀘스트 수락상태 + 퀘스트 진행상황이 받은 인수랑 같을 때
+            questController[questProgress].PlusCount = questController[questProgress].PlusCount + 1; }
     }
 
-    private void QuestClear(int num) // 퀘스트를 클리어하고 NPC와 접촉해 완료 처리
+    private void QuestClear() // 클리어 시 처리
     {
+<<<<<<< HEAD
         if (questController[num].Clear) { 
             PlayerController.Instance.QuestClear(questController[num].Gold); //클리어 보상 주기
             questController[num].QuestReset();        //퀘스트 객체 리셋
         }
 
         Debug.Log("플레이어의 골드 : "+PlayerController.Instance.Gold);
+=======
+        if (questController[numbers[questProgress]].Clear) { 
+            PlayerController.Instance.QuestClear(questController[numbers[questProgress]].Gold); //클리어 보상 주기
+            questController[numbers[questProgress]].QuestReset();        //퀘스트 객체 리셋
+
+            questProgress++;   //퀘스트 진행도++
+            if(questProgress >= numbers.Length) { numbers = Enumerable.Range(0, numbers.Length).OrderBy(x => Random.value).Take(2).ToArray(); questProgress = 0; }
+
+            questText.text = questController[numbers[questProgress]].Text;    //퀘스트NPC의 UI 초기화
+            questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
+        } 
+>>>>>>> parent of 86f4e1e (Merge branch 'develop' into feature/Boss)
     }
 
-    public bool QuestClearCheck()
-    {
-        foreach (var quest in questController) {  if (quest.Clear) { return true; }  }
-        return false;
-    }
+
 }
