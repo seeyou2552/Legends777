@@ -690,17 +690,81 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 563771396725582946, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_fontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 563771396725582946, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 840673234933277842, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 840673234933277842, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1419973569292242593, guid: b0a306523d9feba4590627df996798ae, type: 3}
       propertyPath: m_Name
       value: /1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363811703836116239, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363811703836116239, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4675105697174522198, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_fontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4675105697174522198, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4974948671224549436, guid: b0a306523d9feba4590627df996798ae, type: 3}
       propertyPath: m_Name
       value: QuestManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4974948671224549436, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129897050424015806, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106483715320372469, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106483715320372469, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931480754482896392, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931480754482896392, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8958331118381839419, guid: b0a306523d9feba4590627df996798ae, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8981133903349344085, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_fontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8981133903349344085, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
