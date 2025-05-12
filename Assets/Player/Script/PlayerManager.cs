@@ -30,8 +30,12 @@ public class PlayerManager : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
 
-        // Player.cs 에 선언된 초기 hp 를 읽어서
-        maxHealth = Player.Instance.hp;
+        // Player.cs ???�언??초기 hp �??�어??
+    }
+
+    private void Start()
+    {
+        maxHealth = PlayerController.Instance.hp;
         currentHealth = maxHealth;
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
@@ -42,7 +46,7 @@ public class PlayerManager : MonoBehaviour
             invincibilityTimer -= Time.deltaTime;
     }
 
-    // <-- 여기서 모든 충돌을 처리합니다
+    // <-- ?�기??모든 충돌??처리?�니??
     void OnCollisionEnter2D(Collision2D col)
     {
         if (invincibilityTimer > 0f) return;
@@ -50,7 +54,7 @@ public class PlayerManager : MonoBehaviour
         var go = col.gameObject;
         if (go.CompareTag("Boss"))
         {
-            // (예시) 보스 몸통 히트 데미지
+            // (?�시) 보스 몸통 ?�트 ?��?지
             ApplyDamage(10);
         }
         else if (go.CompareTag("Monster"))
@@ -72,16 +76,16 @@ public class PlayerManager : MonoBehaviour
         if (invincibilityTimer > 0f) return;
 
         var go = col.gameObject;
-        if (go.CompareTag("Projectile"))
-        {
-            var proj = go.GetComponent<ProjectileController>();
-            if (proj?.monsterController != null)
-            {
-                var ms = proj.monsterController.GetComponent<MonsterStatHandler>();
-                if (ms != null) ApplyDamage(ms.Atk);
-            }
-            Destroy(go);
-        }
+        //if (go.CompareTag("Projectile"))
+        //{
+        //    var proj = go.GetComponent<ProjectileController>();
+        //    if (proj?.monsterController != null)
+        //    {
+        //        var ms = proj.monsterController.GetComponent<MonsterStatHandler>();
+        //        if (ms != null) ApplyDamage(ms.Atk);
+        //    }
+        //    Destroy(go);
+        //}
     }
     */
 
@@ -90,7 +94,7 @@ public class PlayerManager : MonoBehaviour
         if (damage <= 0) return;
 
         currentHealth = Mathf.Max(currentHealth - damage, 0);
-        Player.Instance.hp = currentHealth;
+        PlayerController.Instance.hp = currentHealth;
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         animator.SetBool("IsHit", true);

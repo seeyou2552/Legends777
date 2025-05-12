@@ -28,7 +28,7 @@ public class SkillManager : Skill
 
     void AutoAttack()
     {
-        if (timer >= Player.Instance.attackSpeed)
+        if (timer >= PlayerController.Instance.attackSpeed)
         {
             if (createBow)
             {
@@ -48,7 +48,7 @@ public class SkillManager : Skill
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
-        // 발사�??�성
+        // 발사�??�성
         Vector2 direction = (new Vector2(mousePos.x, mousePos.y) - (Vector2)transform.position).normalized;
 
         float fullAngle = (arrowCount > 1) ? Mathf.Clamp(15f * (arrowCount - 1), 0f, 90f) : 0f;
@@ -63,7 +63,7 @@ public class SkillManager : Skill
             float angleInRad = Mathf.Atan2(direction.y, direction.x) + angleOffset * Mathf.Deg2Rad;
             Vector2 rotatedDirection = new Vector2(Mathf.Cos(angleInRad), Mathf.Sin(angleInRad)).normalized;
 
-            // Z ?�전�?계산
+            // Z ?�전�?계산
             float zRotation = Mathf.Atan2(rotatedDirection.y, rotatedDirection.x) * Mathf.Rad2Deg - 90f;
 
             GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.Euler(0f, 0f, zRotation));

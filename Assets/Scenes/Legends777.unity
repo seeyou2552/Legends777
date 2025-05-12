@@ -180,7 +180,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3616bec3c6c66424c9fd19b2917550a8, type: 3}
---- !u!1001 &621210067
+--- !u!1001 &710150921
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -569,7 +569,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6800589411218848859, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -747,17 +748,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1419973569292242593, guid: b0a306523d9feba4590627df996798ae, type: 3}
-      propertyPath: m_Name
-      value: /1
-      objectReference: {fileID: 0}
     - target: {fileID: 4974948671224549436, guid: b0a306523d9feba4590627df996798ae, type: 3}
       propertyPath: m_Name
       value: QuestManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8958331118381839419, guid: b0a306523d9feba4590627df996798ae, type: 3}
+    - target: {fileID: 6129897050424015806, guid: b0a306523d9feba4590627df996798ae, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7925446213811883711, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -776,4 +777,4 @@ SceneRoots:
   - {fileID: 4028690}
   - {fileID: 795195679}
   - {fileID: 1603177282}
-  - {fileID: 621210067}
+  - {fileID: 710150921}
