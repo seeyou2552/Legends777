@@ -34,7 +34,8 @@ public class Boss_FireBall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Player.Instance.hp -= 5;
+            //Player.Instance.hp -= 10;
+            PlayerManager.Instance.ApplyDamage(10);
             Debug.Log("Player HP: " + Player.Instance.hp);
             if(Player.Instance.hp <= 0)
             {

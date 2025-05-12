@@ -211,8 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4eed43603ffad438a4afdc0adade58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
-  power: 100
+  invincibilityDuration: 0.2
 --- !u!95 &1433732445528377322
 Animator:
   serializedVersion: 5
@@ -247,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  power: 100
+  power: 2
 --- !u!1001 &5048331903263333535
 PrefabInstance:
   m_ObjectHideFlags: 0

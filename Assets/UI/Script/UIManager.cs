@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("UI/" + name);
         GameObject obj = Resources.Load<GameObject>("UI/" + name);
         GameObject popup = Instantiate(obj);
-        popup.transform.parent = Root.transform;
+        popup.transform.SetParent(Root.transform, worldPositionStays: false);
 
         return popup.GetComponent<T>();
     }
