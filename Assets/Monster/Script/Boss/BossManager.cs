@@ -24,6 +24,7 @@ public class BossManager : MonoBehaviour
             if(health <= 0)
             {
                 Ondead?.Invoke();
+                Destroy(gameObject);
             }
         }
 

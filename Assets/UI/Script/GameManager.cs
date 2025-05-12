@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
             stage = value;
             if (stage == 8)
             {
+                ShowStageResult();
                 Debug.Log("Game Clear UI Popup");
             }
             OnStageUpdated?.Invoke();
@@ -56,11 +58,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        OnDungeonTypeBossUpdated += () => StartCoroutine(SubscribeToBossDeath());
     }
 
     private void Start()
     {
-
+     
     }
 
 
@@ -76,8 +79,9 @@ public class GameManager : MonoBehaviour
         currentWaveIndex++;
         if (currentWaveIndex > stage)
         {
-            IsStageClear = true;
+            ShowStageResult();
             Debug.Log("Skill Select Popup");
+            
             return;
         }
 
@@ -86,6 +90,24 @@ public class GameManager : MonoBehaviour
 
     public void EndOfWave()
     {
-        StartNextWave();
+        
+        StartNextWave();        
+    }
+
+    void ShowStageResult()
+    {
+
+        var popup = UIManager.Instance.ShowPopup<UI_StageResult>("UI_StageResult");
+        popup.Init();
+
+    }
+
+    private IEnumerator SubscribeToBossDeath()
+    {
+        yield return null;
+        if(BossManager.instance !=null)
+        {
+             BossManager.instance.Ondead += ShowStageResult;
+        }
     }
 }
