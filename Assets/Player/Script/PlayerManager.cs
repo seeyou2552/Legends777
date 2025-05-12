@@ -76,16 +76,16 @@ public class PlayerManager : MonoBehaviour
         if (invincibilityTimer > 0f) return;
 
         var go = col.gameObject;
-        if (go.CompareTag("Projectile"))
-        {
-            var proj = go.GetComponent<ProjectileController>();
-            if (proj?.monsterController != null)
-            {
-                var ms = proj.monsterController.GetComponent<MonsterStatHandler>();
-                if (ms != null) ApplyDamage(ms.Atk);
-            }
-            Destroy(go);
-        }
+        //if (go.CompareTag("Projectile"))
+        //{
+        //    var proj = go.GetComponent<ProjectileController>();
+        //    if (proj?.monsterController != null)
+        //    {
+        //        var ms = proj.monsterController.GetComponent<MonsterStatHandler>();
+        //        if (ms != null) ApplyDamage(ms.Atk);
+        //    }
+        //    Destroy(go);
+        //}
     }
     */
 

@@ -7,19 +7,21 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
+    [SerializeField] private Canvas UICanvas;
     [SerializeField] private Button Button1;
     [SerializeField] private Button Button2;
     [SerializeField] private Button Button3;
     [SerializeField] private Button BaseWeaponButton;
+    [SerializeField] private Button ExitButton;
 
     [SerializeField] private TextMeshProUGUI button11;
     [SerializeField] private TextMeshProUGUI button22;
     [SerializeField] private TextMeshProUGUI button33;
 
-    [SerializeField] private GameObject BasicWeapon;  //무기 프리팹
-    [SerializeField] private GameObject Weapon_1;
-    [SerializeField] private GameObject Weapon_2;
-    [SerializeField] private GameObject Weapon_3;
+    //[SerializeField] private GameObject BasicWeapon;  //무기 프리팹
+    //[SerializeField] private GameObject Weapon_1;
+    //[SerializeField] private GameObject Weapon_2;
+    //[SerializeField] private GameObject Weapon_3;
 
 
 
@@ -40,14 +42,14 @@ public class ShopManager : MonoBehaviour
         weapons.Add(new WeaponController(i, 7, 6)); inventory.Add(false); i++;
 
 
-
+        BaseWeaponButton.onClick.AddListener(() => ButtonPressed(0));
         Button1.onClick.AddListener(()=>ButtonPressed(1));
         Button2.onClick.AddListener(() => ButtonPressed(2));
         Button3.onClick.AddListener(() => ButtonPressed(3));
+        ExitButton.onClick.AddListener(() => UICanvas.gameObject.SetActive(false));
 
-        BaseWeaponButton.onClick.AddListener(() => ButtonPressed(0));
-        
-        for(int j=0; j<i; j++) { inventory[j] = false; }
+
+        for (int j=0; j<i; j++) { inventory[j] = false; }
         inventory[0] = true;
         ButtonPressed(0);
     }
@@ -72,6 +74,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision) { UICanvas.gameObject.SetActive(true); }
 
     private WeaponController searchWeapon(int num) {   //무기를 찾아 리턴, 무기번호에 맞는 무기가 없다면 null 리턴
         foreach (WeaponController weapon in weapons) {
@@ -82,7 +85,7 @@ public class ShopManager : MonoBehaviour
 
     private void ButtonPressed(int num) //구매 전 -> Buy() | 구매 후 -> EquipWeapon()
     {
-        if (!inventory[num]) { Buy(num); return; }
+        if (!inventory[num]) { Buy(num); EquipWeapon(num); return; }
         else { EquipWeapon(num); return; }
     }
 
@@ -101,19 +104,19 @@ public class ShopManager : MonoBehaviour
             switch (num)
             {
                 case 0:
-                    PlayerController.Instance.EquipWeapon(weapons[num], BasicWeapon);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, BasicWeapon*/);
                     break;
                 case 1:
-                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_1);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, Weapon_1*/);
                     break;
                 case 2:
-                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_2);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, Weapon_2*/);
                     break;
                 case 3:
-                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_3);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, Weapon_3*/);
                     break;
             }
-
+            Debug.Log(PlayerController.Instance.Equip.Num());
         
         }
     }
