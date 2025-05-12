@@ -1,0 +1,33 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine;
+
+public class QuestNPC : MonoBehaviour
+{
+    [SerializeField] private Canvas UICanvas;             //퀘스트NPC의 UI
+    [SerializeField] private Button acceptButton;
+    [SerializeField] private Button ExitButton;
+    [SerializeField] private TextMeshProUGUI questText;
+
+    
+
+
+    private void Awake()
+    {
+        Debug.Log("asd");
+        UICanvas.gameObject.SetActive(false);
+
+        acceptButton.onClick.AddListener(() => ButtonPressed());
+        ExitButton.onClick.AddListener(() => UICanvas.gameObject.SetActive(false));
+        //acceptButton.text = "Accept";
+    }
+
+    private void OnCollisionEnter(Collision collision) { UICanvas.gameObject.SetActive(true); }
+
+    private void ButtonPressed()
+    {
+        QuestManager.Instance.ButtonPressed(); UICanvas.gameObject.SetActive(false);
+    }
+}

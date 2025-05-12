@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class ShopManager : MonoBehaviour
 {
+    [SerializeField] private Canvas UICanvas;
     [SerializeField] private Button Button1;
     [SerializeField] private Button Button2;
     [SerializeField] private Button Button3;
@@ -76,6 +78,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision collision) { UICanvas.gameObject.SetActive(true); }
 
     private WeaponController searchWeapon(int num) {   //무기를 찾아 리턴, 무기번호에 맞는 무기가 없다면 null 리턴
         foreach (WeaponController weapon in weapons) {
@@ -86,7 +89,7 @@ public class ShopManager : MonoBehaviour
 
     private void ButtonPressed(int num) //구매 전 -> Buy() | 구매 후 -> EquipWeapon()
     {
-        if (!inventory[num]) { Buy(num); return; }
+        if (!inventory[num]) { Buy(num); EquipWeapon(num); return; }
         else { EquipWeapon(num); return; }
     }
 
