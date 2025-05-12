@@ -43,11 +43,11 @@ public class ArrowManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // 몬스터 적중
+        // 몬스???�중
         if (other.gameObject.CompareTag("Monster"))
         {
             MonsterController monster = other.GetComponent<MonsterController>();
-            monster.OnDamaged(Player.Instance.power);
+            monster.OnDamaged(PlayerController.Instance.power);
 
             if (skill.addFreeze)
             {
@@ -59,10 +59,10 @@ public class ArrowManager : MonoBehaviour
             {
                 if(skill.addChase) Destroy(this.gameObject);
             }
-            else Destroy(this.gameObject); // ë¹„ê´€í†µ
+            else Destroy(this.gameObject); // ë¹?�ê´€í?��?
         }
 
-        // 보스 적중
+        // 보스 ?�중
         if (other.gameObject.CompareTag("Boss"))
         {
             if (!skill.addPenetrates) Destroy(this.gameObject);

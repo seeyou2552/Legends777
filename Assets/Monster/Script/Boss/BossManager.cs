@@ -101,14 +101,14 @@ public class BossManager : MonoBehaviour
     private void OnEnable()
     {
         target = PlayerController.Instance.GetComponent<Rigidbody2D>();
-        playerTarget = Player.Instance.gameObject;
+        playerTarget = PlayerController.Instance.gameObject;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Arrow"))
         {
-            Health -= Player.Instance.power;
+            Health -= PlayerController.Instance.power;
             animator.SetTrigger("isHit");
             Debug.Log(Health);
 
