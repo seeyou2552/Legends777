@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
@@ -110,6 +110,7 @@ public class BossManager : MonoBehaviour
 
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
                 Destroy(gameObject);  // ���� ������Ʈ �ı�
+                QuestManager.Instance.QuestCheck(1);
             }
         }
     }

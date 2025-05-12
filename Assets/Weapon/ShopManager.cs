@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class ShopManager : MonoBehaviour
 {
+    [SerializeField] private Canvas UICanvas;
     [SerializeField] private Button Button1;
     [SerializeField] private Button Button2;
     [SerializeField] private Button Button3;
@@ -16,10 +18,10 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI button22;
     [SerializeField] private TextMeshProUGUI button33;
 
-    [SerializeField] private GameObject BasicWeapon;  //무기 프리팹
-    [SerializeField] private GameObject Weapon_1;
-    [SerializeField] private GameObject Weapon_2;
-    [SerializeField] private GameObject Weapon_3;
+    //[SerializeField] private GameObject BasicWeapon;  //무기 프리팹
+    //[SerializeField] private GameObject Weapon_1;
+    //[SerializeField] private GameObject Weapon_2;
+    //[SerializeField] private GameObject Weapon_3;
 
 
 
@@ -46,11 +48,18 @@ public class ShopManager : MonoBehaviour
         Button3.onClick.AddListener(() => ButtonPressed(3));
 
         BaseWeaponButton.onClick.AddListener(() => ButtonPressed(0));
-        ButtonPressed(0);
+        //ButtonPressed(0);
+        
+        for(int j=0; j<i; j++) { inventory[j] = false; }
+        inventory[0] = true;
     }
 
     private void Update()
     {
+        if (PlayerController.Instance == null || PlayerController.Instance.Equip == null)
+            return;
+
+
         if (inventory[1]) { button11.text = "Equip"; }   //무기를 구매 했는지 확인, 했으면 버튼 글자 바꿈
         if (inventory[2]) { button22.text = "Equip"; }
         if (inventory[3]) { button33.text = "Equip"; }
@@ -69,23 +78,25 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision) { UICanvas.gameObject.SetActive(true); }
 
     private WeaponController searchWeapon(int num) {   //무기를 찾아 리턴, 무기번호에 맞는 무기가 없다면 null 리턴
         foreach (WeaponController weapon in weapons) {
-            if (weapon.Num() == num) {  return weapon; } }
-        
+            if (weapon.Num() == num) { return weapon; } }
+
         return null;
     }
 
     private void ButtonPressed(int num) //구매 전 -> Buy() | 구매 후 -> EquipWeapon()
     {
-        if (!inventory[num]) { Buy(num); return; }
+        if (!inventory[num]) { Buy(num); EquipWeapon(num); return; }
         else { EquipWeapon(num); return; }
     }
 
     private void Buy(int num) //무기 구매
     {
-        if(PlayerController.Instance.MinusGold(searchWeapon(num).Price()))// 플레이어 골드를 체크, 충분하면 마이너스 후 true
+        WeaponController temp_weapon = searchWeapon(num);
+        if (PlayerController.Instance.MinusGold(temp_weapon.Price()))// 플레이어 골드를 체크, 충분하면 마이너스 후 true
         {
             inventory[num] = true;  // inventory에 해당 무기 true
         }
@@ -99,19 +110,19 @@ public class ShopManager : MonoBehaviour
             switch (num)
             {
                 case 0:
-                    PlayerController.Instance.EquipWeapon(weapons[num], BasicWeapon);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, BasicWeapon*/);
                     break;
                 case 1:
-                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_1);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, Weapon_1*/);
                     break;
                 case 2:
-                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_2);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, Weapon_2*/);
                     break;
                 case 3:
-                    PlayerController.Instance.EquipWeapon(weapons[num], Weapon_3);
+                    PlayerController.Instance.EquipWeapon(weapons[num]/*, Weapon_3*/);
                     break;
             }
-
+            Debug.Log(PlayerController.Instance.Equip.Num());
         
         }
     }
