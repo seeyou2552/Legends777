@@ -69,7 +69,7 @@ public class BossManager : MonoBehaviour
 
     private void Start()
     {
-        firstHp = bossHealth;
+        firstHp = Health;
     }
 
     private void FixedUpdate()
