@@ -578,8 +578,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7346573969154469017, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
+      propertyPath: addChase
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346573969154469017, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
+      propertyPath: addGhost
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346573969154469017, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
+      propertyPath: addSpread
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346573969154469017, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
       propertyPath: arrowCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346573969154469017, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
+      propertyPath: addPenetrates
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6800589411218848859, guid: 07e599849237db74f98015c4d54b1b67, type: 3}

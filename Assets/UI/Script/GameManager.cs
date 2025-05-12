@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public Action OnStageUpdated;
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
+    public int KillCount { get; set; } = 0;
+
 
     [SerializeField] private int stage;
     public int Stage
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
             stage = value;
             if (stage == 8)
             {
-                ShowStageResult();
+                ShowClearResult();
                 Debug.Log("Game Clear UI Popup");
             }
             OnStageUpdated?.Invoke();
@@ -100,6 +102,12 @@ public class GameManager : MonoBehaviour
         var popup = UIManager.Instance.ShowPopup<UI_StageResult>("UI_StageResult");
         popup.Init();
 
+    }
+
+    void ShowClearResult()
+    {
+        var popup = UIManager.Instance.ShowPopup<UI_ClearResult>("UI_ClearResult");
+        popup.Init();
     }
 
     private IEnumerator SubscribeToBossDeath()
