@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 
 public class MonsterManager : MonoBehaviour
 {
+
     public static MonsterManager Instance;
 
     //¿þÀÌºê
@@ -41,7 +42,6 @@ public class MonsterManager : MonoBehaviour
         GameManager.instance.OnDungeonTypeMonsterUpdated += StartWave;
     }
 
-
     public void StartWave()
     {
         if (waveRoutine != null)
@@ -67,7 +67,7 @@ public class MonsterManager : MonoBehaviour
         enemySpawnComplite = true;
     }
 
-    private void SpawnRandomMonster()
+    public void SpawnRandomMonster()
     {
         if (enemyPrefabs.Count == 0)
         {

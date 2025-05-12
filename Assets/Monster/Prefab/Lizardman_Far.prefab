@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: -606953415141261884}
   - component: {fileID: 7342692706772636949}
   m_Layer: 0
-  m_Name: 'Lizardman_Far '
+  m_Name: Lizardman_Far
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
