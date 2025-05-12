@@ -12,12 +12,14 @@ public class ArrowManager : MonoBehaviour
     public GameObject arrowPrefab;
     SkillManager skill;
     SpriteRenderer renderer;
+    private AudioSource audio;
 
     void Awake()
     {
         GameObject bow = GameObject.Find("Weapon_Bow");
         skill = bow.GetComponent<SkillManager>();
         renderer = GetComponent<SpriteRenderer>();
+        audio = GetComponent<AudioSource>();
     }
 
     void Update()

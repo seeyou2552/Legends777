@@ -13,10 +13,12 @@ public class SkillManager : Skill
     public float chaseRadius = 0f;
     public float timer;
     public bool createBow = false;
+    private AudioSource audio;
 
     void Awake()
     {
         target = GameObject.Find("Player");
+        audio = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -42,6 +44,7 @@ public class SkillManager : Skill
 
     void ShootArrow()
     {
+        audio.Play();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
