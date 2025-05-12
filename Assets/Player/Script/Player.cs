@@ -6,14 +6,14 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
-    public int hp = 100;
-    public int power = 100;
+    public int hp { get; set;}
+    public int power { get; set;}
     public float speed { get; set;}
     public float attackSpeed { get; set;}
 
     private void Awake()
     {
-        // ?��???중복 방�?
+        // 싱글톤 중복 방지
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);

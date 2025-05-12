@@ -1,15 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-
-// QuestController 초기화, num = 0, 몬스터 처치, num = 1, 보스 처치, num = 2, 퍼즐 기믹 해결 (아이템 획득), num = 3, 아무방 클리어
-// 상황에 맞게 QuestManager.instance.QuestCheck( ); 추가
-
-public class QuestManager : SingleTon<QuestManager>
+public class QuestManager : MonoBehaviour
 {
     [SerializeField] private Canvas UICanvas;             //퀘스트NPC의 UI
     [SerializeField] private Button Button1;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour
 {
     public Transform target;
-    // // 카메?��? ?�어가지 못할 ?�역
+    // // 카메라가 넘어가지 못할 영역
     // public TilemapCollider2D cameraBounds;
 
     private float halfHeight;
@@ -39,7 +39,7 @@ public class FollowCamera : MonoBehaviour
         // if (target == null || cameraBounds == null) return;
         if (target == null) return;
         Vector3 targetPos = target.position;
-        // �??�?�맵??벗어?��? 못하?�록 ?�정
+        // 벽 타일맵을 벗어나지 못하도록 설정
         // float minX = cameraBounds.bounds.min.x + halfWidth;
         // float maxX = cameraBounds.bounds.max.x - halfWidth;
         // float minY = cameraBounds.bounds.min.y + halfHeight;
