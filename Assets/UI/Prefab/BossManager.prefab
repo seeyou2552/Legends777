@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 8465360537213919076, guid: b53b3d29a6041a44989f737d7ec19c6c, type: 3}
+  bossHealthBar: {fileID: 7968316405697536729, guid: 63720eddfb3032249b483b5cdde53dc8, type: 3}
 --- !u!114 &5254141153635476592
 MonoBehaviour:
   m_ObjectHideFlags: 0

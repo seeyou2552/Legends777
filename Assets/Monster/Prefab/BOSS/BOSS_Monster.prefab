@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3276f5af935498f49a64b189acb291ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossHealth: 1000
+  initialHealth: 100
   bossSpeed: 3
   redBackGround: {fileID: 2747213633161331068, guid: b06b4fb5eabdc3d46812013ba790cece, type: 3}
 --- !u!114 &-6838238381144533660
