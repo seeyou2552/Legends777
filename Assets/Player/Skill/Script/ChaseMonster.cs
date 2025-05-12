@@ -22,7 +22,7 @@ public class ChaseMonster : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (skill.addChase == false) return;
-        if (skill.addChase && other.gameObject.CompareTag("Monster"))
+        if (skill.addChase && other.gameObject.CompareTag("Monster") || other.gameObject.CompareTag("Boss"))
         {
             target = other.gameObject.transform;
         }

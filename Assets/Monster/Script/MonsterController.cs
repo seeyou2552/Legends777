@@ -195,7 +195,9 @@ public class MonsterController : MonoBehaviour
 
     public void OnDead()
     {
-        GameManager.instance.KillCount++;
+        //GameManager.instance.KillCount++;
+
+        monsterManager.RemoveActiveMonster(this);
 
         //움직임 정지
         rigid.velocity = Vector2.zero;

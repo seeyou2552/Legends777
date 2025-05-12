@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 175954116140470836}
   - component: {fileID: 1288119784805007813}
   - component: {fileID: 1433732445528377322}
+  - component: {fileID: 6800589411218848859}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -187,6 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b4f888f314c874688ed99475d1c6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 100
+  power: 100
   dashSpeed: 25
   dashDuration: 0.2
   dashTime: 0
@@ -194,9 +197,7 @@ MonoBehaviour:
   dashCoolTime: 2
   dashCool: 0
   dashTrailPrefab: {fileID: 7887855799961801403, guid: 204d632dd9a2b5c4ebd1b68ecc233b2d, type: 3}
-  hp: 100
-  power: 100
-  rigid: {fileID: 0}
+  rigid: {fileID: 145079921637700777}
   render: {fileID: 0}
 --- !u!114 &1288119784805007813
 MonoBehaviour:
@@ -210,6 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4eed43603ffad438a4afdc0adade58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 100
+  power: 100
 --- !u!95 &1433732445528377322
 Animator:
   serializedVersion: 5

@@ -122,6 +122,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b4f888f314c874688ed99475d1c6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 100
+  power: 100
+  dashSpeed: 15
+  dashDuration: 0.2
+  dashTime: 0
+  isDashing: 0
+  dashCoolTime: 2
+  dashCool: 0
+  dashTrailPrefab: {fileID: 7887855799961801403, guid: 204d632dd9a2b5c4ebd1b68ecc233b2d, type: 3}
+  rigid: {fileID: 1481884323431302260}
+  render: {fileID: 6917594237285505258}
 --- !u!1 &7596106482832149399
 GameObject:
   m_ObjectHideFlags: 0

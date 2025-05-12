@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class ArrowManager : MonoBehaviour
 {
@@ -27,27 +28,39 @@ public class ArrowManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (skill.addBurn) BurnArrow();
+        if (skill.addFreeze) FreezeArrow();
 
-        if (skill.addBomb > 0 && this.gameObject.name == "Weapon_Bomb(Clone)") StartCoroutine(Spread());
+        if (skill.addBomb <= 3 && skill.addBomb > 0 && this.gameObject.name == "Weapon_Bomb(Clone)") StartCoroutine(Spread());
 
-        if (skill.addSpread > 0 && this.gameObject.name == "Weapon_Arrow(Clone)") StartCoroutine(Spread());
+        if (skill.addSpread <= 3 && skill.addSpread > 0 && this.gameObject.name == "Weapon_Arrow(Clone)") StartCoroutine(Spread());
 
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // 몬스터 적중
         if (other.gameObject.CompareTag("Monster"))
         {
-            Debug.Log("ì ì¤‘");
-            // addBurn íš¨ê³¼
-            if (skill.addBurn)
+            MonsterController monster = other.GetComponent<MonsterController>();
+            monster.OnDamaged(Player.Instance.power);
+
+            if (skill.addFreeze)
             {
-                SpriteRenderer otherRenderer = other.gameObject.GetComponent<SpriteRenderer>();
-                otherRenderer.color = new Color(1f, 0f, 0f, 0.4f);
+                MonsterStatHandler monsterStat = other.GetComponent<MonsterStatHandler>();
+                if (monsterStat.Speed > 0) monsterStat.Speed -= 1;
             }
 
-            if (!skill.addPenetrates) Destroy(this.gameObject); // ë¹„ê´€í†µ
+            if (skill.addPenetrates)
+            {
+                if(skill.addChase) Destroy(this.gameObject);
+            }
+            else Destroy(this.gameObject); // ë¹„ê´€í†µ
+        }
+
+        // 보스 적중
+        if (other.gameObject.CompareTag("Boss"))
+        {
+            if (!skill.addPenetrates) Destroy(this.gameObject);
         }
 
         if (other.gameObject.CompareTag("Wall"))
@@ -56,9 +69,10 @@ public class ArrowManager : MonoBehaviour
         }
     }
 
-    void BurnArrow()
+    void FreezeArrow()
+
     {
-        renderer.color = new Color(1f, 0f, 0f, 0.5f);
+        renderer.color = new Color(0.4f, 0.7f, 1f, 1f);
     }
 
     IEnumerator Spread()
@@ -66,7 +80,7 @@ public class ArrowManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         GameObject weapon;
         int count;
-        if(this.gameObject.name == "Weapon_Bomb(Clone)") count = skill.addBomb + 2;
+        if (this.gameObject.name == "Weapon_Bomb(Clone)") count = skill.addBomb + 2;
         else count = skill.addSpread + 2;
 
         float angleStep = 360f / count;

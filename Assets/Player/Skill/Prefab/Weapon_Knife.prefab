@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: -5737342410613114540}
   m_Layer: 9
   m_Name: Weapon_Knife
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

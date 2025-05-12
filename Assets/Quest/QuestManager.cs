@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -30,6 +30,7 @@ public class QuestManager : SingleTon<QuestManager>
 
     private void Start()
     {
+        UICanvas.gameObject.SetActive(false);
         questController = new List<QuestController>(); int i = 0;
 
         // QuestController 초기화, num = 0, 몬스터 처치, num = 1, 보스 처치, num = 2, 퍼즐 기믹 해결 (아이템 획득), num = 3, 아무방 클리어
@@ -39,7 +40,7 @@ public class QuestManager : SingleTon<QuestManager>
         questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
         questController.Add(new QuestController(i, "Clear the room", 1, 400)); i++;
 
-        numbers = Enumerable.Range(0, 4).OrderBy(x => Random.value).ToArray(); //퀘스트 진행 순서 섞기
+        numbers = Enumerable.Range(0, i).OrderBy(x => Random.value).ToArray(); //퀘스트 진행 순서 섞기
         acceptButton.text = "Accept"; questText.text = questController[numbers[questProgress]].Text;
 
         if (!questController[numbers[questProgress]].OnOff) {
@@ -57,8 +58,11 @@ public class QuestManager : SingleTon<QuestManager>
         if (questController[numbers[questProgress]].Clear) { acceptButton.text = "Clear!"; }
     }
 
+    void OnCollisionEnter(Collision collision) { UICanvas.gameObject.SetActive(true); }
+
     private void ButtonPressed() //버튼을 눌렀을 때
     {
+        UICanvas.gameObject.SetActive(false);
         if (!questController[numbers[questProgress]].OnOff) { //questProgress 순서의 퀘스트가 수락 안돼있을 때
             QuestOn();    //퀘스트 수락상태로 초기화
 
@@ -85,7 +89,6 @@ public class QuestManager : SingleTon<QuestManager>
             questController[numbers[questProgress]].OnOff = true;
         }
     }
-
     
     public void QuestCheck(int num) //퀘스트 조건 체크(클리어 확인)
     {
@@ -100,7 +103,7 @@ public class QuestManager : SingleTon<QuestManager>
             questController[numbers[questProgress]].QuestReset();        //퀘스트 객체 리셋
 
             questProgress++;   //퀘스트 진행도++
-            if(questProgress >= 4) { numbers = Enumerable.Range(0, 4).OrderBy(x => Random.value).Take(2).ToArray(); questProgress = 0; }
+            if(questProgress >= numbers.Length) { numbers = Enumerable.Range(0, numbers.Length).OrderBy(x => Random.value).Take(2).ToArray(); questProgress = 0; }
 
             questText.text = questController[numbers[questProgress]].Text;    //퀘스트NPC의 UI 초기화
             questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
