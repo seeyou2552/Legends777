@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponController
+public class WeaponController : MonoBehaviour
 {
     private int num, atk, price;
 
