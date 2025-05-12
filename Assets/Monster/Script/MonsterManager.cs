@@ -6,24 +6,47 @@ using UnityEngine.VFX;
 
 public class MonsterManager : MonoBehaviour
 {
+
+    public static MonsterManager Instance;
+
+    //웨이브
     private Coroutine waveRoutine;
     private bool waveStarted = false;
+
+
     [SerializeField]
     private List<GameObject> enemyPrefabs; // 생성할 적 프리팹 리스트
 
-    private List<Monster> activeEnemies = new List<Monster>(); // 현재 활성화된 적들
+    private List<MonsterController> activeEnemies = new List<MonsterController>(); // 현재 활성화된 적들
 
     private bool enemySpawnComplite;
 
+    //적 생성 간 간격
     [SerializeField] private float timeBetweenSpawns = 0.2f;
-    [SerializeField] private float timeBetweenWaves = 1f;
 
+    //한 웨이브에 몇 개의 몬스터 생성할 것인지?
+    [SerializeField] private int waveMonsterCount;
 
-    public void StartWave(int waveCount)
+    //발사할 투사체 프리팹 배열 (총알 종류별)
+    [SerializeField] public GameObject[] projectilePrefabs;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        //Stage Type이 Monster로 변경되면 몬스터 스폰 (웨이브 시작)
+        waveMonsterCount = 5;
+        GameManager.instance.OnDungeonTypeMonsterUpdated += StartWave;
+    }
+
+    public void StartWave()
     {
         if (waveRoutine != null)
             StopCoroutine(waveRoutine);
-        waveRoutine = StartCoroutine(SpawnWave(waveCount));
+        waveRoutine = StartCoroutine(SpawnWave(waveMonsterCount));
     }
 
     public void StopWave()
@@ -31,11 +54,11 @@ public class MonsterManager : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private IEnumerator SpawnWave(int waveCount)
+    private IEnumerator SpawnWave(int waveMonsterCount)
     {
         enemySpawnComplite = false;
-        yield return new WaitForSeconds(timeBetweenWaves);
-        for (int i = 0; i < waveCount; i++)
+
+        for (int i = 0; i < waveMonsterCount; i++)
         {
             yield return new WaitForSeconds(timeBetweenSpawns);
             SpawnRandomMonster();
@@ -44,11 +67,10 @@ public class MonsterManager : MonoBehaviour
         enemySpawnComplite = true;
     }
 
-    private void SpawnRandomMonster()
+    public void SpawnRandomMonster()
     {
         if (enemyPrefabs.Count == 0)
         {
-            Debug.LogWarning("!!!");
             return;
         }
 
@@ -63,7 +85,8 @@ public class MonsterManager : MonoBehaviour
 
         // 적 생성 및 리스트에 추가
         GameObject spawnedEnemy = Instantiate(randomPrefab, randomPosition, Quaternion.identity, this.transform);
-        Monster enemyController = spawnedEnemy.GetComponent<Monster>();
+        MonsterController enemyController = spawnedEnemy.GetComponent<MonsterController>();
+        enemyController.Init();
 
         activeEnemies.Add(enemyController);
     }

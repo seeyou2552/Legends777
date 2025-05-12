@@ -5,8 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
-  - Entrance
+  - FireBall
   - Obstacle
+  - Entrance
+  - Wall
+  - Arrow
   layers:
   - Default
   - TransparentFX
@@ -16,10 +19,10 @@ TagManager:
   - UI
   - 
   - 
+  - PostProcessing
   - 
   - 
   - 
-  - Obstacle
   - 
   - 
   - 
