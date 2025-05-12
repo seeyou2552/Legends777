@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[SerializeField]
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
     public int hp = 100;
-    public int power = 100;
-    public float speed { get; set;}
-    public float attackSpeed { get; set;}
+    public int power = 10;
+    public float speed;
+    public float attackSpeed;
+
 
     private void Awake()
     {
-        // ?��???중복 방�?
+        speed = 10;
+        attackSpeed = 2f;
+
+        // ?��???중복 방�?
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);

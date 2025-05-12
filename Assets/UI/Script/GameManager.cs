@@ -1,113 +1,46 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static UnityEditor.Progress;
-
-public class GameManager : MonoBehaviour
-{
-    public static GameManager instance;
-
-    public Action OnStageUpdated;
-    public Action OnDungeonTypeMonsterUpdated;
-    public Action OnDungeonTypeBossUpdated;
-    
-    [SerializeField] private int stage;
-    public int Stage 
-    { 
-        get { return stage; } 
-        set
-        {
-            stage = value;
-            if (stage == 8)
-            {
-                ShowStageResult();
-                Debug.Log("Game Clear UI Popup");
-            }
-            OnStageUpdated?.Invoke();
-        }
-    }
-
-    [SerializeField] private DungeonType dungeonType;
-    public DungeonType DungeonType
-    {
-        get { return dungeonType; }
-        set
-        {
-            dungeonType = value;
-            if (dungeonType == DungeonType.Monster)
-            {
-                IsStageClear = false;
-                currentWaveIndex = 0;
-                StartMonsterStage();
-            }
-            else if (dungeonType == DungeonType.Boss)
-            {
-                IsStageClear = false;
-                OnDungeonTypeBossUpdated?.Invoke();
-            }
-            else
-            {
-                IsStageClear = true;
-            }
-        }
-    }
-
-    public bool IsStageClear;
-
-    private void Awake()
-    {
-        instance = this;
-        OnDungeonTypeBossUpdated += () => StartCoroutine(SubscribeToBossDeath());
-    }
-
-    private void Start()
-    {
-     
-    }
-
-
-    int currentWaveIndex;
-
-    void StartMonsterStage()
-    {
-        StartNextWave();
-    }
-
-    void StartNextWave()
-    {
-        currentWaveIndex++;
-        if (currentWaveIndex > stage)
-        {
-            ShowStageResult();
-            Debug.Log("Skill Select Popup");
-            
-            return;
-        }
-
-        MonsterManager.Instance.StartWave(currentWaveIndex);
-    }
-
-    public void EndOfWave()
-    {
-        
-        StartNextWave();        
-    }
-
-    void ShowStageResult()
-    {
-
-        var popup = UIManager.Instance.ShowPopup<UI_StageResult>("UI_StageResult");
-        popup.Init();
-
-    }
-
-    private IEnumerator SubscribeToBossDeath()
-    {
-        yield return null;
-        if(BossManager.instance !=null)
-        {
-             BossManager.instance.Ondead += ShowStageResult;
-        }
-    }
-}
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1478789952071735860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171691612778724442}
+  - component: {fileID: 1087449570369579251}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &171691612778724442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478789952071735860}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1087449570369579251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478789952071735860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e4d59be779369488f6d0be7652a018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

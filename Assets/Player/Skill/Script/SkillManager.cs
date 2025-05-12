@@ -9,14 +9,16 @@ public class SkillManager : Skill
     public GameObject bowPrefab;
     public GameObject bombPrefab;
     public GameObject target;
-    public float shootInterval = 2f;
+    // public float shootInterval = 2f;
     public float chaseRadius = 0f;
     public float timer;
     public bool createBow = false;
+    private AudioSource audio;
 
     void Awake()
     {
         target = GameObject.Find("Player");
+        audio = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -26,7 +28,7 @@ public class SkillManager : Skill
 
     void AutoAttack()
     {
-        if (timer >= shootInterval)
+        if (timer >= Player.Instance.attackSpeed)
         {
             if (createBow)
             {
@@ -42,10 +44,11 @@ public class SkillManager : Skill
 
     void ShootArrow()
     {
+        audio.Play();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
-        // 발사�??�성
+        // 발사�??�성
         Vector2 direction = (new Vector2(mousePos.x, mousePos.y) - (Vector2)transform.position).normalized;
 
         float fullAngle = (arrowCount > 1) ? Mathf.Clamp(15f * (arrowCount - 1), 0f, 90f) : 0f;
@@ -53,14 +56,14 @@ public class SkillManager : Skill
 
         for (int i = 0; i < arrowCount; i++)
         {
-            // ?��???각도 계산
+            // ?��???각도 계산
             float angleOffset = (arrowCount > 1) ? startAngle + (fullAngle / (arrowCount - 1)) * i : 0f;
 
-            // ?�전??방향 벡터 계산
+            // ?�전??방향 벡터 계산
             float angleInRad = Mathf.Atan2(direction.y, direction.x) + angleOffset * Mathf.Deg2Rad;
             Vector2 rotatedDirection = new Vector2(Mathf.Cos(angleInRad), Mathf.Sin(angleInRad)).normalized;
 
-            // Z ?�전�?계산
+            // Z ?�전�?계산
             float zRotation = Mathf.Atan2(rotatedDirection.y, rotatedDirection.x) * Mathf.Rad2Deg - 90f;
 
             GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.Euler(0f, 0f, zRotation));
@@ -93,7 +96,7 @@ public class SkillManager : Skill
     {
         ShootArrow();
         addGhost = false;
-        yield return new WaitForSeconds(shootInterval);
+        yield return new WaitForSeconds(Player.Instance.attackSpeed);
         Destroy(bow);
         addGhost = true;
         createBow = false;

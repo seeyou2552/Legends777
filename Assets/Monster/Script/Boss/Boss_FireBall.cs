@@ -7,25 +7,25 @@ public class Boss_FireBall : MonoBehaviour
     public float speed = 15f;
     private Vector2 direction;
 
-    // ¹æÇâ ¼³Á¤ ÇÔ¼ö
+    // ë°©í–¥ ì„¤ì • í•¨ìˆ˜
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
     }
 
-    // ¸Å ÇÁ·¹ÀÓ ÀÌµ¿ Ã³¸®
+    // ë§¤ í”„ë ˆì„ ì´ë™ ì²˜ë¦¬
     private void Update()
     {
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
-    // È­¸é ¹ÛÀ¸·Î ³ª°¡¸é Ç®·Î ¹İÈ¯
+    // í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ í’€ë¡œ ë°˜í™˜
     private void OnBecameInvisible()
     {
         ReturnToPool();
     }
 
-    // Ãæµ¹ ½Ã Ã³¸®
+    // ì¶©ëŒ ì‹œ ì²˜ë¦¬
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -38,14 +38,14 @@ public class Boss_FireBall : MonoBehaviour
             }
             ReturnToPool();
         }
-        // ¸ó½ºÅÍ³ª ´Ù¸¥ ÆÄÀÌ¾îº¼°ú Ãæµ¹ÇÏÁö ¾Ê¾ÒÀ» ¶§¿¡¸¸ ¹İÈ¯
+        // ëª¬ìŠ¤í„°ë‚˜ ë‹¤ë¥¸ íŒŒì´ì–´ë³¼ê³¼ ì¶©ëŒí•˜ì§€ ì•Šì•˜ì„ ë•Œì—ë§Œ ë°˜í™˜
         else if (!collision.gameObject.CompareTag("Monster") && !collision.gameObject.CompareTag("FireBall"))
         {
             ReturnToPool();
         }
     }
 
-    // ¿ÀºêÁ§Æ® Ç®·Î ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    // ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     private void ReturnToPool()
     {
         BossObjectPoolManager.Instance.ReturnToPool("Fireball", gameObject);
