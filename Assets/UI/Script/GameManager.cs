@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
         set
         {
             stage = value;
+            if (stage == 8)
+            {
+                Debug.Log("Game Clear UI Popup");
+            }
             OnStageUpdated?.Invoke();
         }
     }
