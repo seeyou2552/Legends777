@@ -10,12 +10,15 @@ public class ArrowManager : MonoBehaviour
     public GameObject swordPrefab;
     public GameObject arrowPrefab;
     SkillManager skill;
+    Player player;
     SpriteRenderer renderer;
 
     void Awake()
     {
         GameObject bow = GameObject.Find("Weapon_Bow");
         skill = bow.GetComponent<SkillManager>();
+        GameObject target = GameObject.Find("Player");
+        player = target.GetComponent<Player>();
         renderer = GetComponent<SpriteRenderer>();
     }
 
@@ -39,8 +42,9 @@ public class ArrowManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Monster"))
         {
-            Debug.Log("ì ì¤‘");
-            // addBurn íš¨ê³¼
+            MonsterController monster = other.GetComponent<MonsterController>();
+            monster.OnDamaged(player.power);
+            
             if (skill.addBurn)
             {
                 SpriteRenderer otherRenderer = other.gameObject.GetComponent<SpriteRenderer>();

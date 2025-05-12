@@ -119,9 +119,9 @@ GameObject:
   - component: {fileID: 1387745434446983545}
   - component: {fileID: 1769446528664580251}
   - component: {fileID: 7865375436591553169}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OrcWarrior
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 7436482653273195065}
   - component: {fileID: 4333643876389280116}
   - component: {fileID: 7875186698270870008}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OrcWarrior_Far
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
