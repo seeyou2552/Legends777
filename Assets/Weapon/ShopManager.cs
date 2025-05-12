@@ -48,7 +48,6 @@ public class ShopManager : MonoBehaviour
         Button3.onClick.AddListener(() => ButtonPressed(3));
 
         BaseWeaponButton.onClick.AddListener(() => ButtonPressed(0));
-        //ButtonPressed(0);
         
         for(int j=0; j<i; j++) { inventory[j] = false; }
         inventory[0] = true;
@@ -101,7 +100,6 @@ public class ShopManager : MonoBehaviour
             inventory[num] = true;  // inventory에 해당 무기 true
         }
     }
-
 
     private void EquipWeapon(int num)// 무기 장착
     {

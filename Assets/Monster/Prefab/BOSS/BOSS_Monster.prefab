@@ -242,5 +242,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 672466838232044130}
-  fireRate: 5
+  fireRate: 3
   defaultBulletSpeed: 10

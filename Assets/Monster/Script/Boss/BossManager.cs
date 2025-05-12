@@ -51,6 +51,7 @@ public class BossManager : MonoBehaviour
     private bool isHalf = false;
     public GameObject redBackGround;
     private Camera Boss_Camera;
+    private int firstHp;
 
     public static BossManager instance;
 
@@ -66,7 +67,10 @@ public class BossManager : MonoBehaviour
         Boss_Camera = Camera.main;
     }
 
-    
+    private void Start()
+    {
+        firstHp = Health;
+    }
 
     private void FixedUpdate()
     {
@@ -107,7 +111,7 @@ public class BossManager : MonoBehaviour
             animator.SetTrigger("isHit");
             Debug.Log(Health);
 
-            if (BossManager.instance.Health <= 500 && !isHalf)
+            if (Health <= firstHp / 2 && !isHalf)
             {
                 CameraShake.instance.StartShake();
                 Instantiate(redBackGround, transform);

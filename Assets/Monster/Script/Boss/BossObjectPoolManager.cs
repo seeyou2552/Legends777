@@ -37,7 +37,7 @@ public class BossObjectPoolManager : MonoBehaviour
     }
 
     // 오브젝트 풀에서 꺼내기
-    public GameObject GetFromPool(string tag, Vector2 position, Quaternion rotation)
+    public GameObject GetFromPool(string tag, Vector2 position, Quaternion rotation, Transform parent = null)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -51,14 +51,15 @@ public class BossObjectPoolManager : MonoBehaviour
             obj = poolDictionary[tag].Dequeue();
             if (obj == null) // 이미 파괴된 오브젝트를 반환하려는 경우
             {
-                obj = Instantiate(GetPrefab(tag));
+                obj = Instantiate(GetPrefab(tag), parent);
             }
         }
         else
         {
-            obj = Instantiate(GetPrefab(tag));
+            obj = Instantiate(GetPrefab(tag), parent);
         }
 
+        obj.transform.SetParent(parent);
         obj.transform.position = position;
         obj.transform.rotation = rotation;
         obj.SetActive(true);
