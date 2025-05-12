@@ -46,13 +46,10 @@ public class ShopManager : MonoBehaviour
         Button3.onClick.AddListener(() => ButtonPressed(3));
 
         BaseWeaponButton.onClick.AddListener(() => ButtonPressed(0));
-<<<<<<< HEAD
         
         for(int j=0; j<i; j++) { inventory[j] = false; }
         inventory[0] = true;
-=======
         ButtonPressed(0);
->>>>>>> parent of 86f4e1e (Merge branch 'develop' into feature/Boss)
     }
 
     private void Update()
