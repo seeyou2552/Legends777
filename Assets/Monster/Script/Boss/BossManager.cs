@@ -20,7 +20,7 @@ public class BossManager : MonoBehaviour
         set => bossSpeed = Mathf.Clamp(value, 0, 20);
     }
 
-    private Rigidbody2D target; // Å¸°Ù È®ÀÎ
+    private Rigidbody2D target; // Å¸ï¿½ï¿½ È®ï¿½ï¿½
     public Rigidbody2D Target => target;
 
     private Rigidbody2D rigid;
@@ -52,14 +52,14 @@ public class BossManager : MonoBehaviour
     private void FixedUpdate()
     {
         if(target == null) return;
-        Vector2 direction = target.position - rigid.position; // Å¸°Ù°ú ¸ó½ºÅÍÀÇ À§Ä¡ ±æÀÌ ±¸ÇÏ±â
+        Vector2 direction = target.position - rigid.position; // Å¸ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
 
-        float stopDistance = 1.5f; // Å¸°Ù°úÀÇ ÃÖ¼Ò °Å¸®
+        float stopDistance = 1.5f; // Å¸ï¿½Ù°ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½Å¸ï¿½
 
         if (direction.magnitude >= stopDistance)
         {
-            Vector2 nextDir = direction.normalized * bossSpeed * Time.fixedDeltaTime; // ÇÃ·¹ÀÌ¾î¿¡°Ô ÇâÇÏ´Â ¿òÁ÷ÀÓ
-            rigid.MovePosition(rigid.position + nextDir); // ¿òÁ÷ÀÓ ±¸Çö
+            Vector2 nextDir = direction.normalized * bossSpeed * Time.fixedDeltaTime; // ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            rigid.MovePosition(rigid.position + nextDir); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             animator.SetBool("isRun", true);
         }
         else
@@ -71,7 +71,7 @@ public class BossManager : MonoBehaviour
     private void LateUpdate()
     {
         if (target == null) return;
-        spriter.flipX = target.position.x < rigid.position.x; // ¸ó½ºÅÍ°¡ ÇÃ·¹ÀÌ¾îº¸´Ù xÀ§Ä¡°¡ ´Ù¸£¸é ¹æÇâ º¯°æ
+        spriter.flipX = target.position.x < rigid.position.x; // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾îº¸ï¿½ï¿½ xï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnEnable()
@@ -96,7 +96,7 @@ public class BossManager : MonoBehaviour
             }
             if (Health <= 0)
             {
-                // ½ºÅ³ ¿ÀºêÁ§Æ® Á¤¸®
+                // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
                 foreach (GameObject obj in BossSkillManager.Instance.ActiveSkillObjects)
                 {
                     if (obj != null && obj.activeSelf)
@@ -107,7 +107,7 @@ public class BossManager : MonoBehaviour
                 BossSkillManager.Instance.ActiveSkillObjects.Clear();
 
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
-                Destroy(gameObject);  // º¸½º ¿ÀºêÁ§Æ® ÆÄ±«
+                Destroy(gameObject);  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ä±ï¿½
             }
         }
     }

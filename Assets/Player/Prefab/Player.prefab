@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 175954116140470836}
   - component: {fileID: 1288119784805007813}
   - component: {fileID: 1433732445528377322}
+  - component: {fileID: 6800589411218848859}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -187,15 +188,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b4f888f314c874688ed99475d1c6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 25
+  hp: 100
+  power: 100
+  dashSpeed: 30
   dashDuration: 0.2
   dashTime: 0
   isDashing: 0
   dashCoolTime: 2
   dashCool: 0
   dashTrailPrefab: {fileID: 7887855799961801403, guid: 204d632dd9a2b5c4ebd1b68ecc233b2d, type: 3}
-  hp: 100
-  power: 100
   rigid: {fileID: 0}
   render: {fileID: 0}
 --- !u!114 &1288119784805007813
@@ -210,6 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4eed43603ffad438a4afdc0adade58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 100
+  power: 100
 --- !u!95 &1433732445528377322
 Animator:
   serializedVersion: 5
@@ -259,11 +262,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: addBomb
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: arrowCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: bombPrefab
