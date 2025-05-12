@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class BossSkillManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class BossSkillManager : MonoBehaviour
     public Transform firePoint; // 보스 위치 가져오기
     private Transform target;
     private Camera Boss_Camera;
+    public TextMeshProUGUI EffectText;
 
     public float fireRate = 3f;
     public float defaultBulletSpeed = 15f;
@@ -23,6 +25,9 @@ public class BossSkillManager : MonoBehaviour
 
     private List<GameObject> activeSkillObjects = new List<GameObject>(); // 따로 생성되는 오브젝트를 보스가 죽을시 삭제하기 위해 저장해두는 리스트
     public List<GameObject> ActiveSkillObjects => activeSkillObjects; // 인스펙터 창에서 안보이고 스크립트에서 참조할수있게
+
+    public string[] sHowEffect = { "체력 x 2", "공격력 x 2", "속도 x 2", "공속 x 2", "체력 / 2", "공격력 / 2", "속도 / 2", "공속 / 2" };
+    int getStr;
 
     BossManager bossManager;
     GameManager gameManager;
@@ -61,14 +66,13 @@ public class BossSkillManager : MonoBehaviour
         skillFuncs.Clear();
 
         // 사용할 스킬들 등록
-        if (gameManager.Stage <= 3)
+        if (gameManager.Stage < 4)
         {
-            skillFuncs.Add(MakeBossItem);
             skillFuncs.Add(MoveFast);
-            //skillFuncs.Add(LazerPatten2);
-            //skillFuncs.Add(MakeMonster);
+            skillFuncs.Add(LazerPatten2);
+            skillFuncs.Add(MakeMonster);
         }
-        else if (gameManager.Stage < 5)
+        else if (gameManager.Stage < 6)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -77,7 +81,7 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(ShootFast);
             skillFuncs.Add(Teleport);
         }
-        else if (gameManager.Stage < 7)
+        else if (gameManager.Stage < 8)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -96,13 +100,12 @@ public class BossSkillManager : MonoBehaviour
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
         // 오브젝트 풀에서 파이어볼 꺼내기
-        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity);
+        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity, this.transform);
         if (fireball == null) // 파괴된 오브젝트인 경우
         {
             return; // 해당 오브젝트는 더 이상 사용할 수 없으므로 종료
         }
 
-        fireball.transform.SetParent(this.transform);
         // 충돌 처리 - 보스와 파이어볼이 충돌하지 않도록 설정
         Collider2D bossCol = GetComponent<Collider2D>();
         Collider2D fireballCol = fireball.GetComponent<Collider2D>();
@@ -197,7 +200,7 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator RedGround()
     {
-        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", Vector2.zero, Quaternion.identity);
+        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", Vector2.zero, Quaternion.identity, this.transform);
         if (!activeSkillObjects.Contains(red))
         {
             activeSkillObjects.Add(red);
@@ -210,7 +213,7 @@ public class BossSkillManager : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity);
+            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity, this.transform);
             if(!activeSkillObjects.Contains(lazer1))
             {
                 activeSkillObjects.Add(lazer1);
@@ -218,7 +221,7 @@ public class BossSkillManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             BossObjectPoolManager.Instance.ReturnToPool("redLazer1", lazer1);
 
-            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity);
+            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity, this.transform);
             if (!activeSkillObjects.Contains(lazer2))
             {
                 activeSkillObjects.Add(lazer2);
@@ -235,7 +238,7 @@ public class BossSkillManager : MonoBehaviour
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
             float z = UnityEngine.Random.Range(-180, 180);
-            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z));
+            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z), this.transform);
             if (!activeSkillObjects.Contains(rLazer))
             {
                 activeSkillObjects.Add(rLazer);
@@ -262,7 +265,7 @@ public class BossSkillManager : MonoBehaviour
         {
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
-            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity);
+            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity, this.transform);
         }
         yield return new WaitForSeconds(5f);
         for (int i = 0; i < 2; i++)
@@ -278,7 +281,7 @@ public class BossSkillManager : MonoBehaviour
         {
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
-            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity);
+            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity, this.transform);
         }
         yield return new WaitForSeconds(5f);
         for (int i = 0; i < 3; i++)
@@ -302,18 +305,22 @@ public class BossSkillManager : MonoBehaviour
             case 0:
                 ApplyEffect = () => { player.attackSpeed *= 2; Debug.Log("+asp"); };
                 RemoveEffect = () => { player.attackSpeed /= 2; };
+                getStr = 0;
                 break;
             case 1:
                 ApplyEffect = () => { player.speed *= 2; Debug.Log("+sp"); };
                 RemoveEffect = () => { player.speed /= 2; };
+                getStr = 1;
                 break;
             case 2:
                 ApplyEffect = () => { player.hp *= 2; Debug.Log("+hp"); };
                 duration = 0f;
+                getStr = 2;
                 break;
             case 3:
                 ApplyEffect = () => { player.power *= 2; Debug.Log("+po"); };
                 RemoveEffect = () => { player.power /= 2; };
+                getStr = 3;
                 break;
             default:
                 Debug.LogError("noEffect");
@@ -321,6 +328,7 @@ public class BossSkillManager : MonoBehaviour
         }
 
         ApplyEffect?.Invoke();
+        EffectText.text = sHowEffect[getStr];
 
         if (duration > 0 && RemoveEffect != null)
         {
@@ -341,18 +349,22 @@ public class BossSkillManager : MonoBehaviour
             case 0:
                 ApplyEffect = () => { player.attackSpeed /= 2; };
                 RemoveEffect = () => { player.attackSpeed *= 2; };
+                getStr = 4;
                 break;
             case 1:
                 ApplyEffect = () => { player.speed /= 2; Debug.Log("-sp"); };
                 RemoveEffect = () => { player.speed *= 2; };
+                getStr = 5;
                 break;
             case 2:
                 ApplyEffect = () => { player.hp /= 2; Debug.Log("-hp"); };
                 duration = 0f;
+                getStr = 6;
                 break;
             case 3:
                 ApplyEffect = () => { player.power /= 2; Debug.Log("-po"); };
                 RemoveEffect = () => { player.power *= 2; };
+                getStr = 7;
                 break;
             default:
                 Debug.LogError("noBedEffect");
@@ -360,7 +372,7 @@ public class BossSkillManager : MonoBehaviour
         }
 
         ApplyEffect?.Invoke();
-
+        EffectText.text = sHowEffect[getStr];
         if (duration > 0 && RemoveEffect != null)
         {
             yield return new WaitForSeconds(duration);
