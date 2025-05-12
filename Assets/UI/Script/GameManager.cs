@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Action OnStageUpdated;
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
+    public Action OnDungeonTypeDefaultUpdated;
 
     public int KillCount { get; set; } = 0;
     private bool OnStageResult = false;
@@ -23,37 +24,15 @@ public class GameManager : MonoBehaviour
         get { return stage; }
         set
         {
-            if(value > maxStage)
+            if (value > maxStage)
             {
                 value = maxStage;
             }
             else
             {
-              stage = value;
+                stage = value;
             }
 
-            if (stage == maxStage)
-            {
-                if (dungeonType != DungeonType.Monster && dungeonType != DungeonType.Boss)
-                {
- 
-                    ShowClearResult();
-                    Debug.Log("Game Clear UI Popup");
-                }
-                else if (dungeonType == DungeonType.Monster || dungeonType == DungeonType.Boss)
-                {
-
-                    if (AreAllMonstersDefeated() && IsBossDefeated())
-                    {
-                        ShowClearResult();
-                        Debug.Log("No Clear UI Popup");
-                    }
-                    else
-                    {
-                        Debug.Log("Monsters or Boss still alive");
-                    }
-                }
-            }
             OnStageUpdated?.Invoke();
         }
     }
@@ -81,6 +60,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 IsStageClear = true;
+                OnDungeonTypeDefaultUpdated?.Invoke();
             }
         }
     }
@@ -91,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         OnDungeonTypeBossUpdated += () => StartCoroutine(SubscribeToBossDeath());
-
+        OnDungeonTypeDefaultUpdated += () => StartCoroutine(SubscribeToDefaultClear());    
     }
 
     private void Start()
@@ -118,8 +98,10 @@ public class GameManager : MonoBehaviour
                 ShowStageResult();
                 Debug.Log("Skill Select Popup");
             }
-
-
+            else if (stage == maxStage && AreAllMonstersDefeated())
+            {
+                ShowClearResult();
+            }
             return;
         }
 
@@ -137,7 +119,7 @@ public class GameManager : MonoBehaviour
 
         var popup = UIManager.Instance.ShowPopup<UI_StageResult>("UI_StageResult");
         popup.Init();
-        
+
     }
 
     void ShowClearResult()
@@ -154,12 +136,26 @@ public class GameManager : MonoBehaviour
         if (BossManager.instance != null)
         {
             BossManager.instance.Ondead -= ShowStageResult;
+            BossManager.instance.Ondead -= ShowStageResult;
             if (stage != maxStage)
             {
                 BossManager.instance.Ondead += ShowStageResult;
                 Debug.Log("Skill Select Popup");
             }
+            else if (stage == maxStage)
+            {
+                BossManager.instance.Ondead += ShowClearResult;
+            }
         }
+    }
+    private IEnumerator SubscribeToDefaultClear()
+    {
+        yield return null;
+        if(stage == maxStage)
+        {
+            ShowClearResult();
+        }
+
     }
 
     private bool AreAllMonstersDefeated()
@@ -167,9 +163,4 @@ public class GameManager : MonoBehaviour
         return MonsterManager.Instance.activeMonsters.Count == 0;
     }
 
-    // 보스가 처치되었는지 확인하는 메서드
-    private bool IsBossDefeated()
-    {
-        return BossManager.FindObjectOfType<BossManager>() == null;
-    }
 }
