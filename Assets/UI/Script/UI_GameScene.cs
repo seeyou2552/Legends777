@@ -31,10 +31,10 @@ public class UI_GameScene : MonoBehaviour
         optionButton.onClick.AddListener(OnClickOptionButton);
         statusButton.onClick.AddListener(OnClickStatusButton);
 
-        questList = UIManager.Instance.ShowPopup<UI_QuestList>(questListName);
-        questList.Init();
+        //questList = UIManager.Instance.ShowPopup<UI_QuestList>(questListName);
+        //questList.Init();
 
-        healthBar = UIManager.Instance.ShowPopup<UI_HealthBar>(healthBarName);
+        //healthBar = UIManager.Instance.ShowPopup<UI_HealthBar>(healthBarName);
 
         //var stat = PlayerStat.Instance;
         //healthBar.SetHealth(stat.CurrentHealth, statMaxHealth: stat.MaxHealth);
