@@ -23,39 +23,35 @@ public class UI_StageResult : UI_Popup
         }
         var candidates = new Dictionary<string, System.Action>();
         if (skill.shootSpeed < 50f)
-            candidates[$"화살 속도 +1 ({skill.shootSpeed} → {skill.shootSpeed + 1})"] =
+            candidates[$"?�살 ?�도 +1 ({skill.shootSpeed} ??{skill.shootSpeed + 1})"] =
                 () => skill.shootSpeed += 1f;
 
-        // 화살 개수 +1 (최대 5)
+        // ?�살 개수 +1 (최�? 5)
         if (skill.arrowCount < 5)
-            candidates[$"화살 개수 +1 ({skill.arrowCount} → {skill.arrowCount + 1})"] =
+            candidates[$"?�살 개수 +1 ({skill.arrowCount} ??{skill.arrowCount + 1})"] =
                 () => skill.arrowCount += 1;
 
-        // 유령 활 활성화 (한 번만)
+        // ?�령 ???�성??(??번만)
         if (!skill.addGhost)
-            candidates["유령 활 활성화"] = () => skill.addGhost = true;
+            candidates["?�령 ???�성??"] = () => skill.addGhost = true;
 
-        // 폭탄 추가 +1 (필요하다면)
-        if (skill.addBomb < 3) // 예시 상한 3
-            candidates[$"폭탄 +1 ({skill.addBomb} → {skill.addBomb + 1})"] =
+        // ??�� 추�? +1 (?�요?�다�?
+        if (skill.addBomb < 3) // ?�시 ?�한 3
+            candidates[$"??�� +1 ({skill.addBomb} ??{skill.addBomb + 1})"] =
                 () => skill.addBomb += 1;
 
-        // 불 화살 활성화
-        if (!skill.addBurn)
-            candidates["불 화살 활성화"] = () => skill.addBurn = true;
-
-        // 관통 활성화
+        // 관???�성??
         if (!skill.addPenetrates)
-            candidates["관통 화살 활성화"] = () => skill.addPenetrates = true;
+            candidates["관???�살 ?�성??"] = () => skill.addPenetrates = true;
 
-        // 확산 +1 (최대 5)
+        // ?�산 +1 (최�? 5)
         if (skill.addSpread < 5)
-            candidates[$"확산 +1 ({skill.addSpread} → {skill.addSpread + 1})"] =
+            candidates[$"?�산 +1 ({skill.addSpread} ??{skill.addSpread + 1})"] =
                 () => skill.addSpread += 1;
 
-        // 유도 활성화
+        // ?�도 ?�성??
         if (!skill.addChase)
-            candidates["유도 화살 활성화"] = () => skill.addChase = true;
+            candidates["?�도 ?�살 ?�성??"] = () => skill.addChase = true;
 
 
         var keys = new List<string>(candidates.Keys);
@@ -69,7 +65,7 @@ public class UI_StageResult : UI_Popup
             keys.RemoveAt(idx);
         }
 
-        // 4) 버튼 배열에 뿌리기
+        // 4) 버튼 배열??뿌리�?
         var buttons = new[] { option1Button, option2Button, option3Button };
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -93,7 +89,7 @@ public class UI_StageResult : UI_Popup
             }
             else
             {
-                // 후보가 부족할 경우 빈 버튼 비활성화
+                // ?�보가 부족할 경우 �?버튼 비활?�화
                 btn.gameObject.SetActive(false);
             }
         }
