@@ -31,24 +31,23 @@ public class GameManager : MonoBehaviour
             dungeonType = value;
             if (dungeonType == DungeonType.Monster)
             {
-                isStageClear = false;
+                IsStageClear = false;
                 currentWaveIndex = 0;
                 StartMonsterStage();
             }
             else if (dungeonType == DungeonType.Boss)
             {
-                isStageClear = false;
+                IsStageClear = false;
                 OnDungeonTypeBossUpdated?.Invoke();
             }
             else
             {
-                isStageClear = true;
+                IsStageClear = true;
             }
         }
     }
 
-    [SerializeField] private bool isStageClear;
-    public bool IsStageClear { get { return isStageClear; } }
+    public bool IsStageClear;
 
     private void Awake()
     {
@@ -73,7 +72,7 @@ public class GameManager : MonoBehaviour
         currentWaveIndex++;
         if (currentWaveIndex > stage)
         {
-            isStageClear = true;
+            IsStageClear = true;
             Debug.Log("Skill Select Popup");
             return;
         }
