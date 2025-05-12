@@ -690,6 +690,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1419973569292242593, guid: b0a306523d9feba4590627df996798ae, type: 3}
+      propertyPath: m_Name
+      value: /1
+      objectReference: {fileID: 0}
     - target: {fileID: 4974948671224549436, guid: b0a306523d9feba4590627df996798ae, type: 3}
       propertyPath: m_Name
       value: QuestManager

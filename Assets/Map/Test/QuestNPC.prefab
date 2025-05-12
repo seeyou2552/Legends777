@@ -84,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UICanvas: {fileID: 766206072940724823}
   acceptButton: {fileID: 7173823091116266627}
+  acceptButtonText: {fileID: 7676007740729236554}
   ExitButton: {fileID: 3051458971477513813}
   questText: {fileID: 569804183566407035}
 --- !u!1 &240706130490391861

@@ -8,6 +8,8 @@ public class QuestNPC : MonoBehaviour
 {
     [SerializeField] private Canvas UICanvas;             //퀘스트NPC의 UI
     [SerializeField] private Button acceptButton;
+    [SerializeField] private TextMeshProUGUI acceptButtonText;
+
     [SerializeField] private Button ExitButton;
     [SerializeField] private TextMeshProUGUI questText;
 
@@ -21,6 +23,12 @@ public class QuestNPC : MonoBehaviour
         acceptButton.onClick.AddListener(() => ButtonPressed());
         ExitButton.onClick.AddListener(() => UICanvas.gameObject.SetActive(false));
         //acceptButton.text = "Accept";
+    }
+
+    private void Update()
+    {
+        if (QuestManager.Instance.QuestClearCheck()) { acceptButtonText.text = "Clear"; }
+        else { acceptButtonText.text = "Accept"; }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) { UICanvas.gameObject.SetActive(true); }

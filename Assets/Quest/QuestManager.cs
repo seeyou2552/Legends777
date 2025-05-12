@@ -13,6 +13,8 @@ public class QuestManager : SingleTon<QuestManager>
 {
     private List<QuestController> questController;
 
+
+    [SerializeField] private Canvas UICanvas;
     [SerializeField] private TextMeshProUGUI questUIText1; //퀘스트UI(화면 왼쪽에 뜨는 퀘스트 정보)
     [SerializeField] private TextMeshProUGUI questUIText2;
     [SerializeField] private TextMeshProUGUI count;
@@ -24,8 +26,8 @@ public class QuestManager : SingleTon<QuestManager>
     protected override void Awake()
     {
         base.Awake();
-        questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); 
-        goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
+        //questUIText1.gameObject.SetActive(false); count.gameObject.SetActive(false); 
+        //goal.gameObject.SetActive(false); questUIText2.gameObject.SetActive(false);
     }
 
     public void Init()
@@ -70,10 +72,14 @@ public class QuestManager : SingleTon<QuestManager>
     {
         QuestOn();  //퀘스트 수락상태로 초기화
 
+        UICanvas.gameObject.SetActive(true);
+
         foreach (var quest in questController) 
         {
             if (quest.Clear) { QuestClear(quest.Num); }  // 클리어 상태일 때 처리
         }
+
+
     }
 
 
@@ -109,5 +115,9 @@ public class QuestManager : SingleTon<QuestManager>
         Debug.Log("플레이어의 골드 : "+PlayerController.Instance.Gold);
     }
 
-
+    public bool QuestClearCheck()
+    {
+        foreach (var quest in questController) {  if (quest.Clear) { return true; }  }
+        return false;
+    }
 }
