@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8028398972675897027}
+  - component: {fileID: 4398425465364510115}
   m_Layer: 0
   m_Name: Monster_Hammer_Weapon
   m_TagString: Untagged
@@ -32,6 +33,29 @@ Transform:
   - {fileID: 234580062680811735}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4398425465364510115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3705265300818383381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa84ec24e07d324abcbd3128f6ca0c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
+  weaponSize: 0.8
+  speed: 1
+  attackRange: 1.2
+  isOnKnockback: 0
+  knockbackPower: 0.1
+  knockbackTime: 0.5
+  colliderBoxSize: {x: 1, y: 1}
+  target:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &4578279806701068324
 GameObject:
   m_ObjectHideFlags: 0
