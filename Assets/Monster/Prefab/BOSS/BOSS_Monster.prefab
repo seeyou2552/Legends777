@@ -119,9 +119,9 @@ GameObject:
   - component: {fileID: 1627185364297478853}
   - component: {fileID: -3157176944890689977}
   - component: {fileID: -6838238381144533660}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BOSS_Monster
-  m_TagString: Monster
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
