@@ -11,18 +11,22 @@ public class GameManager : MonoBehaviour
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
     
-    private int stage;
+    [SerializeField] private int stage;
     public int Stage 
     { 
         get { return stage; } 
         set
         {
             stage = value;
+            if (stage == 8)
+            {
+                Debug.Log("Game Clear UI Popup");
+            }
             OnStageUpdated?.Invoke();
         }
     }
 
-    private DungeonType dungeonType;
+    [SerializeField] private DungeonType dungeonType;
     public DungeonType DungeonType
     {
         get { return dungeonType; }
@@ -31,18 +35,23 @@ public class GameManager : MonoBehaviour
             dungeonType = value;
             if (dungeonType == DungeonType.Monster)
             {
-                Debug.Log("Monster changed");
-                OnDungeonTypeMonsterUpdated?.Invoke();
+                IsStageClear = false;
+                currentWaveIndex = 0;
+                StartMonsterStage();
             }
             else if (dungeonType == DungeonType.Boss)
             {
-                Debug.Log("Boss changed");
+                IsStageClear = false;
                 OnDungeonTypeBossUpdated?.Invoke();
+            }
+            else
+            {
+                IsStageClear = true;
             }
         }
     }
 
-
+    public bool IsStageClear;
 
     private void Awake()
     {
@@ -52,5 +61,31 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 
+    }
+
+
+    int currentWaveIndex;
+
+    void StartMonsterStage()
+    {
+        StartNextWave();
+    }
+
+    void StartNextWave()
+    {
+        currentWaveIndex++;
+        if (currentWaveIndex > stage)
+        {
+            IsStageClear = true;
+            Debug.Log("Skill Select Popup");
+            return;
+        }
+
+        MonsterManager.Instance.StartWave(currentWaveIndex);
+    }
+
+    public void EndOfWave()
+    {
+        StartNextWave();
     }
 }
