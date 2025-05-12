@@ -162,7 +162,7 @@ MonoBehaviour:
   colliderBoxSize: {x: 1, y: 1}
   target:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!1 &8607773781342504928
 GameObject:
   m_ObjectHideFlags: 0

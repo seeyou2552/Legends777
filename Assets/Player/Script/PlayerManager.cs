@@ -1,23 +1,20 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-[SerializeField]
-public class PlayerManager : Player
+public class PlayerManager : MonoBehaviour
 {
-    Animator animation;
+    public static PlayerManager Instance { get; private set; }
+
+    Animator animator;
     SpriteRenderer renderer;
+    Rigidbody2D rigid;
 
-    [Header("무적(Invincibility) 설정")]
-    [SerializeField] private float invincibilityDuration = 0.2f;
-    private float invincibilityTimer = 0f;
+    [Header("무적")]
+    [SerializeField] float invincibilityDuration = 0.2f;
+    float invincibilityTimer;
 
-
-    private int maxHealth;
-    private int currentHealth;
-    private int prevRawHp;
+    int maxHealth, currentHealth;
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
 
@@ -26,95 +23,87 @@ public class PlayerManager : Player
 
     void Awake()
     {
-        animation = GetComponent<Animator>();
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+
+        animator = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
-        Debug.Log("PlayerManager Awake");
+        rigid = GetComponent<Rigidbody2D>();
+
+        // Player.cs 에 선언된 초기 hp 를 읽어서
         maxHealth = Player.Instance.hp;
         currentHealth = maxHealth;
-        prevRawHp = Player.Instance.hp;
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-
     }
 
-    private void Update()
+    void Update()
     {
         if (invincibilityTimer > 0f)
             invincibilityTimer -= Time.deltaTime;
-        int rawHp = Player.Instance.hp;
-        if (rawHp < prevRawHp && invincibilityTimer <= 0f)
-        {
-            int dmg = prevRawHp - rawHp;
-            OnDamage(dmg);
+    }
 
-            prevRawHp = Player.Instance.hp;
-        }
-        else
+    // <-- 여기서 모든 충돌을 처리합니다
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (invincibilityTimer > 0f) return;
+
+        var go = col.gameObject;
+        if (go.CompareTag("Boss"))
         {
-            prevRawHp = rawHp;
+            // (예시) 보스 몸통 히트 데미지
+            ApplyDamage(10);
+        }
+        else if (go.CompareTag("Monster"))
+        {
+            var ms = go.GetComponent<MonsterStatHandler>();
+            if (ms != null) ApplyDamage(ms.Atk);
+        }
+        else if (go.CompareTag("FireBall"))
+        {
+            // 보스 FireBall
+            ApplyDamage(10);
+            Destroy(go);
+        }
+    }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (invincibilityTimer > 0f) return;
+
+        var go = col.gameObject;
+        if (go.CompareTag("Projectile"))
+        {
+            var proj = go.GetComponent<ProjectileController>();
+            if (proj?.monsterController != null)
+            {
+                var ms = proj.monsterController.GetComponent<MonsterStatHandler>();
+                if (ms != null) ApplyDamage(ms.Atk);
+            }
+            Destroy(go);
         }
     }
 
 
-    void OnTriggerStay2D(Collider2D other)
+    public void ApplyDamage(int damage)
     {
-
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (invincibilityTimer > 0f)
-            return;
-        // A) 몬스터/보스 몸통 태그가 붙어 있으면
-        if (other.tag == "Monster" || other.tag == "Boss")
-        {
-            int dmg = 0;
-            var ms = other.GetComponent<MonsterStatHandler>();
-            if (ms != null) dmg = ms.Atk;
-            OnDamage(dmg);
-            return;
-        }
-
-        var proj = other.GetComponent<ProjectileController>();
-        if (proj != null)
-        {
-            // proj.monsterController가 null인지 체크
-            var ms = proj.monsterController?.GetComponent<MonsterStatHandler>();
-            int dmg = (ms != null) ? ms.Atk : 0;
-            OnDamage(dmg);
-
-            Destroy(other.gameObject);
-            return;
-        }
-
-    }
-
-    public void OnDamage(int damage)
-    {
-        Debug.Log("hit");
-        animation.SetBool("IsHit", true);
-
-        gameObject.layer = LayerMask.NameToLayer("DamagedPlayer");
-        renderer.color = new Color(1, 1, 1, 0.4f);
-        invincibilityTimer = invincibilityDuration;
-        StartCoroutine(OnInvincibility());
+        if (damage <= 0) return;
 
         currentHealth = Mathf.Max(currentHealth - damage, 0);
         Player.Instance.hp = currentHealth;
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        
+
+        animator.SetBool("IsHit", true);
+        renderer.color = new Color(1f, 1f, 1f, 0.4f);
+        invincibilityTimer = invincibilityDuration;
+        StartCoroutine(EndInvincibility());
 
         if (currentHealth <= 0)
-        {
             OnPlayerDie?.Invoke();
-        }
     }
 
-    IEnumerator OnInvincibility()
+    IEnumerator EndInvincibility()
     {
         yield return new WaitForSeconds(invincibilityDuration);
-        gameObject.layer = LayerMask.NameToLayer("Player");
-        animation.SetBool("IsHit", false);
-        renderer.color = new Color(1, 1, 1, 1);
+        animator.SetBool("IsHit", false);
+        renderer.color = Color.white;
     }
 }

@@ -83,7 +83,9 @@ public class ProjectileController : MonoBehaviour
             if (player != null)
             {
                 //플레이어에게 데미지 적용
-                player.gameObject.GetComponent<Player>().hp -= monsterController.gameObject.GetComponent<MonsterStatHandler>().Atk;
+                //player.gameObject.GetComponent<Player>().hp -= monsterController.gameObject.GetComponent<MonsterStatHandler>().Atk;
+                int dmg = monsterController.GetComponent<MonsterStatHandler>().Atk;
+                PlayerManager.Instance.ApplyDamage(dmg);
             }
 
             DestroyProjectile(collision.ClosestPoint(transform.position));
