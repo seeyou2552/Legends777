@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditorInternal.VersionControl.ListControl;
+using System;
+using TMPro;
 
 public class BossSkillManager : MonoBehaviour
 {
@@ -14,22 +11,27 @@ public class BossSkillManager : MonoBehaviour
     public Transform firePoint; // 보스 위치 가져오기
     private Transform target;
     private Camera Boss_Camera;
+    public TextMeshProUGUI EffectText;
 
-    public float fireRate = 5f;
+    public float fireRate = 3f;
     public float defaultBulletSpeed = 15f;
 
     private float currentBulletSpeed;
     private float nextFireTime = 0f;
     private int attackCount = 1;
 
-    private List<System.Func<IEnumerator>> skillFuncs = new List<System.Func<IEnumerator>>();
+    private List<Func<IEnumerator>> skillFuncs = new List<Func<IEnumerator>>();
     private int currentSkillIndex = 0;
 
     private List<GameObject> activeSkillObjects = new List<GameObject>(); // 따로 생성되는 오브젝트를 보스가 죽을시 삭제하기 위해 저장해두는 리스트
     public List<GameObject> ActiveSkillObjects => activeSkillObjects; // 인스펙터 창에서 안보이고 스크립트에서 참조할수있게
 
+    public string[] sHowEffect = { "체력 x 2", "공격력 x 2", "속도 x 2", "공속 x 2", "체력 / 2", "공격력 / 2", "속도 / 2", "공속 / 2" };
+    int getStr;
+
     BossManager bossManager;
     GameManager gameManager;
+    Player player;
 
     private void Awake()
     {
@@ -38,13 +40,14 @@ public class BossSkillManager : MonoBehaviour
 
     private void Start()
     {
+        player = Player.Instance;
         gameManager = GameManager.instance;
         bossManager = GetComponent<BossManager>();
         Boss_Camera = Camera.main;
         currentBulletSpeed = defaultBulletSpeed;
 
-        gameManager.OnStageUpdated += SkillsForStage; // 스테이지 이벤트 사용
         SkillsForStage();
+        gameManager.OnStageUpdated += SkillsForStage; // 스테이지 이벤트 사용
 
         StartCoroutine(UseSkillsRoutine());
     }
@@ -63,14 +66,13 @@ public class BossSkillManager : MonoBehaviour
         skillFuncs.Clear();
 
         // 사용할 스킬들 등록
-        if (gameManager.Stage < 5)
+        if (gameManager.Stage < 4)
         {
-            //skillFuncs.Add(CirCleFireball);
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(MakeMonster);
         }
-        else if (gameManager.Stage < 10)
+        else if (gameManager.Stage < 6)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -79,7 +81,7 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(ShootFast);
             skillFuncs.Add(Teleport);
         }
-        else if (gameManager.Stage < 15)
+        else if (gameManager.Stage < 8)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -98,13 +100,12 @@ public class BossSkillManager : MonoBehaviour
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
         // 오브젝트 풀에서 파이어볼 꺼내기
-        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity);
+        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity, this.transform);
         if (fireball == null) // 파괴된 오브젝트인 경우
         {
             return; // 해당 오브젝트는 더 이상 사용할 수 없으므로 종료
         }
 
-        fireball.transform.SetParent(this.transform);
         // 충돌 처리 - 보스와 파이어볼이 충돌하지 않도록 설정
         Collider2D bossCol = GetComponent<Collider2D>();
         Collider2D fireballCol = fireball.GetComponent<Collider2D>();
@@ -142,15 +143,24 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
+    //플레이어가 존재하는지 체크하고 스킬사용 유무 판단
+    private bool CanUseSkill(Func<IEnumerator> _) => BossManager.instance.PlayerTarget != null;
+
     private IEnumerator UseSkillsRoutine()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
 
         while (true)
         {
             if (skillFuncs.Count > 0)
             {
-                yield return StartCoroutine(skillFuncs[currentSkillIndex]());
+                var nextSkill = skillFuncs[currentSkillIndex];
+
+                if (CanUseSkill(nextSkill))
+                {
+                    yield return StartCoroutine(nextSkill());
+                }
+
                 int num = UnityEngine.Random.Range(0, skillFuncs.Count);
                 currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
             }
@@ -161,7 +171,7 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator MoveFast()
     {
-        bossManager.MonsterSpeed = 8;
+        bossManager.MonsterSpeed = 6;
         yield return new WaitForSeconds(5f);
         bossManager.MonsterSpeed = 3;
     }
@@ -181,16 +191,16 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator ShootFast()
     {
-        fireRate = 10;
+        fireRate = 6;
         currentBulletSpeed = 25f;
         yield return new WaitForSeconds(5f);
         currentBulletSpeed = defaultBulletSpeed;
-        fireRate = 5;
+        fireRate = 3;
     }
 
     private IEnumerator RedGround()
     {
-        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", Vector2.zero, Quaternion.identity);
+        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", Vector2.zero, Quaternion.identity, this.transform);
         if (!activeSkillObjects.Contains(red))
         {
             activeSkillObjects.Add(red);
@@ -203,7 +213,7 @@ public class BossSkillManager : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity);
+            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity, this.transform);
             if(!activeSkillObjects.Contains(lazer1))
             {
                 activeSkillObjects.Add(lazer1);
@@ -211,7 +221,7 @@ public class BossSkillManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             BossObjectPoolManager.Instance.ReturnToPool("redLazer1", lazer1);
 
-            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity);
+            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity, this.transform);
             if (!activeSkillObjects.Contains(lazer2))
             {
                 activeSkillObjects.Add(lazer2);
@@ -228,7 +238,7 @@ public class BossSkillManager : MonoBehaviour
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
             float z = UnityEngine.Random.Range(-180, 180);
-            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z));
+            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z), this.transform);
             if (!activeSkillObjects.Contains(rLazer))
             {
                 activeSkillObjects.Add(rLazer);
@@ -248,6 +258,22 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
+    private IEnumerator Teleport()
+    {
+        GameObject[] teleport = new GameObject[2];
+        for (int i = 0; i < 2; i++)
+        {
+            float x = UnityEngine.Random.Range(-9, 9.1f);
+            float y = UnityEngine.Random.Range(-4, 4.1f);
+            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity, this.transform);
+        }
+        yield return new WaitForSeconds(5f);
+        for (int i = 0; i < 2; i++)
+        {
+            BossObjectPoolManager.Instance.ReturnToPool("Teleport", teleport[i]);
+        }
+    }
+
     private IEnumerator MakeBossItem()
     {
         GameObject[] item = new GameObject[3];
@@ -255,7 +281,7 @@ public class BossSkillManager : MonoBehaviour
         {
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
-            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity);
+            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity, this.transform);
         }
         yield return new WaitForSeconds(5f);
         for (int i = 0; i < 3; i++)
@@ -267,42 +293,95 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Teleport()
+    public IEnumerator MakeRandomEffect()
     {
-        GameObject[] teleport = new GameObject[2];
-        for (int i = 0; i < 2; i++)
+        int random = UnityEngine.Random.Range(0, 4);
+
+        Action ApplyEffect = null;
+        Action RemoveEffect = null;
+        float duration = 5f;
+        switch (random)
         {
-            float x = UnityEngine.Random.Range(-9, 9.1f);
-            float y = UnityEngine.Random.Range(-4, 4.1f);
-            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity);
+            case 0:
+                ApplyEffect = () => { player.attackSpeed *= 2; Debug.Log("+asp"); };
+                RemoveEffect = () => { player.attackSpeed /= 2; };
+                getStr = 0;
+                break;
+            case 1:
+                ApplyEffect = () => { player.speed *= 2; Debug.Log("+sp"); };
+                RemoveEffect = () => { player.speed /= 2; };
+                getStr = 1;
+                break;
+            case 2:
+                ApplyEffect = () => { player.hp *= 2; Debug.Log("+hp"); };
+                duration = 0f;
+                getStr = 2;
+                break;
+            case 3:
+                ApplyEffect = () => { player.power *= 2; Debug.Log("+po"); };
+                RemoveEffect = () => { player.power /= 2; };
+                getStr = 3;
+                break;
+            default:
+                Debug.LogError("noEffect");
+                break;
         }
-        yield return new WaitForSeconds(5f);
-        for(int i = 0;i < 2; i++)
+
+        ApplyEffect?.Invoke();
+        EffectText.text = sHowEffect[getStr];
+
+        if (duration > 0 && RemoveEffect != null)
         {
-            BossObjectPoolManager.Instance.ReturnToPool("Teleport", teleport[i]);
+            yield return new WaitForSeconds(duration);
+            RemoveEffect();
         }
     }
 
-    //private IEnumerator CirCleFireball()
-    //{
-    //    int bulletCount = 8; // 발사할 파이어볼의 개수
-    //    float angleStep = 360f / bulletCount; //총 360도를 bulletCount로 나누어서 45도 간격으로 발사
+    public IEnumerator MakeRandomBedEffect()
+    {
+        int random = UnityEngine.Random.Range(0, 4);
 
-    //    for (int i = 0; i < bulletCount; i++)
-    //    {
-    //        float angle = i * angleStep; // 파이어볼이 위치할 각도
-    //        Vector3 offset = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0f) * 2f; // 반지름 2로 파이어볼 위치 계산
+        Action ApplyEffect = null;
+        Action RemoveEffect = null;
+        float duration = 5f;
+        switch (random)
+        {
+            case 0:
+                ApplyEffect = () => { player.attackSpeed /= 2; };
+                RemoveEffect = () => { player.attackSpeed *= 2; };
+                getStr = 4;
+                break;
+            case 1:
+                ApplyEffect = () => { player.speed /= 2; Debug.Log("-sp"); };
+                RemoveEffect = () => { player.speed *= 2; };
+                getStr = 5;
+                break;
+            case 2:
+                ApplyEffect = () => { player.hp /= 2; Debug.Log("-hp"); };
+                duration = 0f;
+                getStr = 6;
+                break;
+            case 3:
+                ApplyEffect = () => { player.power /= 2; Debug.Log("-po"); };
+                RemoveEffect = () => { player.power *= 2; };
+                getStr = 7;
+                break;
+            default:
+                Debug.LogError("noBedEffect");
+                break;
+        }
 
-    //        // 파이어볼 생성
-    //        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("CircleFireball", firePoint.position +  offset, Quaternion.identity);
-    //        Boss_FIreBallCIrcle fireballScript = fireball.GetComponent<Boss_FIreBallCIrcle>();
-    //        fireballScript.boss = firePoint; // 보스를 파이어볼에 연결
-    //    }
-    //    yield return null;
-    //}
-
+        ApplyEffect?.Invoke();
+        EffectText.text = sHowEffect[getStr];
+        if (duration > 0 && RemoveEffect != null)
+        {
+            yield return new WaitForSeconds(duration);
+            RemoveEffect();
+        }
+    }
     private void OnEnable()
     {
-        target = PlayerController.Instance.transform;
+        if (PlayerController.Instance != null)
+            target = PlayerController.Instance.transform;
     }
 }
