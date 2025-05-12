@@ -15,7 +15,7 @@ public class BossSkillManager : MonoBehaviour
     private Transform target;
     private Camera Boss_Camera;
 
-    public float fireRate = 5f;
+    public float fireRate = 3f;
     public float defaultBulletSpeed = 15f;
 
     private float currentBulletSpeed;
@@ -63,14 +63,14 @@ public class BossSkillManager : MonoBehaviour
         skillFuncs.Clear();
 
         // 사용할 스킬들 등록
-        if (gameManager.Stage < 5)
+        if (gameManager.Stage < 3)
         {
             //skillFuncs.Add(CirCleFireball);
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(MakeMonster);
         }
-        else if (gameManager.Stage < 10)
+        else if (gameManager.Stage < 5)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -79,7 +79,7 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(ShootFast);
             skillFuncs.Add(Teleport);
         }
-        else if (gameManager.Stage < 15)
+        else if (gameManager.Stage < 7)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -161,7 +161,7 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator MoveFast()
     {
-        bossManager.MonsterSpeed = 8;
+        bossManager.MonsterSpeed = 6;
         yield return new WaitForSeconds(5f);
         bossManager.MonsterSpeed = 3;
     }
@@ -181,11 +181,11 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator ShootFast()
     {
-        fireRate = 10;
+        fireRate = 6;
         currentBulletSpeed = 25f;
         yield return new WaitForSeconds(5f);
         currentBulletSpeed = defaultBulletSpeed;
-        fireRate = 5;
+        fireRate = 3;
     }
 
     private IEnumerator RedGround()
