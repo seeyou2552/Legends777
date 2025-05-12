@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private DungeonType dungeonType;
+    private DungeonType dungeonType;
     public DungeonType DungeonType
     {
         get { return dungeonType; }
@@ -42,12 +42,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private int killCount;
-    public int KillCount 
-    { 
-        get { return killCount; } 
-        set { killCount = value; } 
-    }
+
 
     private void Awake()
     {
