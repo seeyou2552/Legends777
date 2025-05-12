@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4999366396833062141}
   m_Layer: 0
   m_Name: BOSS_Sprite
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,37 +106,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &8405471605988494006
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8338193939765475338}
-  m_Layer: 0
-  m_Name: Boss_Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8338193939765475338
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8405471605988494006}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 672466838232044130}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8465360537213919076
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,9 +117,11 @@ GameObject:
   - component: {fileID: 672466838232044130}
   - component: {fileID: 7340590990921052861}
   - component: {fileID: 1627185364297478853}
+  - component: {fileID: -3157176944890689977}
+  - component: {fileID: -6838238381144533660}
   m_Layer: 0
   m_Name: BOSS_Monster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,12 +135,11 @@ Transform:
   m_GameObject: {fileID: 8465360537213919076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7791748455310336747}
-  - {fileID: 8338193939765475338}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &7340590990921052861
@@ -244,3 +214,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.510781, y: 1.9218974}
   m_EdgeRadius: 0
+--- !u!114 &-3157176944890689977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465360537213919076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3276f5af935498f49a64b189acb291ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossHealth: 1000
+  bossSpeed: 3
+  redBackGround: {fileID: 2747213633161331068, guid: b06b4fb5eabdc3d46812013ba790cece, type: 3}
+--- !u!114 &-6838238381144533660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465360537213919076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac164c43da49e0449cf447d0bcd10bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 672466838232044130}
+  fireRate: 5
+  defaultBulletSpeed: 10
