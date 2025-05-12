@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 175954116140470836}
   - component: {fileID: 1288119784805007813}
   - component: {fileID: 1433732445528377322}
-  - component: {fileID: 6800589411218848859}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -188,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b4f888f314c874688ed99475d1c6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 300
   power: 100
   speed: 0
   attackSpeed: 0
@@ -235,22 +234,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6800589411218848859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6838919149086725006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e879a7dc5123fa5409ad3c5cbaf777d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 100
-  power: 2
-  speed: 0
-  attackSpeed: 0
 --- !u!1001 &5048331903263333535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -265,11 +248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: addBomb
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: arrowCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: bombPrefab

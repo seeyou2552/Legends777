@@ -196,7 +196,7 @@ public class MonsterController : MonoBehaviour
     public void OnDead()
     {
         GameManager.instance.KillCount++;
-
+        Debug.Log($"kill :{GameManager.instance.KillCount}");
         //monsterManager.RemoveActiveMonster(this);
 
         //?€ì§ì„ ?•ì?

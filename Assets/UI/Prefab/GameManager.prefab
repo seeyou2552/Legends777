@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e4d59be779369488f6d0be7652a018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxStage: 8
+  stage: 0
+  dungeonType: 0
+  IsStageClear: 0
