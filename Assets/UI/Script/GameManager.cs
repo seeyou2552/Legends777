@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         if (currentWaveIndex > stage)
         {
             isStageClear = true;
+            Debug.Log("Skill Select Popup");
             return;
         }
 
@@ -82,7 +83,6 @@ public class GameManager : MonoBehaviour
 
     public void EndOfWave()
     {
-        Debug.Log("End OF Wave");
         StartNextWave();
     }
 }
