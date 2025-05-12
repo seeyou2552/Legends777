@@ -8,28 +8,28 @@ public class MonsterController : MonoBehaviour
     private MonsterStatHandler monsterStatHandler;
 
 
-    //Å¸°Ù È®ÀÎ
+    //?€ê²??•ì¸
     public Rigidbody2D target;
-    //Å¸°ÙÀ» ÂÑ¾Æ°¥ ÃÖ´ë °Å¸®
+    //?€ê²Ÿì„ ì«“ì•„ê°?ìµœë? ê±°ë¦¬
     private float followRange = 15f;
 
     private Vector2 lookDirection = Vector2.zero;
     public Vector2 LookDirection { get { return lookDirection; } }
 
 
-    //Á×À½ À¯¹«
+    //ì£½ìŒ ? ë¬´
     private bool isDead;
 
-    private Vector2 knockback = Vector2.zero;   //³Ë¹é ¹æÇâ
-    private float knockbackDuration = 0.0f;     //³Ë¹é Áö¼Ó ½Ã°£3
+    private Vector2 knockback = Vector2.zero;   //?‰ë°± ë°©í–¥
+    private float knockbackDuration = 0.0f;     //?‰ë°± ì§€???œê°„3
 
-    protected bool isAttacking;                                 //°ø°İ Áß ¿©ºÎ
-    private float timeSinceLastAttack = 0;         //¸¶Áö¸· °ø°İ ÀÌÈÄ °æ°ú ½Ã°£
+    protected bool isAttacking;                                 //ê³µê²© ì¤??¬ë?
+    private float timeSinceLastAttack = 0;         //ë§ˆì?ë§?ê³µê²© ?´í›„ ê²½ê³¼ ?œê°„
 
-    //¹«±â
+    //ë¬´ê¸°
     [SerializeField] public Transform weaponPivot;
-    [SerializeField] public MonsterWeaponHandler WeaponPrefab;         //ÀåÂøÇÒ ¹«±â ÇÁ¸®ÆÕ(¾øÀ¸¸é ÀÚ½Ä¿¡¼­ Ã£¾Æ¼­ »ç¿ë)
-    [SerializeField] protected MonsterWeaponHandler weaponHandler;                      //ÀåÂøµÈ ¹«±â
+    [SerializeField] public MonsterWeaponHandler WeaponPrefab;         //?¥ì°©??ë¬´ê¸° ?„ë¦¬???†ìœ¼ë©??ì‹?ì„œ ì°¾ì•„???¬ìš©)
+    [SerializeField] protected MonsterWeaponHandler weaponHandler;                      //?¥ì°©??ë¬´ê¸°
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
@@ -62,9 +62,9 @@ public class MonsterController : MonoBehaviour
     private void Update()
     {
         HandleAction();
-        //È¸Àü Ã³¸®
+        //?Œì „ ì²˜ë¦¬
         Rotate(lookDirection);
-        //°ø°İ ÀÔ·Â ¹× ÄğÅ¸ÀÓ °ü¸®
+        //ê³µê²© ?…ë ¥ ë°?ì¿¨í???ê´€ë¦?
         HandleAttackDelay();
     }
 
@@ -87,32 +87,32 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        //Å¸°Ù±îÁö °Å¸®
+        //?€ê²Ÿê¹Œì§€ ê±°ë¦¬
         float distance = DistanceToTarget();
-        //Å¸°Ù ¹æÇâ (¹«±â)
+        //?€ê²?ë°©í–¥ (ë¬´ê¸°)
         Vector2 direction = DirectionToTarget();
 
         isAttacking = false;
 
-        //ÇÃ·¹ÀÌ¾î°¡ ÀÏÁ¤ °Å¸® ¾È¿¡ ÀÖÀ» ¶§¸¸ ÃßÀû ½ÃÀÛ
+        //?Œë ˆ?´ì–´ê°€ ?¼ì • ê±°ë¦¬ ?ˆì— ?ˆì„ ?Œë§Œ ì¶”ì  ?œì‘
         if (distance <= followRange)
         {
-            //¹æÇâ
+            //ë°©í–¥
             lookDirection = direction;
 
-            //°ø°İ »ç°Å¸® ¾ÈÀ¸·Î µé¾î¿ÔÀ» °æ¿ì
+            //ê³µê²© ?¬ê±°ë¦??ˆìœ¼ë¡??¤ì–´?”ì„ ê²½ìš°
             if (distance < weaponHandler.AttackRange)
             {
                 isAttacking = true;
-                //°ø°İ ¹üÀ§ ¾ÈÀÌ¹Ç·Î Á¤Áö
+                //ê³µê²© ë²”ìœ„ ?ˆì´ë¯€ë¡??•ì?
                 rigid.velocity = Vector2.zero;
                 return;
             }
 
-            //°ø°İ ¹üÀ§ ¾ÈÀÌ ¾Æ´Ï±â ¶§¹®¿¡ ÀÌµ¿
-            // ÇÃ·¹ÀÌ¾î¿¡°Ô ÇâÇÏ´Â ¿òÁ÷ÀÓ
+            //ê³µê²© ë²”ìœ„ ?ˆì´ ?„ë‹ˆê¸??Œë¬¸???´ë™
+            // ?Œë ˆ?´ì–´?ê²Œ ?¥í•˜???€ì§ì„
             Vector2 nextDir = direction * monsterStatHandler.Speed * Time.fixedDeltaTime;
-            // ¿òÁ÷ÀÓ ±¸Çö - ¿ø°Å¸®´Â ¿òÁ÷ÀÌÁö ¾Ê°Ô
+            // ?€ì§ì„ êµ¬í˜„ - ?ê±°ë¦¬ëŠ” ?€ì§ì´ì§€ ?Šê²Œ
             if (gameObject.name.Contains("Far"))
             {
                 rigid.velocity = Vector2.zero;
@@ -125,7 +125,7 @@ public class MonsterController : MonoBehaviour
         }
         else
         {
-            //ÇÃ·¹ÀÌ¾î°¡ ÃßÀû ¹üÀ§ ¹Û¿¡ ÀÖ´Ù¸é °¡¸¸È÷ ÀÖ¾î¾ß ÇÔ
+            //?Œë ˆ?´ì–´ê°€ ì¶”ì  ë²”ìœ„ ë°–ì— ?ˆë‹¤ë©?ê°€ë§Œíˆ ?ˆì–´????
             rigid.velocity = Vector2.zero;
             animator.SetBool("isRun", false);
         }
@@ -134,19 +134,19 @@ public class MonsterController : MonoBehaviour
     private void Rotate(Vector2 direction)
     {
         float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        bool isLeft = Mathf.Abs(rotZ) > 90f; //90µµº¸´Ù Å©´Ù¸é ¿ŞÂÊÀ» ¹Ù¶óº¸´Â °ÍÀÓ
+        bool isLeft = Mathf.Abs(rotZ) > 90f; //90?„ë³´???¬ë‹¤ë©??¼ìª½??ë°”ë¼ë³´ëŠ” ê²ƒì„
 
-        //Ä³¸¯ÅÍ°¡ º¸´Â ¹æÇâ´ë·Î ÀÌ¹ÌÁö µÚÁı±â
+        //ìºë¦­?°ê? ë³´ëŠ” ë°©í–¥?€ë¡??´ë?ì§€ ?¤ì§‘ê¸?
         spriter.flipX = isLeft;
 
         if (weaponPivot != null)
         {
-            //weaponPivotÀ» zÃà ±âÁØÀ¸·Î rotZ¸¸Å­ È¸Àü
-            //¹«±â È¸Àü Ã³¸®
+            //weaponPivot??zì¶?ê¸°ì??¼ë¡œ rotZë§Œí¼ ?Œì „
+            //ë¬´ê¸° ?Œì „ ì²˜ë¦¬
             weaponPivot.rotation = Quaternion.Euler(0f, 0f, rotZ);
         }
 
-        //¹«±âµµ ÁÂ¿ì ¹İÀü Ã³¸®
+        //ë¬´ê¸°??ì¢Œìš° ë°˜ì „ ì²˜ë¦¬
         weaponHandler?.Rotate(isLeft);
     }
 
@@ -158,30 +158,30 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        //°ø°İÀÌ Äğ´Ù¿î ÁßÀÌ¸é ½Ã°£ ´©Àû
+        //ê³µê²©??ì¿¨ë‹¤??ì¤‘ì´ë©??œê°„ ?„ì 
         if (timeSinceLastAttack <= weaponHandler.Delay)
         {
             timeSinceLastAttack += Time.deltaTime;
         }
 
-        //ÀÏÁ¤ ½Ã°£¸¶´Ù ¹ß»ç
-        //°ø°İÀÌ ÀÔ·Â ÁßÀÌ°í ÄğÅ¸ÀÓÀÌ ³¡³µÀ¸¸é °ø°İ ½ÇÇà
+        //?¼ì • ?œê°„ë§ˆë‹¤ ë°œì‚¬
+        //ê³µê²©???…ë ¥ ì¤‘ì´ê³?ì¿¨í??„ì´ ?ë‚¬?¼ë©´ ê³µê²© ?¤í–‰
         if (isAttacking && timeSinceLastAttack > weaponHandler.Delay)
         {
             timeSinceLastAttack = 0;
-            //½ÇÁ¦ °ø°İ ½ÇÇà
+            //?¤ì œ ê³µê²© ?¤í–‰
             Attack();
         }
     }
 
     protected virtual void Attack()
     {
-        //¹Ù¶óº¸´Â ¹æÇâÀÌ ÀÖÀ» ¶§¸¸ °ø°İ
+        //ë°”ë¼ë³´ëŠ” ë°©í–¥???ˆì„ ?Œë§Œ ê³µê²©
         if (lookDirection != Vector2.zero)
             weaponHandler.Attack();
     }
 
-    #region Damage Ã³¸®
+    #region Damage ì²˜ë¦¬
     public void OnDamaged(int damage)
     {
         monsterStatHandler.Health -= damage;
@@ -199,10 +199,10 @@ public class MonsterController : MonoBehaviour
 
         //monsterManager.RemoveActiveMonster(this);
 
-        //¿òÁ÷ÀÓ Á¤Áö
+        //?€ì§ì„ ?•ì?
         rigid.velocity = Vector2.zero;
 
-        //¸ğµç SpriteRendererÀÇ Åõ¸íµµ ³·Ãç¼­ Á×Àº È¿°ú ¿¬Ãâ
+        //ëª¨ë“  SpriteRenderer???¬ëª…????¶°??ì£½ì? ?¨ê³¼ ?°ì¶œ
         foreach (SpriteRenderer renderer in transform.GetComponentsInChildren<SpriteRenderer>())
         {
             Color color = renderer.color;
@@ -210,29 +210,29 @@ public class MonsterController : MonoBehaviour
             renderer.color = color;
         }
 
-        //¸ğµç ÄÄÆ÷³ÍÆ®(½ºÅ©¸³Æ® Æ÷ÇÔ) ºñÈ°¼ºÈ­
+        //ëª¨ë“  ì»´í¬?ŒíŠ¸(?¤í¬ë¦½íŠ¸ ?¬í•¨) ë¹„í™œ?±í™”
         foreach (Behaviour component in transform.GetComponentsInChildren<Behaviour>())
         {
             component.enabled = false;
         }
 
         QuestManager.Instance.QuestCheck(0);
-        MonsterManager.Instance.RemoveActiveMonster(this);
+        monsterManager.RemoveActiveMonster(this);
 
-        //2ÃÊ ÈÄ ¿ÀºêÁ§Æ® ÆÄ±«
+        //2ì´????¤ë¸Œ?íŠ¸ ?Œê´´
         Destroy(gameObject, 2f);
     }
     #endregion
 
     public void ShootBullet(RangeWeaponHandler rangeWeaponHandler, Vector2 startPosition, Vector2 direction)
     {
-        //ÇØ´ç ¹«±â¿¡¼­ »ç¿ëÇÒ Åõ»çÃ¼ ÇÁ¸®ÆÕ °¡Á®¿À±â
+        //?´ë‹¹ ë¬´ê¸°?ì„œ ?¬ìš©???¬ì‚¬ì²??„ë¦¬??ê°€?¸ì˜¤ê¸?
         GameObject origin = monsterManager.projectilePrefabs[rangeWeaponHandler.BulletIndex];
 
-        //ÁöÁ¤µÈ À§Ä¡¿¡ Åõ»çÃ¼ »ı¼º
+        //ì§€?•ëœ ?„ì¹˜???¬ì‚¬ì²??ì„±
         GameObject obj = Instantiate(origin, startPosition, Quaternion.identity);
 
-        //Åõ»çÃ¼¿¡ ÃÊ±â Á¤º¸ Àü´Ş (¹æÇâ, ¹«±â µ¥ÀÌÅÍ)
+        //?¬ì‚¬ì²´ì— ì´ˆê¸° ?•ë³´ ?„ë‹¬ (ë°©í–¥, ë¬´ê¸° ?°ì´??
         ProjectileController projectileController = obj.GetComponent<ProjectileController>();
         projectileController.Init(direction, rangeWeaponHandler, this);
     }

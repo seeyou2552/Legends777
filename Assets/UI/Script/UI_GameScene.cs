@@ -64,12 +64,12 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: ´Ù¸¥ UI ¿ä¼Ò ¸®ÇÁ·¹½Ã È£Ãâ
+        // TODO: ë‹¤ë¥¸ UI ìš”ì†Œ ë¦¬í”„ë ˆì‹œ í˜¸ì¶œ
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "½ºÅ×ÀÌÁö " + GameManager.instance.Stage.ToString();
+        stageText.text = "ìŠ¤í…Œì´ì§€ " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()

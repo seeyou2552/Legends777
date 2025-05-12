@@ -23,39 +23,35 @@ public class UI_StageResult : UI_Popup
         }
         var candidates = new Dictionary<string, System.Action>();
         if (skill.shootSpeed < 50f)
-            candidates[$"È­»ì ¼Óµµ +1 ({skill.shootSpeed} ¡æ {skill.shootSpeed + 1})"] =
+            candidates[$"?”ì‚´ ?ë„ +1 ({skill.shootSpeed} ??{skill.shootSpeed + 1})"] =
                 () => skill.shootSpeed += 1f;
 
-        // È­»ì °³¼ö +1 (ÃÖ´ë 5)
+        // ?”ì‚´ ê°œìˆ˜ +1 (ìµœë? 5)
         if (skill.arrowCount < 5)
-            candidates[$"È­»ì °³¼ö +1 ({skill.arrowCount} ¡æ {skill.arrowCount + 1})"] =
+            candidates[$"?”ì‚´ ê°œìˆ˜ +1 ({skill.arrowCount} ??{skill.arrowCount + 1})"] =
                 () => skill.arrowCount += 1;
 
-        // À¯·É È° È°¼ºÈ­ (ÇÑ ¹ø¸¸)
+        // ? ë ¹ ???œì„±??(??ë²ˆë§Œ)
         if (!skill.addGhost)
-            candidates["À¯·É È° È°¼ºÈ­"] = () => skill.addGhost = true;
+            candidates["? ë ¹ ???œì„±??"] = () => skill.addGhost = true;
 
-        // ÆøÅº Ãß°¡ +1 (ÇÊ¿äÇÏ´Ù¸é)
-        if (skill.addBomb < 3) // ¿¹½Ã »óÇÑ 3
-            candidates[$"ÆøÅº +1 ({skill.addBomb} ¡æ {skill.addBomb + 1})"] =
+        // ??ƒ„ ì¶”ê? +1 (?„ìš”?˜ë‹¤ë©?
+        if (skill.addBomb < 3) // ?ˆì‹œ ?í•œ 3
+            candidates[$"??ƒ„ +1 ({skill.addBomb} ??{skill.addBomb + 1})"] =
                 () => skill.addBomb += 1;
 
-        // ºÒ È­»ì È°¼ºÈ­
-        if (!skill.addBurn)
-            candidates["ºÒ È­»ì È°¼ºÈ­"] = () => skill.addBurn = true;
-
-        // °üÅë È°¼ºÈ­
+        // ê´€???œì„±??
         if (!skill.addPenetrates)
-            candidates["°üÅë È­»ì È°¼ºÈ­"] = () => skill.addPenetrates = true;
+            candidates["ê´€???”ì‚´ ?œì„±??"] = () => skill.addPenetrates = true;
 
-        // È®»ê +1 (ÃÖ´ë 5)
+        // ?•ì‚° +1 (ìµœë? 5)
         if (skill.addSpread < 5)
-            candidates[$"È®»ê +1 ({skill.addSpread} ¡æ {skill.addSpread + 1})"] =
+            candidates[$"?•ì‚° +1 ({skill.addSpread} ??{skill.addSpread + 1})"] =
                 () => skill.addSpread += 1;
 
-        // À¯µµ È°¼ºÈ­
+        // ? ë„ ?œì„±??
         if (!skill.addChase)
-            candidates["À¯µµ È­»ì È°¼ºÈ­"] = () => skill.addChase = true;
+            candidates["? ë„ ?”ì‚´ ?œì„±??"] = () => skill.addChase = true;
 
 
         var keys = new List<string>(candidates.Keys);
@@ -69,7 +65,7 @@ public class UI_StageResult : UI_Popup
             keys.RemoveAt(idx);
         }
 
-        // 4) ¹öÆ° ¹è¿­¿¡ »Ñ¸®±â
+        // 4) ë²„íŠ¼ ë°°ì—´??ë¿Œë¦¬ê¸?
         var buttons = new[] { option1Button, option2Button, option3Button };
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -93,7 +89,7 @@ public class UI_StageResult : UI_Popup
             }
             else
             {
-                // ÈÄº¸°¡ ºÎÁ·ÇÒ °æ¿ì ºó ¹öÆ° ºñÈ°¼ºÈ­
+                // ?„ë³´ê°€ ë¶€ì¡±í•  ê²½ìš° ë¹?ë²„íŠ¼ ë¹„í™œ?±í™”
                 btn.gameObject.SetActive(false);
             }
         }

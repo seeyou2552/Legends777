@@ -33,6 +33,7 @@ public class PlayerController : Player
         render = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
         speed = 10;
+        attackSpeed = 3f;
 
         if (Instance != null && Instance != this)
         {

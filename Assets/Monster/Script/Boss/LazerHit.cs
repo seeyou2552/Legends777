@@ -9,7 +9,7 @@ public class LazerHit : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerManager.Instance.ApplyDamage(20);
-            Debug.Log("hit"); // µ¥¹ÌÁö Ã³¸® º¯°æ ¿¹Á¤
+            Debug.Log("hit"); // ÂµÂ¥Â¹ÃŒÃÃ¶ ÃƒÂ³Â¸Â® ÂºÂ¯Â°Ã¦ Â¿Â¹ÃÂ¤
         }
     }
 }

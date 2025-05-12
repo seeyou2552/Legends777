@@ -9,12 +9,12 @@ public class BossObjectPoolManager : MonoBehaviour
     [System.Serializable]
     public class Pool
     {
-        public string tag;            // °íÀ¯ ÅÂ±× ÀÌ¸§ (¿¹: "Fireball", "RedGround")
-        public GameObject prefab;     // »ı¼ºÇÒ ÇÁ¸®ÆÕ
-        public int size;              // ÃÊ±â Ç® Å©±â
+        public string tag;            // ê³ ìœ  íƒœê·¸ ì´ë¦„ (ì˜ˆ: "Fireball", "RedGround")
+        public GameObject prefab;     // ìƒì„±í•  í”„ë¦¬íŒ¹
+        public int size;              // ì´ˆê¸° í’€ í¬ê¸°
     }
 
-    public List<Pool> pools;  // ÀÎ½ºÆåÅÍ¿¡¼­ ¼³Á¤ÇÒ Ç® ¸®½ºÆ®
+    public List<Pool> pools;  // ì¸ìŠ¤í™í„°ì—ì„œ ì„¤ì •í•  í’€ ë¦¬ìŠ¤íŠ¸
     private Dictionary<string, Queue<GameObject>> poolDictionary;
 
     private void Awake()
@@ -22,7 +22,7 @@ public class BossObjectPoolManager : MonoBehaviour
         Instance = this;
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
-        // °¢ Ç®¸¶´Ù ¿ÀºêÁ§Æ® ¹Ì¸® »ı¼ºÇØ¼­ Å¥¿¡ ÀúÀå
+        // ê° í’€ë§ˆë‹¤ ì˜¤ë¸Œì íŠ¸ ë¯¸ë¦¬ ìƒì„±í•´ì„œ íì— ì €ì¥
         foreach (Pool pool in pools)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
@@ -36,12 +36,12 @@ public class BossObjectPoolManager : MonoBehaviour
         }
     }
 
-    // ¿ÀºêÁ§Æ® Ç®¿¡¼­ ²¨³»±â
+    // ì˜¤ë¸Œì íŠ¸ í’€ì—ì„œ êº¼ë‚´ê¸°
     public GameObject GetFromPool(string tag, Vector2 position, Quaternion rotation, Transform parent = null)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
-            Debug.LogWarning($"{tag} ÅÂ±×°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogWarning($"{tag} íƒœê·¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
             return null;
         }
 
@@ -49,7 +49,7 @@ public class BossObjectPoolManager : MonoBehaviour
         if (poolDictionary[tag].Count > 0)
         {
             obj = poolDictionary[tag].Dequeue();
-            if (obj == null) // ÀÌ¹Ì ÆÄ±«µÈ ¿ÀºêÁ§Æ®¸¦ ¹İÈ¯ÇÏ·Á´Â °æ¿ì
+            if (obj == null) // ì´ë¯¸ íŒŒê´´ëœ ì˜¤ë¸Œì íŠ¸ë¥¼ ë°˜í™˜í•˜ë ¤ëŠ” ê²½ìš°
             {
                 obj = Instantiate(GetPrefab(tag), parent);
             }
@@ -66,19 +66,19 @@ public class BossObjectPoolManager : MonoBehaviour
         return obj;
     }
 
-    // ¿ÀºêÁ§Æ® Ç®·Î ¹İÈ¯
+    // ì˜¤ë¸Œì íŠ¸ í’€ë¡œ ë°˜í™˜
     public void ReturnToPool(string tag, GameObject obj)
     {
-        if (obj == null || !obj.activeSelf) // ÀÌ¹Ì ºñÈ°¼ºÈ­µÇ¾ú°Å³ª ÆÄ±«µÈ ¿ÀºêÁ§Æ®´Â ¹İÈ¯ÇÏÁö ¾ÊÀ½
+        if (obj == null || !obj.activeSelf) // ì´ë¯¸ ë¹„í™œì„±í™”ë˜ì—ˆê±°ë‚˜ íŒŒê´´ëœ ì˜¤ë¸Œì íŠ¸ëŠ” ë°˜í™˜í•˜ì§€ ì•ŠìŒ
         {
             return;
         }
 
-        obj.SetActive(false); // ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
-        poolDictionary[tag].Enqueue(obj); // Ç®¿¡ ´Ù½Ã ³Ö±â
+        obj.SetActive(false); // ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”
+        poolDictionary[tag].Enqueue(obj); // í’€ì— ë‹¤ì‹œ ë„£ê¸°
     }
 
-    // ÅÂ±×·Î ÇÁ¸®ÆÕ Ã£±â
+    // íƒœê·¸ë¡œ í”„ë¦¬íŒ¹ ì°¾ê¸°
     private GameObject GetPrefab(string tag)
     {
         return pools.Find(p => p.tag == tag)?.prefab;

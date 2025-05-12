@@ -11,11 +11,11 @@ public class GameManager : MonoBehaviour
     public Action OnStageUpdated;
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
-    
+
     [SerializeField] private int stage;
-    public int Stage 
-    { 
-        get { return stage; } 
+    public int Stage
+    {
+        get { return stage; }
         set
         {
             stage = value;
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-     
+
     }
 
 
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
         {
             ShowStageResult();
             Debug.Log("Skill Select Popup");
-            
+
             return;
         }
 
@@ -90,8 +90,8 @@ public class GameManager : MonoBehaviour
 
     public void EndOfWave()
     {
-        
-        StartNextWave();        
+
+        StartNextWave();
     }
 
     void ShowStageResult()
@@ -105,9 +105,9 @@ public class GameManager : MonoBehaviour
     private IEnumerator SubscribeToBossDeath()
     {
         yield return null;
-        if(BossManager.instance !=null)
+        if (BossManager.instance != null)
         {
-             BossManager.instance.Ondead += ShowStageResult;
+            BossManager.instance.Ondead += ShowStageResult;
         }
     }
 }

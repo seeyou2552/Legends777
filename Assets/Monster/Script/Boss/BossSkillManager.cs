@@ -8,7 +8,7 @@ public class BossSkillManager : MonoBehaviour
 {
     public static BossSkillManager Instance;
 
-    public Transform firePoint; // º¸½º À§Ä¡ °¡Á®¿À±â
+    public Transform firePoint; // ë³´ìŠ¤ ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
     private Transform target;
     private Camera Boss_Camera;
     public TextMeshProUGUI EffectText;
@@ -23,10 +23,10 @@ public class BossSkillManager : MonoBehaviour
     private List<Func<IEnumerator>> skillFuncs = new List<Func<IEnumerator>>();
     private int currentSkillIndex = 0;
 
-    private List<GameObject> activeSkillObjects = new List<GameObject>(); // µû·Î »ı¼ºµÇ´Â ¿ÀºêÁ§Æ®¸¦ º¸½º°¡ Á×À»½Ã »èÁ¦ÇÏ±â À§ÇØ ÀúÀåÇØµÎ´Â ¸®½ºÆ®
-    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ÀÎ½ºÆåÅÍ Ã¢¿¡¼­ ¾Èº¸ÀÌ°í ½ºÅ©¸³Æ®¿¡¼­ ÂüÁ¶ÇÒ¼öÀÖ°Ô
+    private List<GameObject> activeSkillObjects = new List<GameObject>(); // ë”°ë¡œ ìƒì„±ë˜ëŠ” ì˜¤ë¸Œì íŠ¸ë¥¼ ë³´ìŠ¤ê°€ ì£½ì„ì‹œ ì‚­ì œí•˜ê¸° ìœ„í•´ ì €ì¥í•´ë‘ëŠ” ë¦¬ìŠ¤íŠ¸
+    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ì¸ìŠ¤í™í„° ì°½ì—ì„œ ì•ˆë³´ì´ê³  ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ì°¸ì¡°í• ìˆ˜ìˆê²Œ
 
-    public string[] sHowEffect = { "Ã¼·Â x 2", "°ø°İ·Â x 2", "¼Óµµ x 2", "°ø¼Ó x 2", "Ã¼·Â / 2", "°ø°İ·Â / 2", "¼Óµµ / 2", "°ø¼Ó / 2" };
+    public string[] sHowEffect = { "ì²´ë ¥ x 2", "ê³µê²©ë ¥ x 2", "ì†ë„ x 2", "ê³µì† x 2", "ì²´ë ¥ / 2", "ê³µê²©ë ¥ / 2", "ì†ë„ / 2", "ê³µì† / 2" };
     int getStr;
 
     BossManager bossManager;
@@ -47,7 +47,7 @@ public class BossSkillManager : MonoBehaviour
         currentBulletSpeed = defaultBulletSpeed;
 
         SkillsForStage();
-        gameManager.OnStageUpdated += SkillsForStage; // ½ºÅ×ÀÌÁö ÀÌº¥Æ® »ç¿ë
+        gameManager.OnStageUpdated += SkillsForStage; // ìŠ¤í…Œì´ì§€ ì´ë²¤íŠ¸ ì‚¬ìš©
 
         StartCoroutine(UseSkillsRoutine());
     }
@@ -60,12 +60,12 @@ public class BossSkillManager : MonoBehaviour
             nextFireTime = Time.time + 1f / fireRate;
         }
     }
-    private void SkillsForStage() // »ç¿ëÇÒ ½ºÅ³µî·ÏÇÔ¼ö
+    private void SkillsForStage() // ì‚¬ìš©í•  ìŠ¤í‚¬ë“±ë¡í•¨ìˆ˜
     {
         int stage = gameManager.Stage;
         skillFuncs.Clear();
 
-        // »ç¿ëÇÒ ½ºÅ³µé µî·Ï
+        // ì‚¬ìš©í•  ìŠ¤í‚¬ë“¤ ë“±ë¡
         if (gameManager.Stage < 4)
         {
             skillFuncs.Add(MoveFast);
@@ -99,14 +99,14 @@ public class BossSkillManager : MonoBehaviour
     {
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
-        // ¿ÀºêÁ§Æ® Ç®¿¡¼­ ÆÄÀÌ¾îº¼ ²¨³»±â
+        // ì˜¤ë¸Œì íŠ¸ í’€ì—ì„œ íŒŒì´ì–´ë³¼ êº¼ë‚´ê¸°
         GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity, this.transform);
-        if (fireball == null) // ÆÄ±«µÈ ¿ÀºêÁ§Æ®ÀÎ °æ¿ì
+        if (fireball == null) // íŒŒê´´ëœ ì˜¤ë¸Œì íŠ¸ì¸ ê²½ìš°
         {
-            return; // ÇØ´ç ¿ÀºêÁ§Æ®´Â ´õ ÀÌ»ó »ç¿ëÇÒ ¼ö ¾øÀ¸¹Ç·Î Á¾·á
+            return; // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ëŠ” ë” ì´ìƒ ì‚¬ìš©í•  ìˆ˜ ì—†ìœ¼ë¯€ë¡œ ì¢…ë£Œ
         }
 
-        // Ãæµ¹ Ã³¸® - º¸½º¿Í ÆÄÀÌ¾îº¼ÀÌ Ãæµ¹ÇÏÁö ¾Êµµ·Ï ¼³Á¤
+        // ì¶©ëŒ ì²˜ë¦¬ - ë³´ìŠ¤ì™€ íŒŒì´ì–´ë³¼ì´ ì¶©ëŒí•˜ì§€ ì•Šë„ë¡ ì„¤ì •
         Collider2D bossCol = GetComponent<Collider2D>();
         Collider2D fireballCol = fireball.GetComponent<Collider2D>();
         if (fireballCol != null && bossCol != null)
@@ -114,7 +114,7 @@ public class BossSkillManager : MonoBehaviour
             Physics2D.IgnoreCollision(fireballCol, bossCol);
         }
 
-        // ÆÄÀÌ¾îº¼¿¡ ½ºÅ©¸³Æ® ¿¬°á ¹× ¹æÇâ, ¼Óµµ ¼³Á¤
+        // íŒŒì´ì–´ë³¼ì— ìŠ¤í¬ë¦½íŠ¸ ì—°ê²° ë° ë°©í–¥, ì†ë„ ì„¤ì •
         Boss_FireBall fireballScript = fireball.GetComponent<Boss_FireBall>();
         fireballScript.SetDirection(direction.normalized);
         fireballScript.speed = currentBulletSpeed;
@@ -131,19 +131,19 @@ public class BossSkillManager : MonoBehaviour
         else
         {
             attackCount = 1;
-            int bulletCount = 8; // ¹ß»çÇÒ ÆÄÀÌ¾îº¼ÀÇ °³¼ö
-            float angleStep = 360f / bulletCount; //ÃÑ 360µµ¸¦ bulletCount·Î ³ª´©¾î¼­ 45µµ °£°İÀ¸·Î ¹ß»ç
+            int bulletCount = 8; // ë°œì‚¬í•  íŒŒì´ì–´ë³¼ì˜ ê°œìˆ˜
+            float angleStep = 360f / bulletCount; //ì´ 360ë„ë¥¼ bulletCountë¡œ ë‚˜ëˆ„ì–´ì„œ 45ë„ ê°„ê²©ìœ¼ë¡œ ë°œì‚¬
 
             for (int i = 0; i < bulletCount; i++)
             {
-                float angle = i * angleStep * Mathf.Deg2Rad; //¶óµğ¾È °¢µµ·Î º¯È¯
-                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos´Â xÃà ¹æÇâ, SinÀº yÃà ¹æÇâ ÀÌ°É·Î unit circle»óÀÇ ¹æÇâÀ» °è»ê
+                float angle = i * angleStep * Mathf.Deg2Rad; //ë¼ë””ì•ˆ ê°ë„ë¡œ ë³€í™˜
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //CosëŠ” xì¶• ë°©í–¥, Sinì€ yì¶• ë°©í–¥ ì´ê±¸ë¡œ unit circleìƒì˜ ë°©í–¥ì„ ê³„ì‚°
                 ShootFireball(direction);
             }
         }
     }
 
-    //ÇÃ·¹ÀÌ¾î°¡ Á¸ÀçÇÏ´ÂÁö Ã¼Å©ÇÏ°í ½ºÅ³»ç¿ë À¯¹« ÆÇ´Ü
+    //í”Œë ˆì´ì–´ê°€ ì¡´ì¬í•˜ëŠ”ì§€ ì²´í¬í•˜ê³  ìŠ¤í‚¬ì‚¬ìš© ìœ ë¬´ íŒë‹¨
     private bool CanUseSkill(Func<IEnumerator> _) => BossManager.instance.PlayerTarget != null;
 
     private IEnumerator UseSkillsRoutine()
