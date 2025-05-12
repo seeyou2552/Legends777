@@ -58,13 +58,15 @@ public class PlayerManager : MonoBehaviour
             var ms = go.GetComponent<MonsterStatHandler>();
             if (ms != null) ApplyDamage(ms.Atk);
         }
-        else if (go.CompareTag("FireBall"))
-        {
-            // 보스 FireBall
-            ApplyDamage(10);
-            Destroy(go);
-        }
+        //else if (go.CompareTag("FireBall"))
+        //{
+        //    // 보스 FireBall
+        //    ApplyDamage(10);
+        //    Destroy(go);
+        //}
     }
+
+    /*
     void OnTriggerEnter2D(Collider2D col)
     {
         if (invincibilityTimer > 0f) return;
@@ -81,7 +83,7 @@ public class PlayerManager : MonoBehaviour
             Destroy(go);
         }
     }
-
+    */
 
     public void ApplyDamage(int damage)
     {
