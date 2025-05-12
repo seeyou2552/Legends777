@@ -213,7 +213,7 @@ public class MonsterController : MonoBehaviour
         {
             component.enabled = false;
         }
-
+        QuestManager.Instance.QuestCheck(0);
         //2초 후 오브젝트 파괴
         Destroy(gameObject, 2f);
     }
