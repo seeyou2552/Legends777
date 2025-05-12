@@ -16,7 +16,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI button22;
     [SerializeField] private TextMeshProUGUI button33;
 
-    [SerializeField] private GameObject BasicWeapon;
+    [SerializeField] private GameObject BasicWeapon;  //무기 프리팹
     [SerializeField] private GameObject Weapon_1;
     [SerializeField] private GameObject Weapon_2;
     [SerializeField] private GameObject Weapon_3;
@@ -51,11 +51,11 @@ public class ShopManager : MonoBehaviour
 
     private void Update()
     {
-        if (inventory[1]) { button11.text = "Equip"; }
+        if (inventory[1]) { button11.text = "Equip"; }   //무기를 구매 했는지 확인, 했으면 버튼 글자 바꿈
         if (inventory[2]) { button22.text = "Equip"; }
         if (inventory[3]) { button33.text = "Equip"; }
 
-        switch (PlayerController.Instance.Equip.Num())
+        switch (PlayerController.Instance.Equip.Num())  //무기를 장착했는지 확인
         {
             case 1:
                 button11.text = "Equipped";
@@ -83,17 +83,16 @@ public class ShopManager : MonoBehaviour
         else { EquipWeapon(num); return; }
     }
 
-    private void Buy(int num)
+    private void Buy(int num) //무기 구매
     {
         if(PlayerController.Instance.MinusGold(searchWeapon(num).Price()))// 플레이어 골드를 체크, 충분하면 마이너스 후 true
         {
-            // inventory에 해당 무기 true
-            inventory[num] = true;
+            inventory[num] = true;  // inventory에 해당 무기 true
         }
     }
 
 
-    private void EquipWeapon(int num)
+    private void EquipWeapon(int num)// 무기 장착
     {
         if (inventory[num]) {
 
