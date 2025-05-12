@@ -19,7 +19,7 @@ public class QuestNPC : MonoBehaviour
 
         acceptButton.onClick.AddListener(() => ButtonPressed());
         ExitButton.onClick.AddListener(() => UICanvas.gameObject.SetActive(false));
-        //acceptButton.text = "Accept";
+        acceptButtonText.text = "Accept";
     }
 
     private void Update()

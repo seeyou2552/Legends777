@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -13,15 +13,15 @@ public class QuestManager : SingleTon<QuestManager>
 {
     private List<QuestController> questController;
 
-    [SerializeField] private Canvas UICanvas;
+    [SerializeField] public Canvas QuestCanvas;
     [SerializeField] private TextMeshProUGUI questUIText1; //퀘스트UI(화면 왼쪽에 뜨는 퀘스트 정보)
-    [SerializeField] private TextMeshProUGUI questUIText2;
+
     [SerializeField] private TextMeshProUGUI count;
     [SerializeField] private TextMeshProUGUI goal;
 
     protected override void Awake() { base.Awake(); }
 
-    public void Init()
+    public void Start()
     {
         questController = new List<QuestController>(); int i = 0;
 
@@ -31,12 +31,18 @@ public class QuestManager : SingleTon<QuestManager>
         questController.Add(new QuestController(i, "Kill the boss", 1, 200)); i++;
         questController.Add(new QuestController(i, "Clear the room", 1, 400)); i++;
         //questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
+
+        QuestCanvas.gameObject.SetActive(false);
     }
 
     private void Update()      //퀘스트 진행사항 퀘스트UI에 반영
     {
-        count.text = (questController[0].PlusCount).ToString();  //퀘스트 진행 상황 UI에 반영
+        if (questController == null)
+        {
+            return;
+        }
 
+        count.text = (questController[0].PlusCount).ToString();  //퀘스트 진행 상황 UI에 반영
 
         if (Input.GetKeyDown(KeyCode.M))   //테스트용 퀘스트 클리어 버튼
         {
@@ -47,11 +53,11 @@ public class QuestManager : SingleTon<QuestManager>
         }
     }
 
-    public void ButtonPressed() //버튼을 눌렀을 때
+    public void ButtonPressed() //QuestNPC에서 버튼을 눌렀을 때
     {
         QuestOn();  //퀘스트 수락상태로 초기화
 
-        UICanvas.gameObject.SetActive(true);
+        QuestCanvas.gameObject.SetActive(true);
 
         foreach (var quest in questController)
         {
@@ -91,9 +97,13 @@ public class QuestManager : SingleTon<QuestManager>
         Debug.Log("플레이어의 골드 : " + PlayerController.Instance.Gold);
     }
 
-    public bool QuestClearCheck()
+    public bool QuestClearCheck()// 클리어한 퀘스트가 있는지 확인
     {
-        foreach (var quest in questController) { if (quest.Clear) { return true; } }
+        if (questController == null)
+        {
+            return false;
+        }
+        foreach (var quest in questController) {  if (quest.Clear) { return true; }  }
         return false;
     }
 }

@@ -7,10 +7,12 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
+    [SerializeField] private Canvas UICanvas;
     [SerializeField] private Button Button1;
     [SerializeField] private Button Button2;
     [SerializeField] private Button Button3;
     [SerializeField] private Button BaseWeaponButton;
+    [SerializeField] private Button ExitButton;
 
     [SerializeField] private TextMeshProUGUI button11;
     [SerializeField] private TextMeshProUGUI button22;
@@ -40,14 +42,14 @@ public class ShopManager : MonoBehaviour
         weapons.Add(new WeaponController(i, 7, 6)); inventory.Add(false); i++;
 
 
-
+        BaseWeaponButton.onClick.AddListener(() => ButtonPressed(0));
         Button1.onClick.AddListener(()=>ButtonPressed(1));
         Button2.onClick.AddListener(() => ButtonPressed(2));
         Button3.onClick.AddListener(() => ButtonPressed(3));
+        ExitButton.onClick.AddListener(() => UICanvas.gameObject.SetActive(false));
 
-        BaseWeaponButton.onClick.AddListener(() => ButtonPressed(0));
-        
-        for(int j=0; j<i; j++) { inventory[j] = false; }
+
+        for (int j=0; j<i; j++) { inventory[j] = false; }
         inventory[0] = true;
         ButtonPressed(0);
     }
