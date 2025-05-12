@@ -133,15 +133,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 235457665964125503, guid: 3616bec3c6c66424c9fd19b2917550a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.1478677
       objectReference: {fileID: 0}
     - target: {fileID: 235457665964125503, guid: 3616bec3c6c66424c9fd19b2917550a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.45564353
       objectReference: {fileID: 0}
     - target: {fileID: 235457665964125503, guid: 3616bec3c6c66424c9fd19b2917550a8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.2311544
       objectReference: {fileID: 0}
     - target: {fileID: 235457665964125503, guid: 3616bec3c6c66424c9fd19b2917550a8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -526,9 +526,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 175954116140470836, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
-      propertyPath: hp
-      value: 10000
-      objectReference: {fileID: 0}
+      propertyPath: weaponRenderer
+      value: 
+      objectReference: {fileID: 1758078103}
     - target: {fileID: 993099867147046914, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -769,6 +769,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0a306523d9feba4590627df996798ae, type: 3}
+--- !u!212 &1758078103 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6736594487994161059, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
+  m_PrefabInstance: {fileID: 1092668400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
