@@ -82,13 +82,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d3c510093001743befb1c74c289a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UICanvas: {fileID: 1917880709203434750}
   Button1: {fileID: 8759113464527653456}
   Button2: {fileID: 1171854430040549508}
   Button3: {fileID: 2463336155743119784}
+  BaseWeaponButton: {fileID: 2109233988848450639}
   button11: {fileID: 4674229487324638227}
   button22: {fileID: 8376582235023983446}
   button33: {fileID: 8039178887763452739}
-  BaseWeaponButton: {fileID: 2109233988848450639}
 --- !u!1 &767626468412847422
 GameObject:
   m_ObjectHideFlags: 0
