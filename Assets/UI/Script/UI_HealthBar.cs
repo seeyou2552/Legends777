@@ -7,6 +7,11 @@ public class UI_HealthBar : MonoBehaviour
     public Slider healthSlider;
     public TextMeshProUGUI healthText;
 
+    private void Init()
+    {
+        
+    }
+
     public void SetHealth(int current, int max)
     {
         healthSlider.maxValue = max;
