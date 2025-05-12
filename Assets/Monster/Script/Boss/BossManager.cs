@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
-    [Range(1, 1000)][SerializeField] private int initialHealth = 10;
+    [Range(1, 5000)][SerializeField] private int initialHealth = 10;
     public int MaxHealth { get; private set; }
 
     public event Action<int, int> OnHealthChanged;
@@ -24,6 +24,7 @@ public class BossManager : MonoBehaviour
             if(health <= 0)
             {
                 Ondead?.Invoke();
+                Destroy(gameObject);
             }
         }
 
