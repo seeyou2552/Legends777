@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  power: 100
+  power: 2
 --- !u!1001 &5048331903263333535
 PrefabInstance:
   m_ObjectHideFlags: 0

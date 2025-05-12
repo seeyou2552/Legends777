@@ -106,6 +106,8 @@ public class BossManager : MonoBehaviour
                 }
                 BossSkillManager.Instance.ActiveSkillObjects.Clear();
 
+                GameManager.instance.IsStageClear = true;
+
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
                 Destroy(gameObject);  // ���� ������Ʈ �ı�
                 QuestManager.Instance.QuestCheck(1);

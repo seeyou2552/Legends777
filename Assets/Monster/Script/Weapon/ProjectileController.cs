@@ -15,7 +15,7 @@ public class ProjectileController : MonoBehaviour
     private Rigidbody2D _rigid;
     private SpriteRenderer _sprite;
 
-    MonsterController monsterController;
+    public MonsterController monsterController;
 
     private void Awake()
     {

@@ -26,7 +26,7 @@ public class MapController : MonoBehaviour
     [SerializeField] private float minY = -3.9f;
     [SerializeField] private float maxY = 3.7f;
 
-    [SerializeField] private Vector2 obstacleSize = new Vector2(1.7f, 1.7f);
+    [SerializeField] private Vector2 obstacleSize = new Vector2(1.3f, 1.3f);
     [SerializeField] private LayerMask obstacleLayer;
 
     [SerializeField] private float minDistance = 2.0f;

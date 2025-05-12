@@ -17,12 +17,13 @@ public class MonsterManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> enemyPrefabs; // 생성할 적 프리팹 리스트
 
-    private List<MonsterController> activeEnemies = new List<MonsterController>(); // 현재 활성화된 적들
+    private List<MonsterController> activeMonsters = new List<MonsterController>(); // 현재 활성화된 적들
 
-    private bool enemySpawnComplite;
+    private bool monsterSpawnComplite;
 
     //적 생성 간 간격
     [SerializeField] private float timeBetweenSpawns = 0.2f;
+    [SerializeField] private float timeBetweenWaves = 1f;
 
     //한 웨이브에 몇 개의 몬스터 생성할 것인지?
     [SerializeField] private int waveMonsterCount;
@@ -39,13 +40,19 @@ public class MonsterManager : MonoBehaviour
     {
         //Stage Type이 Monster로 변경되면 몬스터 스폰 (웨이브 시작)
         waveMonsterCount = 5;
-        GameManager.instance.OnDungeonTypeMonsterUpdated += StartWave;
     }
 
-    public void StartWave()
+    public void StartWave(int waveIdx)
     {
+        if (waveIdx <= 0)
+        {
+            GameManager.instance.EndOfWave();
+            return;
+        }
+       
         if (waveRoutine != null)
             StopCoroutine(waveRoutine);
+
         waveRoutine = StartCoroutine(SpawnWave(waveMonsterCount));
     }
 
@@ -56,7 +63,8 @@ public class MonsterManager : MonoBehaviour
 
     private IEnumerator SpawnWave(int waveMonsterCount)
     {
-        enemySpawnComplite = false;
+        monsterSpawnComplite = false;
+        yield return new WaitForSeconds(timeBetweenWaves);
 
         for (int i = 0; i < waveMonsterCount; i++)
         {
@@ -64,7 +72,7 @@ public class MonsterManager : MonoBehaviour
             SpawnRandomMonster();
         }
 
-        enemySpawnComplite = true;
+        monsterSpawnComplite = true;
     }
 
     public void SpawnRandomMonster()
@@ -88,6 +96,13 @@ public class MonsterManager : MonoBehaviour
         MonsterController enemyController = spawnedEnemy.GetComponent<MonsterController>();
         enemyController.Init();
 
-        activeEnemies.Add(enemyController);
+        activeMonsters.Add(enemyController);
+    }
+
+    public void RemoveActiveMonster(MonsterController monster)
+    {
+        activeMonsters.Remove(monster);
+        if (monsterSpawnComplite && activeMonsters.Count == 0)
+            GameManager.instance.EndOfWave();
     }
 }

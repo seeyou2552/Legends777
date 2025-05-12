@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0.5
-  weaponSize: 1
+  weaponSize: 0.7
   speed: 10
   attackRange: 5
   isOnKnockback: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   knockbackTime: 0.5
   projectileSpawnPosition: {fileID: 3445637546415058345}
   bulletIndex: 0
-  bulletSize: 1
+  bulletSize: 0.7
   duration: 10
   spread: 1
   numberOfProjectilesPerShot: 1
