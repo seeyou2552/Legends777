@@ -73,27 +73,27 @@ public class BossSkillManager : MonoBehaviour
         // ?毄???ろ偓???彪
         if (gameManager.Stage < 3)
         {
-            //skillFuncs.Add(MoveFast);
+            skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
-            //skillFuncs.Add(LazerPatten2);
-            //skillFuncs.Add(CameraReversal);
-            //skillFuncs.Add(ShootFast);
-            //skillFuncs.Add(Teleport);
-            //skillFuncs.Add(MakeBossItem);
-            //skillFuncs.Add(LazerPattern);
-            //skillFuncs.Add(RedGround);
+            skillFuncs.Add(LazerPatten2);
+            skillFuncs.Add(CameraReversal);
+            skillFuncs.Add(ShootFast);
+            skillFuncs.Add(Teleport);
+            skillFuncs.Add(MakeBossItem);
+            skillFuncs.Add(LazerPattern);
+            skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 5)
         {
-            //skillFuncs.Add(MoveFast);
+            skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
-            //skillFuncs.Add(LazerPatten2);
-            //skillFuncs.Add(CameraReversal);
-            //skillFuncs.Add(ShootFast);
-            //skillFuncs.Add(Teleport);
-            //skillFuncs.Add(MakeBossItem);
-            //skillFuncs.Add(LazerPattern);
-            //skillFuncs.Add(RedGround);
+            skillFuncs.Add(LazerPatten2);
+            skillFuncs.Add(CameraReversal);
+            skillFuncs.Add(ShootFast);
+            skillFuncs.Add(Teleport);
+            skillFuncs.Add(MakeBossItem);
+            skillFuncs.Add(LazerPattern);
+            skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 9)
         {
