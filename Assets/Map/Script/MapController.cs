@@ -110,31 +110,46 @@ public class MapController : MonoBehaviour
 
     private void InitLobbyMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //quest npc 생성
         SpawnNpcOrBox();
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.mainBgm);
     }
 
     private void InitMonsterMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //장애물 랜덤으로 생성
         CreateObstacle(stage);
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.battleBgm);
     }
 
     private void InitBossMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //아무것도 없는 상태
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.battleBgm);
     }
 
     private void InitItemMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //아이템 생성
         SpawnNpcOrBox();
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.mainBgm);
     }
 
     private void InitStoreMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //store npc 생성
         SpawnNpcOrBox();
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.mainBgm);
     }
 
     private void SpawnNpcOrBox()

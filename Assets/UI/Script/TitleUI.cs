@@ -17,7 +17,7 @@ public class TitleUI : MonoBehaviour
     private void OnStartButtonClicked()
     {
         // Load the game scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Legends777");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("ShowStory");
     }
 
     private void OnExitButtonClicked()

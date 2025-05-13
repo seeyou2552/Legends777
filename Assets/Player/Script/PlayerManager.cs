@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,8 +10,10 @@ public class PlayerManager : MonoBehaviour
     SpriteRenderer renderer;
     Rigidbody2D rigid;
 
-    [Header("무적")]
+    [Header("臾댁쟻")]
     [SerializeField] float invincibilityDuration = 0.2f;
+    [SerializeField] private AudioClip attackSound;
+
     float invincibilityTimer;
 
     int maxHealth, currentHealth;
@@ -30,7 +32,7 @@ public class PlayerManager : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
 
-        // Player.cs ???�언??초기 hp �??�어??
+        // Player.cs ???좎뼵??珥덇린 hp 瑜??쎌뼱??
     }
 
     private void Start()
@@ -46,7 +48,7 @@ public class PlayerManager : MonoBehaviour
             invincibilityTimer -= Time.deltaTime;
     }
 
-    // <-- ?�기??모든 충돌??처리?�니??
+    // <-- ?ш린??紐⑤뱺 異⑸룎??泥섎━?⑸땲??
     void OnCollisionEnter2D(Collision2D col)
     {
         if (invincibilityTimer > 0f) return;
@@ -54,7 +56,7 @@ public class PlayerManager : MonoBehaviour
         var go = col.gameObject;
         if (go.CompareTag("Boss"))
         {
-            // (?�시) 보스 몸통 ?�트 ?��?지
+            // (?덉떆) 蹂댁뒪 紐명넻 ?덊듃 ?곕?吏
             ApplyDamage(10);
         }
         else if (go.CompareTag("Monster"))
@@ -64,7 +66,7 @@ public class PlayerManager : MonoBehaviour
         }
         //else if (go.CompareTag("FireBall"))
         //{
-        //    // 보스 FireBall
+        //    // 蹂댁뒪 FireBall
         //    ApplyDamage(10);
         //    Destroy(go);
         //}
@@ -104,6 +106,8 @@ public class PlayerManager : MonoBehaviour
 
         if (currentHealth <= 0)
             OnPlayerDie?.Invoke();
+
+        SoundManager.Instance.PlaySFX(attackSound);
     }
 
     IEnumerator EndInvincibility()

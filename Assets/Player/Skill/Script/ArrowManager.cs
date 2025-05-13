@@ -35,15 +35,15 @@ public class ArrowManager : MonoBehaviour
 
         if (skill.addFreeze) FreezeArrow();
 
-        if (skill.addBomb <= 3 && skill.addBomb > 0 && this.gameObject.name == "Weapon_Bomb(Clone)") StartCoroutine(Spread());
+        if (skill.addBomb <= 3 && skill.addBomb > 0 && this.gameObject.name == "Weapon_Bomb(Clone)") StartCoroutine(Spread(1f));
 
-        if (skill.addSpread <= 3 && skill.addSpread > 0 && this.gameObject.name == "Weapon_Arrow(Clone)") StartCoroutine(Spread());
+        if (skill.addSpread <= 3 && skill.addSpread > 0 && this.gameObject.name == "Weapon_Arrow(Clone)") StartCoroutine(Spread(1f));
 
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // 몬스???�중
+        // 몬스터 적중 시
         if (other.gameObject.CompareTag("Monster"))
         {
             MonsterController monster = other.GetComponent<MonsterController>();
@@ -57,15 +57,29 @@ public class ArrowManager : MonoBehaviour
 
             if (skill.addPenetrates)
             {
-                if(skill.addChase) Destroy(this.gameObject);
+                if (skill.addChase)
+                {
+                    if (skill.addSpread > 0 && this.gameObject.name.StartsWith("Weapon_Arrow")) StartCoroutine(Spread(0f));
+                    else Destroy(this.gameObject);
+                }
             }
-            else Destroy(this.gameObject); // ë¹?�ê´€í?��?
+            else if (skill.addSpread > 0 && this.gameObject.name.StartsWith("Weapon_Arrow"))
+            {
+                StartCoroutine(Spread(0f));
+            }
+            else Destroy(this.gameObject);
+
+
         }
 
-        // 보스 ?�중
+        // 보스 ?�중
         if (other.gameObject.CompareTag("Boss"))
         {
-            if (!skill.addPenetrates) Destroy(this.gameObject);
+            if (!skill.addPenetrates)
+            {
+                if (skill.addSpread > 0 && this.gameObject.name.StartsWith("Weapon_Arrow")) StartCoroutine(Spread(0f));
+                else Destroy(this.gameObject);
+            }
         }
 
         if (other.gameObject.CompareTag("Wall"))
@@ -80,9 +94,9 @@ public class ArrowManager : MonoBehaviour
         renderer.color = new Color(0.4f, 0.7f, 1f, 1f);
     }
 
-    IEnumerator Spread()
+    IEnumerator Spread(float time)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(time);
         GameObject weapon;
         int count;
         if (this.gameObject.name == "Weapon_Bomb(Clone)") count = skill.addBomb + 2;
