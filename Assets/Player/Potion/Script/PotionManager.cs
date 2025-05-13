@@ -4,24 +4,16 @@ using UnityEngine;
 
 public class PotionManager : Potion
 {
-    private PlayerController player;
-    public int tempHp;
-
-    void Awake()
-    {
-        player = FindObjectOfType<PlayerController>();
-        tempHp = player.hp;
-    }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player"))
         {
-            PlayerController.Instance.hp += hp;
-            if (PlayerController.Instance.hp >= tempHp) PlayerController.Instance.hp = tempHp;
+            Player.Instance.hp += hp;
+            if(Player.Instance.hp >= 100) Player.Instance.hp = 100;
 
-            PlayerController.Instance.attackSpeed -= attackSpeed;
+            Player.Instance.attackSpeed -= attackSpeed;
 
-            PlayerController.Instance.power += power;
+            Player.Instance.power += power;
 
             Destroy(this.gameObject);
         }
