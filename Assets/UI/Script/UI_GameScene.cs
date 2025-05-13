@@ -199,20 +199,20 @@ public class UI_GameScene : MonoBehaviour
         goldText.text = $"Gold: {gold}";
     }
 
-    void Update()
-    {
-        if(playerController.dashCool > 0f) // 쿨�???????
-        {
-            coolTimeText.text = playerController.dashCool.ToString("N1");
-            dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-            dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
-            dashIconAnim.Play("DashIconState", -1, 0f);
-        }
-        else if(playerController.dashCool < 0) // 쿨이 ?�났????
-        {
-            coolTimeText.text = "";
-            dashIcon.color = new Color(1f, 1f, 1f, 1f);
-            dashImage.color = new Color(1f, 1f, 1f, 1f);
-        }
-    }
+    //void Update()
+    //{
+    //    if(playerController.dashCool > 0f) // 쿨�???????
+    //    {
+    //        coolTimeText.text = playerController.dashCool.ToString("N1");
+    //        dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+    //        dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+    //        dashIconAnim.Play("DashIconState", -1, 0f);
+    //    }
+    //    else if(playerController.dashCool < 0) // 쿨이 ?�났????
+    //    {
+    //        coolTimeText.text = "";
+    //        dashIcon.color = new Color(1f, 1f, 1f, 1f);
+    //        dashImage.color = new Color(1f, 1f, 1f, 1f);
+    //    }
+    //}
 }
