@@ -19,12 +19,6 @@ public class Boss_FireBall : MonoBehaviour
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
-    // ?”ë©´ ë°–ìœ¼ë¡??˜ê?ë©??€ë¡?ë°˜í™˜
-    private void OnBecameInvisible()
-    {
-        ReturnToPool();
-    }
-
     // ì¶©ëŒ ??ì²˜ë¦¬
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -36,17 +30,17 @@ public class Boss_FireBall : MonoBehaviour
             {
                 Destroy(BossManager.instance.PlayerTarget);
             }
-            ReturnToPool();
+            bReturnToPool();
         }
         // ëª¬ìŠ¤?°ë‚˜ ?¤ë¥¸ ?Œì´?´ë³¼ê³?ì¶©ëŒ?˜ì? ?Šì•˜???Œì—ë§?ë°˜í™˜
         else if (!collision.gameObject.CompareTag("Monster") && !collision.gameObject.CompareTag("FireBall"))
         {
-            ReturnToPool();
+            bReturnToPool();
         }
     }
 
     // ?¤ë¸Œ?íŠ¸ ?€ë¡?ë°˜í™˜?˜ëŠ” ?¨ìˆ˜
-    private void ReturnToPool()
+    private void bReturnToPool()
     {
         BossObjectPoolManager.Instance.ReturnToPool("Fireball", gameObject);
     }

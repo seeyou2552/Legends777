@@ -87,8 +87,8 @@ public class MonsterManager : MonoBehaviour
 
         // 랜덤한 영역 선택
         Vector2 randomPosition = new Vector2(
-            Random.Range(-9, 10),
-            Random.Range(-4, 5)
+            Random.Range(-8, 9),
+            Random.Range(-4, 3.5f)
         );
 
         // 적 생성 및 리스트에 추가

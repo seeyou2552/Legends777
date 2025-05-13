@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class BossManager : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class BossManager : MonoBehaviour
     private bool isHalf = false;
     public GameObject redBackGround;
     private Camera Boss_Camera;
-    private int firstHp;
+    public int firstHp;
 
     public static BossManager instance;
 
@@ -110,7 +111,6 @@ public class BossManager : MonoBehaviour
         {
             Health -= PlayerController.Instance.power;
             animator.SetTrigger("isHit");
-            Debug.Log(Health);
 
             if (Health <= firstHp / 2 && !isHalf)
             {
@@ -120,15 +120,19 @@ public class BossManager : MonoBehaviour
             }
             if (Health <= 0)
             {
-                // ��ų ������Ʈ ����
                 foreach (GameObject obj in BossSkillManager.Instance.ActiveSkillObjects)
                 {
+                    var pooled = obj.GetComponent<PoolTag>();
                     if (obj != null && obj.activeSelf)
                     {
-                        BossObjectPoolManager.Instance.ReturnToPool(obj.tag, obj);
+                        BossObjectPoolManager.Instance.ReturnToPool(pooled.poolTag, obj);
                     }
                 }
                 BossSkillManager.Instance.ActiveSkillObjects.Clear();
+
+                PlayerController.Instance.attackSpeed =  BossSkillManager.Instance.playerAtkSpeed;
+                PlayerController.Instance.speed = BossSkillManager.Instance.playerSpeed;
+                PlayerController.Instance.power = BossSkillManager.Instance.playerPower;
 
                 GameManager.instance.IsStageClear = true;
 

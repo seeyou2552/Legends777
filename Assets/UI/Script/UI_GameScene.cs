@@ -16,6 +16,8 @@ public class UI_GameScene : MonoBehaviour
     public RectTransform skillsContainer;
     public GameObject skillIconPrefab;
 
+    private Dictionary<string, TextMeshProUGUI> skillIconMap = new Dictionary<string, TextMeshProUGUI>();
+
     private GridLayoutGroup grid;
     private SkillManager skillManager;
 
@@ -133,11 +135,21 @@ public class UI_GameScene : MonoBehaviour
 
         string value = GetSkillValue(key);
 
-        var icon = Instantiate(skillIconPrefab, skillsContainer, false);
-        var rt = icon.GetComponent<RectTransform>();
-        rt.localScale = Vector3.one;
-        var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
-        iconText.text = $"{key}: \n{value}";
+        if(skillIconMap.TryGetValue(key, out var existingText))
+        {
+            existingText.text = $"{key}: \n{value}";
+        }
+        else
+        {
+            var icon = Instantiate(skillIconPrefab, skillsContainer, false);
+            var rt = icon.GetComponent<RectTransform>();
+            rt.localScale = Vector3.one;
+            var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
+            iconText.text = $"{key}: \n{value}";
+            skillIconMap[key] = iconText;
+        }
+
+
     }
 
     private string GetSkillValue(string key)

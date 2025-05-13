@@ -17,9 +17,9 @@ public class RandomBossItem : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             int random = UnityEngine.Random.Range(0, 2);
             if (random == 0)
@@ -32,6 +32,5 @@ public class RandomBossItem : MonoBehaviour
             }
             BossObjectPoolManager.Instance.ReturnToPool("item", this.gameObject);
         }
-    }
-    
+    }   
 }
