@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,12 +18,12 @@ public class TutorialController : MonoBehaviour
     [Header("— Tilemap & Keys 설정 —")]
     [SerializeField] private Tilemap tutorialTilemap;
     [SerializeField] private List<KeyTileInfo> keyTiles = new List<KeyTileInfo>();
+    
 
     bool isActive = false;
 
     void Update()
     {
-        // 1) 로비일 때만 토글
         if (GameManager.instance.DungeonType == DungeonType.Lobby)
         {
             if (!isActive)
