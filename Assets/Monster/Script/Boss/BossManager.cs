@@ -8,6 +8,8 @@ using UnityEngine.Pool;
 
 public class BossManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip spawnSound;
+    [SerializeField] private AudioClip deathSound;
     [Range(1, 5000)][SerializeField] private int initialHealth = 10;
     public int MaxHealth { get; private set; }
 
@@ -67,6 +69,7 @@ public class BossManager : MonoBehaviour
         spriter = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
         Boss_Camera = Camera.main;
+        SoundManager.Instance.PlaySFX(spawnSound);
     }
 
     private void Start()
@@ -138,6 +141,7 @@ public class BossManager : MonoBehaviour
 
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
                 Destroy(gameObject);  // ���� ������Ʈ �ı�
+                SoundManager.Instance.PlaySFX(deathSound);
                 QuestManager.Instance.QuestCheck(1);
             }
         }
