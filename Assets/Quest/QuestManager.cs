@@ -45,10 +45,7 @@ public class QuestManager : SingleTon<QuestManager>
 
     private void Update()      //퀘스트 진행사항을 퀘스트UI에 반영
     {
-        if (questController == null)
-        {
-            return;
-        }
+        if (questController == null) { return; }
 
         count0.text = (questController[0].PlusCount).ToString() + "/" + (questController[0].Goal).ToString(); 
         count1.text = (questController[1].PlusCount).ToString() + "/" + (questController[1].Goal).ToString();
@@ -56,10 +53,7 @@ public class QuestManager : SingleTon<QuestManager>
 
         if (Input.GetKeyDown(KeyCode.M))   //테스트용 퀘스트 클리어 버튼
         {
-            foreach (var quest in questController)
-            {
-                quest.QuestClear(true);
-            }
+            foreach (var quest in questController) { quest.QuestCheat(); }
         }
     }
 
@@ -114,10 +108,7 @@ public class QuestManager : SingleTon<QuestManager>
 
     public bool QuestClearCheck()// 클리어한 퀘스트가 있는지 확인
     {
-        if (questController == null)
-        {
-            return false;
-        }
+        if (questController == null) { return false; }
         foreach (var quest in questController) {  if (quest.Clear) { return true; }  }
         return false;
     }
