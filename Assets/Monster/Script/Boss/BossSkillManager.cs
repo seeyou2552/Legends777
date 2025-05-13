@@ -74,8 +74,14 @@ public class BossSkillManager : MonoBehaviour
         if (gameManager.Stage < 3)
         {
             skillFuncs.Add(MoveFast);
-            skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(MakeMonster);
+            skillFuncs.Add(LazerPatten2);
+            skillFuncs.Add(CameraReversal);
+            skillFuncs.Add(ShootFast);
+            skillFuncs.Add(Teleport);
+            skillFuncs.Add(MakeBossItem);
+            skillFuncs.Add(LazerPattern);
+            skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 5)
         {
@@ -85,6 +91,9 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(CameraReversal);
             skillFuncs.Add(ShootFast);
             skillFuncs.Add(Teleport);
+            skillFuncs.Add(MakeBossItem);
+            skillFuncs.Add(LazerPattern);
+            skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 9)
         {
@@ -162,26 +171,28 @@ public class BossSkillManager : MonoBehaviour
                 int num = UnityEngine.Random.Range(0, skillFuncs.Count);
                 currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
                 var nextSkill = skillFuncs[currentSkillIndex];
-                if (CanUseSkill(nextSkill))
+                if (bossManager.Health <= bossManager.firstHp / 2 && CanUseSkill(nextSkill))
                 {
-                    yield return StartCoroutine(nextSkill());
-                    if (bossManager.Health <= bossManager.firstHp / 2)
+                    do
                     {
-                        do
-                        {
-                            int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
-                            currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
+                        int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
+                        currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
 
-                        } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
-                        var nextskill2 = skillFuncs[currentskillIndex2];
-                        if (CanUseSkill(nextskill2))
-                        {
-                            yield return StartCoroutine(nextskill2());
-                        }
+                    } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
+                    var nextskill2 = skillFuncs[currentskillIndex2];
+                    if (CanUseSkill(nextskill2))
+                    {
+                        StartCoroutine(nextSkill());
+                        StartCoroutine(nextskill2());
+                        yield return new WaitForSeconds(5f);
                     }
                 }
+                else if (CanUseSkill(nextSkill))
+                {
+                    yield return StartCoroutine(nextSkill());
+                    yield return new WaitForSeconds(2f);
+                }
             }
-            yield return new WaitForSeconds(2f);
         }
     }
 
@@ -216,7 +227,7 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator RedGround()
     {
-        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", Vector2.zero, Quaternion.identity/*, this.transform*/);
+        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", new Vector2(0,-0.6f), Quaternion.identity/*, this.transform*/);
         if (!activeSkillObjects.Contains(red))
         {
             activeSkillObjects.Add(red);
