@@ -19,11 +19,17 @@ public class UI_GameScene : MonoBehaviour
 
     public Slider healthSlider;
     public TextMeshProUGUI healthText;
+    public TextMeshProUGUI coolTimeText;
+    public Image dashIcon;
+    public Image dashImage;
+    public Animator dashIconAnim;
     private PlayerManager player;
+    private PlayerController playerController;
 
     private void Start()
     {
         player = FindObjectOfType<PlayerManager>();
+        playerController = player.GetComponent<PlayerController>();
         if (player == null)
         {
             Debug.LogError("PlayerManager not found in the scene.");
@@ -94,5 +100,22 @@ public class UI_GameScene : MonoBehaviour
     {
         var popup = UIManager.Instance.ShowPopup<UI_StageFailPopup>("UI_StageFailPopup");
         popup.Init();
+    }
+
+    void Update()
+    {
+        if(playerController.dashCool > 0f) // 쿨타임 일 때
+        {
+            coolTimeText.text = playerController.dashCool.ToString("N1");
+            dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+            dashIconAnim.Play("DashIconState", -1, 0f);
+        }
+        else if(playerController.dashCool < 0) // 쿨이 끝났을 떄
+        {
+            coolTimeText.text = "";
+            dashIcon.color = new Color(1f, 1f, 1f, 1f);
+            dashImage.color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 }

@@ -8,7 +8,7 @@ public class BossSkillManager : MonoBehaviour
 {
     public static BossSkillManager Instance;
 
-    public Transform firePoint; // 보스 위치 가져오기
+    public Transform firePoint; // 보스 ?�치 가?�오�?
     private Transform target;
     private Camera Boss_Camera;
     public TextMeshProUGUI EffectText;
@@ -23,10 +23,10 @@ public class BossSkillManager : MonoBehaviour
     private List<Func<IEnumerator>> skillFuncs = new List<Func<IEnumerator>>();
     private int currentSkillIndex = 0;
 
-    private List<GameObject> activeSkillObjects = new List<GameObject>(); // 따로 생성되는 오브젝트를 보스가 죽을시 삭제하기 위해 저장해두는 리스트
-    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // 인스펙터 창에서 안보이고 스크립트에서 참조할수있게
+    private List<GameObject> activeSkillObjects = new List<GameObject>(); // ?�로 ?�성?�는 ?�브?�트�?보스가 죽을????��?�기 ?�해 ?�?�해?�는 리스??
+    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ?�스?�터 창에???�보?�고 ?�크립트?�서 참조?�수?�게
 
-    public string[] sHowEffect = { "체력 x 2", "공격력 x 2", "속도 x 2", "공속 x 2", "체력 / 2", "공격력 / 2", "속도 / 2", "공속 / 2" };
+    public string[] sHowEffect = { "체력 x 2", "공격??x 2", "?�도 x 2", "공속 x 2", "체력 / 2", "공격??/ 2", "?�도 / 2", "공속 / 2" };
     int getStr;
 
     BossManager bossManager;
@@ -47,7 +47,7 @@ public class BossSkillManager : MonoBehaviour
         currentBulletSpeed = defaultBulletSpeed;
 
         SkillsForStage();
-        gameManager.OnStageUpdated += SkillsForStage; // 스테이지 이벤트 사용
+        gameManager.OnStageUpdated += SkillsForStage; // ?�테?��? ?�벤???�용
 
         StartCoroutine(UseSkillsRoutine());
     }
@@ -60,12 +60,12 @@ public class BossSkillManager : MonoBehaviour
             nextFireTime = Time.time + 1f / fireRate;
         }
     }
-    private void SkillsForStage() // 사용할 스킬등록함수
+    private void SkillsForStage() // ?�용???�킬?�록?�수
     {
         int stage = gameManager.Stage;
         skillFuncs.Clear();
 
-        // 사용할 스킬들 등록
+        // ?�용???�킬???�록
         if (gameManager.Stage < 4)
         {
             skillFuncs.Add(MoveFast);
@@ -99,14 +99,14 @@ public class BossSkillManager : MonoBehaviour
     {
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
-        // 오브젝트 풀에서 파이어볼 꺼내기
+        // ?�브?�트 ?�?�서 ?�이?�볼 꺼내�?
         GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity, this.transform);
-        if (fireball == null) // 파괴된 오브젝트인 경우
+        if (fireball == null) // ?�괴???�브?�트??경우
         {
-            return; // 해당 오브젝트는 더 이상 사용할 수 없으므로 종료
+            return; // ?�당 ?�브?�트?????�상 ?�용?????�으므�?종료
         }
 
-        // 충돌 처리 - 보스와 파이어볼이 충돌하지 않도록 설정
+        // 충돌 처리 - 보스?� ?�이?�볼??충돌?��? ?�도�??�정
         Collider2D bossCol = GetComponent<Collider2D>();
         Collider2D fireballCol = fireball.GetComponent<Collider2D>();
         if (fireballCol != null && bossCol != null)
@@ -114,7 +114,7 @@ public class BossSkillManager : MonoBehaviour
             Physics2D.IgnoreCollision(fireballCol, bossCol);
         }
 
-        // 파이어볼에 스크립트 연결 및 방향, 속도 설정
+        // ?�이?�볼???�크립트 ?�결 �?방향, ?�도 ?�정
         Boss_FireBall fireballScript = fireball.GetComponent<Boss_FireBall>();
         fireballScript.SetDirection(direction.normalized);
         fireballScript.speed = currentBulletSpeed;
@@ -131,19 +131,19 @@ public class BossSkillManager : MonoBehaviour
         else
         {
             attackCount = 1;
-            int bulletCount = 8; // 발사할 파이어볼의 개수
-            float angleStep = 360f / bulletCount; //총 360도를 bulletCount로 나누어서 45도 간격으로 발사
+            int bulletCount = 8; // 발사???�이?�볼??개수
+            float angleStep = 360f / bulletCount; //�?360?��? bulletCount�??�누?�서 45??간격?�로 발사
 
             for (int i = 0; i < bulletCount; i++)
             {
-                float angle = i * angleStep * Mathf.Deg2Rad; //라디안 각도로 변환
-                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos는 x축 방향, Sin은 y축 방향 이걸로 unit circle상의 방향을 계산
+                float angle = i * angleStep * Mathf.Deg2Rad; //?�디??각도�?변??
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos??x�?방향, Sin?� y�?방향 ?�걸�?unit circle?�의 방향??계산
                 ShootFireball(direction);
             }
         }
     }
 
-    //플레이어가 존재하는지 체크하고 스킬사용 유무 판단
+    //?�레?�어가 존재?�는지 체크?�고 ?�킬?�용 ?�무 ?�단
     private bool CanUseSkill(Func<IEnumerator> _) => BossManager.instance.PlayerTarget != null;
 
     private IEnumerator UseSkillsRoutine()

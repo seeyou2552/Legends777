@@ -11,19 +11,28 @@ public class GameManager : MonoBehaviour
     public Action OnStageUpdated;
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
+    public Action OnDungeonTypeDefaultUpdated;
 
+    public int KillCount { get; set; } = 0;
+    private bool OnStageResult = false;
+
+    [SerializeField] private int maxStage = 8;
     [SerializeField] private int stage;
+
     public int Stage
     {
         get { return stage; }
         set
         {
-            stage = value;
-            if (stage == 8)
+            if (value > maxStage)
             {
-                ShowStageResult();
-                Debug.Log("Game Clear UI Popup");
+                value = maxStage;
             }
+            else
+            {
+                stage = value;
+            }
+
             OnStageUpdated?.Invoke();
         }
     }
@@ -37,18 +46,21 @@ public class GameManager : MonoBehaviour
             dungeonType = value;
             if (dungeonType == DungeonType.Monster)
             {
+                OnStageResult = false;
                 IsStageClear = false;
                 currentWaveIndex = 0;
                 StartMonsterStage();
             }
             else if (dungeonType == DungeonType.Boss)
             {
+                OnStageResult = false;
                 IsStageClear = false;
                 OnDungeonTypeBossUpdated?.Invoke();
             }
             else
             {
                 IsStageClear = true;
+                OnDungeonTypeDefaultUpdated?.Invoke();
             }
         }
     }
@@ -59,6 +71,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         OnDungeonTypeBossUpdated += () => StartCoroutine(SubscribeToBossDeath());
+        OnDungeonTypeDefaultUpdated += () => StartCoroutine(SubscribeToDefaultClear());    
     }
 
     private void Start()
@@ -77,11 +90,18 @@ public class GameManager : MonoBehaviour
     void StartNextWave()
     {
         currentWaveIndex++;
-        if (currentWaveIndex > stage)
+        if (currentWaveIndex > stage && !OnStageResult && dungeonType != DungeonType.Boss)
         {
-            ShowStageResult();
-            Debug.Log("Skill Select Popup");
-
+            if (stage != maxStage)
+            {
+                OnStageResult = true;
+                ShowStageResult();
+                Debug.Log("Skill Select Popup");
+            }
+            else if (stage == maxStage && AreAllMonstersDefeated())
+            {
+                ShowClearResult();
+            }
             return;
         }
 
@@ -102,12 +122,45 @@ public class GameManager : MonoBehaviour
 
     }
 
+    void ShowClearResult()
+    {
+
+        var popup = UIManager.Instance.ShowPopup<UI_ClearResult>("UI_ClearResult");
+        popup.Init();
+
+    }
+
     private IEnumerator SubscribeToBossDeath()
     {
         yield return null;
         if (BossManager.instance != null)
         {
-            BossManager.instance.Ondead += ShowStageResult;
+            BossManager.instance.Ondead -= ShowStageResult;
+            BossManager.instance.Ondead -= ShowStageResult;
+            if (stage != maxStage)
+            {
+                BossManager.instance.Ondead += ShowStageResult;
+                Debug.Log("Skill Select Popup");
+            }
+            else if (stage == maxStage)
+            {
+                BossManager.instance.Ondead += ShowClearResult;
+            }
         }
     }
+    private IEnumerator SubscribeToDefaultClear()
+    {
+        yield return null;
+        if(stage == maxStage)
+        {
+            ShowClearResult();
+        }
+
+    }
+
+    private bool AreAllMonstersDefeated()
+    {
+        return MonsterManager.Instance.activeMonsters.Count == 0;
+    }
+
 }

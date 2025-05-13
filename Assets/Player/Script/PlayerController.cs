@@ -25,6 +25,8 @@ public class PlayerController : Player
     private WeaponController weapon;
     private GameObject weaponPivot;
 
+    public SpriteRenderer weaponRenderer;
+
 
     void Awake()
     {
@@ -88,10 +90,24 @@ public class PlayerController : Player
         private set { weapon = value; }
     }
 
-    public void EquipWeapon(WeaponController weaponController/*, GameObject gameObject*/)  //무기 장착, 무기 공격력 -> weaponController.Atk();
+    public void EquipWeapon(WeaponController weaponController)  //무기 장착, 무기 공격력 -> weaponController.Atk();
     {
         Equip = weaponController;   //무기 장착
 
+        weaponRenderer.sprite = ShopManager.Instance.weaponSprites[Equip.Num()];
+        if (Equip.Num() == 2)
+        {
+            weaponRenderer.material.color = Color.yellow;
+        }
+        else if (Equip.Num() == 3)
+        {
+            weaponRenderer.material.color = Color.green;
+        }
+        else if (Equip.Num() == 4)
+        {
+            weaponRenderer.material.color = Color.red;
+        }
+        //Equip.Num
         //무기 프리팹 부착 코드 자리
         //if (weaponPivot != null) { Destroy(weaponPivot); }
         //weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);

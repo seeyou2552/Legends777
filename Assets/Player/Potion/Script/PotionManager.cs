@@ -8,12 +8,12 @@ public class PotionManager : Potion
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            Player.Instance.hp += hp;
-            if(Player.Instance.hp >= 100) Player.Instance.hp = 100;
+            PlayerController.Instance.hp += hp;
+            if(PlayerController.Instance.hp >= 100) PlayerController.Instance.hp = 100;
 
-            Player.Instance.attackSpeed -= attackSpeed;
+            PlayerController.Instance.attackSpeed -= attackSpeed;
 
-            Player.Instance.power += power;
+            PlayerController.Instance.power += power;
 
             Destroy(this.gameObject);
         }
