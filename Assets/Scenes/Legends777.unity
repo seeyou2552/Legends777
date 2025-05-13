@@ -586,6 +586,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 175954116140470836, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
+      propertyPath: weaponRenderer
+      value: 
+      objectReference: {fileID: 1758078103}
     - target: {fileID: 993099867147046914, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -760,6 +764,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0a306523d9feba4590627df996798ae, type: 3}
+--- !u!212 &1758078103 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6736594487994161059, guid: 07e599849237db74f98015c4d54b1b67, type: 3}
+  m_PrefabInstance: {fileID: 1092668400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
