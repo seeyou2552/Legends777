@@ -25,30 +25,24 @@ public class UI_StageResult : UI_Popup
             candidates[$"shootSpeed +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})"] =
                 () => skill.shootSpeed += 1f;
 
-        // ?”ì‚´ ê°œìˆ˜ +1 (ìµœë? 5)
         if (skill.arrowCount < 5)
             candidates[$"arrowCount +1 ({skill.arrowCount} -> {skill.arrowCount + 1})"] =
                 () => skill.arrowCount += 1;
 
-        // ? ë ¹ ???œì„±??(??ë²ˆë§Œ)
         if (!skill.addGhost)
             candidates["addGhost"] = () => skill.addGhost = true;
 
-        // ??ƒ„ ì¶”ê? +1 (?„ìš”?˜ë‹¤ë©?
-        if (skill.addBomb < 3) // ?ˆì‹œ ?í•œ 3
+        if (skill.addBomb < 3) 
             candidates[$"addBomb +1 ({skill.addBomb} -> {skill.addBomb + 1})"] =
                 () => skill.addBomb += 1;
 
-        // ê´€???œì„±??
         if (!skill.addPenetrates)
             candidates["addPenetrates"] = () => skill.addPenetrates = true;
 
-        // ?•ì‚° +1 (ìµœë? 5)
         if (skill.addSpread < 5)
             candidates[$"addSpread +1 ({skill.addSpread} -> {skill.addSpread + 1})"] =
                 () => skill.addSpread += 1;
 
-        // ? ë„ ?œì„±??
         if (!skill.addChase)
             candidates["addChase"] = () => skill.addChase = true;
 
@@ -62,9 +56,9 @@ public class UI_StageResult : UI_Popup
             int idx = rnd.Next(keys.Count);
             picked.Add(keys[idx]);
             keys.RemoveAt(idx);
+           
         }
 
-        // 4) ë²„íŠ¼ ë°°ì—´??ë¿Œë¦¬ê¸?
         var buttons = new[] { option1Button, option2Button, option3Button };
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -82,13 +76,13 @@ public class UI_StageResult : UI_Popup
                 btn.onClick.AddListener(() =>
                 {
                     apply();
+                    GameManager.instance.OnSkillUpgraded?.Invoke(label);
                     GameManager.instance.IsStageClear = true;   
                     Destroy(popupRoot);
                 });
             }
             else
             {
-                // ?„ë³´ê°€ ë¶€ì¡±í•  ê²½ìš° ë¹?ë²„íŠ¼ ë¹„í™œ?±í™”
                 btn.gameObject.SetActive(false);
             }
         }
