@@ -94,12 +94,12 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: 다른 UI 요소 리프레시 호출
+        // TODO: ?�른 UI ?�소 리프?�시 ?�출
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "스테이지 " + GameManager.instance.Stage.ToString();
+        stageText.text = "�������� " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()
@@ -201,14 +201,14 @@ public class UI_GameScene : MonoBehaviour
 
     void Update()
     {
-        if(playerController.dashCool > 0f) // 쿨타임 일 때
+        if(playerController.dashCool > 0f) // 쿨�???????
         {
             coolTimeText.text = playerController.dashCool.ToString("N1");
             dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
             dashIconAnim.Play("DashIconState", -1, 0f);
         }
-        else if(playerController.dashCool < 0) // 쿨이 끝났을 떄
+        else if(playerController.dashCool < 0) // 쿨이 ?�났????
         {
             coolTimeText.text = "";
             dashIcon.color = new Color(1f, 1f, 1f, 1f);
