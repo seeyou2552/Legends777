@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
@@ -8,6 +9,8 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class PlayerController : Player
 {
+    public event Action<int> OnGoldChanged;
+    
     public static PlayerController Instance { get; set; }
     public float dashSpeed = 15f;
     public float dashDuration = 0.2f;
@@ -22,6 +25,7 @@ public class PlayerController : Player
     protected Animator animation;
     private Camera mainCamera;
     private int gold = 1000;
+
     private WeaponController weapon;
     private GameObject weaponPivot;
 
@@ -74,7 +78,11 @@ public class PlayerController : Player
     public int Gold  
     {
         get { return gold; }
-        private set { gold = value; }
+        private set 
+        { 
+            gold = value;
+            OnGoldChanged?.Invoke(gold);
+        }
     }
 
     public bool MinusGold(int gold) // 무기 구매시 골드가 충분한지 확인, 골드 감소
@@ -93,7 +101,6 @@ public class PlayerController : Player
     public void EquipWeapon(WeaponController weaponController)  //무기 장착, 무기 공격력 -> weaponController.Atk();
     {
         Equip = weaponController;   //무기 장착
-
         weaponRenderer.sprite = ShopManager.Instance.weaponSprites[Equip.Num()];
         if (Equip.Num() == 2)
         {

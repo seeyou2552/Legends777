@@ -29,6 +29,8 @@ public class BossObjectPoolManager : MonoBehaviour
             for (int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab, this.transform);
+                var poolObject = obj.AddComponent<PoolTag>();
+                poolObject.poolTag = pool.tag;
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -37,7 +39,7 @@ public class BossObjectPoolManager : MonoBehaviour
     }
 
     // 오브젝트 풀에서 꺼내기
-    public GameObject GetFromPool(string tag, Vector2 position, Quaternion rotation, Transform parent = null)
+    public GameObject GetFromPool(string tag, Vector2 position, Quaternion rotation)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -51,15 +53,14 @@ public class BossObjectPoolManager : MonoBehaviour
             obj = poolDictionary[tag].Dequeue();
             if (obj == null) // 이미 파괴된 오브젝트를 반환하려는 경우
             {
-                obj = Instantiate(GetPrefab(tag), parent);
+                obj = Instantiate(GetPrefab(tag));
             }
         }
         else
         {
-            obj = Instantiate(GetPrefab(tag), parent);
+            obj = Instantiate(GetPrefab(tag));
         }
 
-        obj.transform.SetParent(parent);
         obj.transform.position = position;
         obj.transform.rotation = rotation;
         obj.SetActive(true);

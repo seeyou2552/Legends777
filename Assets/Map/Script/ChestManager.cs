@@ -9,12 +9,14 @@ public class ChestManager : MonoBehaviour
     public GameObject hp_Potion;
     public GameObject power_Potion;
     public GameObject attackSpeed_Potion;
+    public int tempHp;
     List<GameObject> potionList = new List<GameObject>();
+    private PlayerController player;
 
     public bool interChest = false;
 
     void Awake()
-    {
+    { 
         potionList.AddRange(new[] { hp_Potion, power_Potion, attackSpeed_Potion });
     }
 

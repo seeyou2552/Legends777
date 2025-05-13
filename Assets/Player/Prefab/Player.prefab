@@ -200,6 +200,7 @@ MonoBehaviour:
   dashTrailPrefab: {fileID: 7887855799961801403, guid: 204d632dd9a2b5c4ebd1b68ecc233b2d, type: 3}
   rigid: {fileID: 145079921637700777}
   render: {fileID: 0}
+  weaponRenderer: {fileID: 6736594487994161059}
 --- !u!114 &1288119784805007813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +319,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6530444558524179842}
   m_SourcePrefab: {fileID: 100100000, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+--- !u!212 &6736594487994161059 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1977774993663544124, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+  m_PrefabInstance: {fileID: 5048331903263333535}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8137554515041620810 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3954478961486385109, guid: 8c099809777a3e2499486c2b364766de, type: 3}
@@ -335,7 +341,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6a3e015e0f6ad8a4e90e8c62174327eb, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

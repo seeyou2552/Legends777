@@ -159,6 +159,7 @@ public class MapController : MonoBehaviour
     private void ClearMap()
     {
         Transform mapContent = Root.transform;
+        QuestManager.Instance.QuestCheck(2);
         foreach (Transform child in mapContent)
         {
             Destroy(child.gameObject);
