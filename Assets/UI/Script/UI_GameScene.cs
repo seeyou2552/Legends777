@@ -23,7 +23,7 @@ public class UI_GameScene : MonoBehaviour
 
 
     [Header("UI Prefabs (Resources/UI)")]
-    
+
     public string questListName = "UI_QuestList";
     public string healthBarName = "UI_HealthBar";
 
@@ -32,6 +32,21 @@ public class UI_GameScene : MonoBehaviour
     public Slider healthSlider;
     public TextMeshProUGUI healthText;
     private PlayerManager player;
+    private PlayerController playerController;
+
+    [Header("Dash Icon")]
+    public TextMeshProUGUI coolTimeText;
+    public Image dashIcon;
+    public Image dashImage;
+    public Animator dashIconAnim;
+
+    [Header("Potion Status Form")]
+    public TextMeshProUGUI potionStatusText;
+    public Animator potionStatusAnim;
+
+    [Header("Tutorial")]
+    public GameObject tutorialPrefab;
+    private GameObject tutorialInstance;
 
     private void Awake()
     {
@@ -41,11 +56,20 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnSkillUpgraded += OnSkillUpgraded;
         PlayerController.Instance.OnGoldChanged += UpdateGoldUI;
         UpdateGoldUI(PlayerController.Instance.Gold);
+
+        GameManager.instance.OnTutorialUpdated += ShowTutorialUI;
+        GameManager.instance.OnDungeonTypeMonsterUpdated += HideTutorialUI;
+        GameManager.instance.OnDungeonTypeBossUpdated += HideTutorialUI;
+        GameManager.instance.OnDungeonTypeDefaultUpdated += HideTutorialUI;
+        if (GameManager.instance.DungeonType == DungeonType.Lobby)
+            ShowTutorialUI();
+
     }
 
     private void Start()
     {
         player = FindObjectOfType<PlayerManager>();
+        playerController = player.GetComponent<PlayerController>();
         if (player == null)
         {
             Debug.LogError("PlayerManager not found in the scene.");
@@ -56,6 +80,8 @@ public class UI_GameScene : MonoBehaviour
         SetHealth(player.CurrentHealth, player.MaxHealth);
 
         SetInfo();
+
+
     }
 
     public void Init()
@@ -86,17 +112,17 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: ?�른 UI ?�소 리프?�시 ?�출
+        // TODO: ?¤ë¥¸ UI ?”ì†Œ ë¦¬í”„?ˆì‹œ ?¸ì¶œ
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "�������� " + GameManager.instance.Stage.ToString();
+        stageText.text = "스테이지 " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()
     {
-        UI_OptionPopup optionPopup =  UIManager.Instance.ShowPopup<UI_OptionPopup>("UI_OptionPopup");
+        UI_OptionPopup optionPopup = UIManager.Instance.ShowPopup<UI_OptionPopup>("UI_OptionPopup");
         optionPopup.Init();
     }
 
@@ -121,6 +147,10 @@ public class UI_GameScene : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.instance.OnSkillUpgraded -= OnSkillUpgraded;
+        GameManager.instance.OnTutorialUpdated -= ShowTutorialUI;
+        GameManager.instance.OnDungeonTypeMonsterUpdated -= HideTutorialUI;
+        GameManager.instance.OnDungeonTypeBossUpdated -= HideTutorialUI;
+        GameManager.instance.OnDungeonTypeDefaultUpdated -= HideTutorialUI;
     }
 
     private void OnSkillUpgraded(SkillOption option)
@@ -135,7 +165,7 @@ public class UI_GameScene : MonoBehaviour
 
         string value = GetSkillValue(option.Id);
 
-        if(skillIconMap.TryGetValue(key, out var existingText))
+        if (skillIconMap.TryGetValue(key, out var existingText))
         {
             existingText.text = $"{key}: \n{value}";
         }
@@ -199,20 +229,66 @@ public class UI_GameScene : MonoBehaviour
         goldText.text = $"Gold: {gold}";
     }
 
-    //void Update()
-    //{
-    //    if(playerController.dashCool > 0f) // 쿨�???????
-    //    {
-    //        coolTimeText.text = playerController.dashCool.ToString("N1");
-    //        dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-    //        dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
-    //        dashIconAnim.Play("DashIconState", -1, 0f);
-    //    }
-    //    else if(playerController.dashCool < 0) // 쿨이 ?�났????
-    //    {
-    //        coolTimeText.text = "";
-    //        dashIcon.color = new Color(1f, 1f, 1f, 1f);
-    //        dashImage.color = new Color(1f, 1f, 1f, 1f);
-    //    }
-    //}
+    void Update()
+    {
+        if (playerController.dashCool > 0f) // 쿨타임 일 때
+        {
+            coolTimeText.text = playerController.dashCool.ToString("N1");
+            dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+            dashIconAnim.Play("DashIconState", -1, 0f);
+        }
+        else if (playerController.dashCool < 0) // 쿨이 끝났을 떄
+        {
+            coolTimeText.text = "";
+            dashIcon.color = new Color(1f, 1f, 1f, 1f);
+            dashImage.color = new Color(1f, 1f, 1f, 1f);
+        }
+    }
+
+    public void SetStatus(string name, float status)
+    {
+        if (name.StartsWith("HP_Potion"))
+        {
+            potionStatusText.text = "체력이 " + status.ToString() + " 만큼 회복되었습니다.";
+        }
+        else if (name.StartsWith("Power_Potion"))
+        {
+            potionStatusText.text = "공격력이 " + status.ToString() + " 만큼 상승하였습니다.";
+        }
+        else if (name.StartsWith("AttackSpeed_Potion"))
+        {
+            potionStatusText.text = "공격 속도가 " + status.ToString() + " 만큼 상승하였습니다.";
+        }
+
+        potionStatusText.gameObject.SetActive(true);
+        StartCoroutine(OutPutStatus());
+    }
+
+    IEnumerator OutPutStatus()
+    {
+        potionStatusAnim.Play("StatusForm", -1, 0f);
+        yield return new WaitForSeconds(1f);
+        potionStatusText.gameObject.SetActive(false);
+    }
+
+    private void ShowTutorialUI()
+    {
+        if (tutorialInstance == null && tutorialPrefab != null)
+        {
+            tutorialInstance = Instantiate(tutorialPrefab);
+            tutorialInstance.transform.SetParent(transform);
+        }
+    }
+
+    private void HideTutorialUI()
+    {
+        if (tutorialInstance != null)
+        {
+            Destroy(tutorialInstance);
+            tutorialInstance = null;
+        }
+    }
+
+
 }

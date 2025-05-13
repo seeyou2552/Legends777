@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class SkillOption
 {
     public string Id;
-    public string Name;         // ¿¹: "Â÷Â¡ ¼Óµµ Áõ°¡"
-    public string Description;  // ¿¹: "È­»ì Â÷Â¡ ¼Óµµ +1 (5 -> 6)"
+    public string Name;         // ì˜ˆ: "ì°¨ì§• ì†ë„ ì¦ê°€"
+    public string Description;  // ì˜ˆ: "í™”ì‚´ ì°¨ì§• ì†ë„ +1 (5 -> 6)"
     public Sprite Icon;
-    public Action ApplyAction;  // ½ÇÁ¦ ½ºÅ³ Àû¿ë ·ÎÁ÷
+    public Action ApplyAction;  // ì‹¤ì œ ìŠ¤í‚¬ ì ìš© ë¡œì§
 }
 
 public class UI_StageResult : UI_Popup
@@ -42,8 +42,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "shootSpeed",
-                Name = "ºü¸¥ »ç°İ",
-                Description = $"È­»ì Â÷Â¡ ¼Óµµ +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})",
+                Name = "ë¹ ë¥¸ ì‚¬ê²©",
+                Description = $"í™”ì‚´ ì°¨ì§• ì†ë„ +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/shootSpeed"),
                 ApplyAction = () => skill.shootSpeed += 1f
             });
@@ -54,8 +54,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "arrowCount",
-                Name = "È­»ì °³¼ö",
-                Description = $"¹ß»çµÇ´Â È­»ì °³¼ö +1 ({skill.arrowCount} -> {skill.arrowCount + 1})",
+                Name = "í™”ì‚´ ê°œìˆ˜",
+                Description = $"ë°œì‚¬ë˜ëŠ” í™”ì‚´ ê°œìˆ˜ +1 ({skill.arrowCount} -> {skill.arrowCount + 1})",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/arrowCount"),
                 ApplyAction = () => skill.arrowCount += 1
             });
@@ -66,8 +66,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "addGhost",
-                Name = "ºĞ½Å È°",
-                Description = "Ä³¸¯ÅÍ°¡ º¸À¯ÇÏ°í ÀÖ´Â È°ÀÇ ºĞ½ÅÀÌ »ı¼ºµÈ´Ù.",
+                Name = "ë¶„ì‹  í™œ",
+                Description = "ìºë¦­í„°ê°€ ë³´ìœ í•˜ê³  ìˆëŠ” í™œì˜ ë¶„ì‹ ì´ ìƒì„±ëœë‹¤.",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addGhost"),
                 ApplyAction = () => skill.addGhost = true
             });
@@ -78,8 +78,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "addBomb",
-                Name = "Áö·Ú È­»ì",
-                Description = $"Æø¹ßÇÑ ÈÄ »ı¼ºµÇ´Â È­»ì °³¼ö +1 ({skill.addBomb} -> {skill.addBomb + 1})",
+                Name = "ì§€ë¢° í™”ì‚´",
+                Description = $"í­ë°œí•œ í›„ ìƒì„±ë˜ëŠ” í™”ì‚´ ê°œìˆ˜ +1 ({skill.addBomb} -> {skill.addBomb + 1})",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addBomb"),
                 ApplyAction = () => skill.addBomb += 1
             });
@@ -90,8 +90,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "addPenetrates",
-                Name = "°üÅë È­»ì",
-                Description = "¿©·¯ ÀûÀ» ÇÑ ¹ø¿¡ ²ç¶Õ´Â´Ù.",
+                Name = "ê´€í†µ í™”ì‚´",
+                Description = "ì—¬ëŸ¬ ì ì„ í•œ ë²ˆì— ê¿°ëš«ëŠ”ë‹¤.",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addPenetrates"),
                 ApplyAction = () => skill.addPenetrates = true
             });
@@ -102,8 +102,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "addSpread",
-                Name = "Ä®³¯ ºĞ¿­",
-                Description = $"ºĞ¿­µÉ Ä®³¯ °³¼ö +1 ({skill.addSpread} -> {skill.addSpread + 1})",
+                Name = "ì¹¼ë‚  ë¶„ì—´",
+                Description = $"ë¶„ì—´ë  ì¹¼ë‚  ê°œìˆ˜ +1 ({skill.addSpread} -> {skill.addSpread + 1})",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addSpread"),
                 ApplyAction = () => skill.addSpread += 1
             });
@@ -114,8 +114,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "addChase",
-                Name = "ÃßÀû È­»ì",
-                Description = "È­»ìÀÌ ÀûÀ» ÃßÀûÇÒ ¼ö ÀÖµµ·Ï ÇÑ´Ù.",
+                Name = "ì¶”ì  í™”ì‚´",
+                Description = "í™”ì‚´ì´ ì ì„ ì¶”ì í•  ìˆ˜ ìˆë„ë¡ í•œë‹¤.",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addChase"),
                 ApplyAction = () => skill.addChase = true
             });
@@ -126,8 +126,8 @@ public class UI_StageResult : UI_Popup
             skillOptions.Add(new SkillOption
             {
                 Id = "addFreeze",
-                Name = "ºù°á È­»ì",
-                Description = "ÀûÀ» ´À¸®°Ô ¸¸µå´Â ³Ã±â¸¦ ºÎ¿©ÇÑ´Ù.",
+                Name = "ë¹™ê²° í™”ì‚´",
+                Description = "ì ì„ ëŠë¦¬ê²Œ ë§Œë“œëŠ” ëƒ‰ê¸°ë¥¼ ë¶€ì—¬í•œë‹¤.",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addFreeze"),
                 ApplyAction = () => skill.addFreeze = true
             });
@@ -156,13 +156,13 @@ public class UI_StageResult : UI_Popup
 
                 btn.gameObject.SetActive(true);
 
-                // ½ºÅ³ ÀÌ¸§ ¡æ Ã¹ ¹øÂ° ÅØ½ºÆ®
+                // ìŠ¤í‚¬ ì´ë¦„ â†’ ì²« ë²ˆì§¸ í…ìŠ¤íŠ¸
                 btn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = opt.Name;
 
-                // ¼³¸í ¡æ µÎ ¹øÂ° ÅØ½ºÆ®
+                // ì„¤ëª… â†’ ë‘ ë²ˆì§¸ í…ìŠ¤íŠ¸
                 btn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = opt.Description;
 
-                // ½ºÅ³ ¾ÆÀÌÄÜ
+                // ìŠ¤í‚¬ ì•„ì´ì½˜
                 btn.transform.GetChild(2).GetComponent<Image>().sprite = opt.Icon;
 
                 GameObject popupRoot = this.gameObject;
@@ -187,32 +187,32 @@ public class UI_StageResult : UI_Popup
         //var titles = new Dictionary<string, System.Action>();
         //var descriptions = new Dictionary<string, System.Action>();
         //if (skill.shootSpeed < 50f)
-        //    descriptions[$"È­»ì Â÷Â¡ ¼Óµµ +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})"] =
+        //    descriptions[$"í™”ì‚´ ì°¨ì§• ì†ë„ +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})"] =
         //        () => skill.shootSpeed += 1f;
 
         //if (skill.arrowCount < 5)
-        //    descriptions[$"¹ß»çµÇ´Â È­»ì °³¼ö +1 ({skill.arrowCount} -> {skill.arrowCount + 1})"] =
+        //    descriptions[$"ë°œì‚¬ë˜ëŠ” í™”ì‚´ ê°œìˆ˜ +1 ({skill.arrowCount} -> {skill.arrowCount + 1})"] =
         //        () => skill.arrowCount += 1;
 
         //if (!skill.addGhost)
-        //    descriptions["Ä³¸¯ÅÍ°¡ º¸À¯ÇÏ°í ÀÖ´Â È°ÀÇ ºĞ½ÅÀÌ »ı¼ºµÈ´Ù."] = () => skill.addGhost = true;
+        //    descriptions["ìºë¦­í„°ê°€ ë³´ìœ í•˜ê³  ìˆëŠ” í™œì˜ ë¶„ì‹ ì´ ìƒì„±ëœë‹¤."] = () => skill.addGhost = true;
 
         //if (skill.addBomb < 3)
-        //    descriptions[$"Æø¹ßÇÑ ÈÄ »ı¼ºµÇ´Â È­»ì °³¼ö +1 ({skill.addBomb} -> {skill.addBomb + 1})"] =
+        //    descriptions[$"í­ë°œí•œ í›„ ìƒì„±ë˜ëŠ” í™”ì‚´ ê°œìˆ˜ +1 ({skill.addBomb} -> {skill.addBomb + 1})"] =
         //        () => skill.addBomb += 1;
 
         //if (!skill.addPenetrates)
-        //    descriptions["¿©·¯ ÀûÀ» ÇÑ ¹ø¿¡ ²ç¶Õ´Â´Ù."] = () => skill.addPenetrates = true;
+        //    descriptions["ì—¬ëŸ¬ ì ì„ í•œ ë²ˆì— ê¿°ëš«ëŠ”ë‹¤."] = () => skill.addPenetrates = true;
 
         //if (skill.addSpread < 5)
-        //    descriptions[$"ºĞ¿­µÉ Ä®³¯ °³¼ö +1 ({skill.addSpread} -> {skill.addSpread + 1})"] =
+        //    descriptions[$"ë¶„ì—´ë  ì¹¼ë‚  ê°œìˆ˜ +1 ({skill.addSpread} -> {skill.addSpread + 1})"] =
         //        () => skill.addSpread += 1;
 
         //if (!skill.addChase)
-        //    descriptions["È­»ìÀÌ ÀûÀ» ÃßÀûÇÒ ¼ö ÀÖµµ·Ï ÇÑ´Ù."] = () => skill.addChase = true;
+        //    descriptions["í™”ì‚´ì´ ì ì„ ì¶”ì í•  ìˆ˜ ìˆë„ë¡ í•œë‹¤."] = () => skill.addChase = true;
 
         //if (!skill.addFreeze)
-        //    descriptions["ÀûÀ» ´À¸®°Ô ¸¸µå´Â ³Ã±â¸¦ ºÎ¿©ÇÑ´Ù."] = () => skill.addFreeze = true;
+        //    descriptions["ì ì„ ëŠë¦¬ê²Œ ë§Œë“œëŠ” ëƒ‰ê¸°ë¥¼ ë¶€ì—¬í•œë‹¤."] = () => skill.addFreeze = true;
 
 
         //var keys = new List<string>(descriptions.Keys);
