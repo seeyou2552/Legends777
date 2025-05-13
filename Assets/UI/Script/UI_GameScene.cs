@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,14 @@ public class UI_GameScene : MonoBehaviour
     public TextMeshProUGUI stageText;
     public Button optionButton;
     //public Button statusButton;
+
+    [Header("Skill Icons")]
+    public RectTransform skillsContainer;
+    public GameObject skillIconPrefab;
+
+    private GridLayoutGroup grid;
+    private SkillManager skillManager;
+
 
     [Header("UI Prefabs (Resources/UI)")]
     
@@ -20,6 +29,14 @@ public class UI_GameScene : MonoBehaviour
     public Slider healthSlider;
     public TextMeshProUGUI healthText;
     private PlayerManager player;
+
+    private void Awake()
+    {
+        grid = skillsContainer.GetComponent<GridLayoutGroup>();
+        skillManager = FindObjectOfType<SkillManager>();
+
+        GameManager.instance.OnSkillUpgraded += OnSkillUpgraded;
+    }
 
     private void Start()
     {
@@ -95,4 +112,63 @@ public class UI_GameScene : MonoBehaviour
         var popup = UIManager.Instance.ShowPopup<UI_StageFailPopup>("UI_StageFailPopup");
         popup.Init();
     }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.OnSkillUpgraded -= OnSkillUpgraded;
+    }
+
+    private void OnSkillUpgraded(string label)
+    {
+        AddSkillIcon(label);
+        UpdateGridConstraint();
+    }
+
+    private void AddSkillIcon(string label)
+    {
+        string key = label.Split(' ')[0];
+
+        string value = GetSkillValue(key);
+
+        var icon = Instantiate(skillIconPrefab, skillsContainer, false);
+        var rt = icon.GetComponent<RectTransform>();
+        rt.localScale = Vector3.one;
+        var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
+        iconText.text = $"{key}: \n{value}";
+    }
+
+    private string GetSkillValue(string key)
+    {
+        switch (key)
+        {
+            case "shootSpeed":
+                return skillManager.shootSpeed.ToString();
+            case "arrowCount":
+                return skillManager.arrowCount.ToString();
+            case "addGhost":
+                return skillManager.addGhost ? "True" : "False";
+            case "addBomb":
+                return skillManager.addBomb.ToString();
+            case "addPenetrates":
+                return skillManager.addPenetrates ? "True" : "False";
+            case "addSpread":
+                return skillManager.addSpread.ToString();
+            case "addChase":
+                return skillManager.addChase ? "True" : "False";
+            default:
+                return "";
+        }
+    }
+
+    private void UpdateGridConstraint()
+    {
+        float width = skillsContainer.rect.width;
+        float cellAndSpacing = grid.cellSize.x + grid.spacing.x;
+
+        int maxColumns = Mathf.Max(1, Mathf.FloorToInt((width + grid.spacing.x) / cellAndSpacing));
+
+        grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        grid.constraintCount = maxColumns;
+    }
+
 }

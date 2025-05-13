@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
     public Action OnDungeonTypeDefaultUpdated;
+    public Action<String> OnSkillUpgraded;
 
     public int KillCount { get; set; } = 0;
     private bool OnStageResult = false;
