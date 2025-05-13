@@ -86,12 +86,12 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: Îã§Î•∏ UI ÏöîÏÜå Î¶¨ÌîÑÎ†àÏãú Ìò∏Ï∂ú
+        // TODO: ?§Î•∏ UI ?îÏÜå Î¶¨ÌîÑ?àÏãú ?∏Ï∂ú
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "Ïä§ÌÖåÏù¥ÏßÄ " + GameManager.instance.Stage.ToString();
+        stageText.text = "Ω∫≈◊¿Ã¡ˆ " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()
@@ -123,17 +123,17 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnSkillUpgraded -= OnSkillUpgraded;
     }
 
-    private void OnSkillUpgraded(string label)
+    private void OnSkillUpgraded(SkillOption option)
     {
-        AddSkillIcon(label);
+        AddSkillIcon(option);
         UpdateGridConstraint();
     }
 
-    private void AddSkillIcon(string label)
+    private void AddSkillIcon(SkillOption option)
     {
-        string key = label.Split(' ')[0];
+        string key = option.Name;
 
-        string value = GetSkillValue(key);
+        string value = GetSkillValue(option.Id);
 
         if(skillIconMap.TryGetValue(key, out var existingText))
         {
@@ -142,10 +142,16 @@ public class UI_GameScene : MonoBehaviour
         else
         {
             var icon = Instantiate(skillIconPrefab, skillsContainer, false);
+
             var rt = icon.GetComponent<RectTransform>();
             rt.localScale = Vector3.one;
+
+            var iconImage = icon.transform.Find("Skillicon/SkillImage")?.GetComponent<Image>();
+            iconImage.sprite = option.Icon;
+
             var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
             iconText.text = $"{key}: \n{value}";
+
             skillIconMap[key] = iconText;
         }
 
@@ -170,6 +176,8 @@ public class UI_GameScene : MonoBehaviour
                 return skillManager.addSpread.ToString();
             case "addChase":
                 return skillManager.addChase ? "True" : "False";
+            case "addFreeze":
+                return skillManager.addFreeze ? "True" : "False";
             default:
                 return "";
         }
@@ -191,4 +199,20 @@ public class UI_GameScene : MonoBehaviour
         goldText.text = $"Gold: {gold}";
     }
 
+    void Update()
+    {
+        if(playerController.dashCool > 0f) // Ïø®Ì???????
+        {
+            coolTimeText.text = playerController.dashCool.ToString("N1");
+            dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+            dashIconAnim.Play("DashIconState", -1, 0f);
+        }
+        else if(playerController.dashCool < 0) // Ïø®Ïù¥ ?ùÎÇ¨????
+        {
+            coolTimeText.text = "";
+            dashIcon.color = new Color(1f, 1f, 1f, 1f);
+            dashImage.color = new Color(1f, 1f, 1f, 1f);
+        }
+    }
 }
