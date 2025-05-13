@@ -145,4 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 0
   attackSpeed: 0
-  hp: 1
+  hp: 20

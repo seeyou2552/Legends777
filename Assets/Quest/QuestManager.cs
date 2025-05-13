@@ -13,7 +13,6 @@ public class QuestManager : SingleTon<QuestManager>
 {
     private List<QuestController> questController;
 
-
     [SerializeField] public Canvas QuestCanvas;
 
     [SerializeField] private TextMeshProUGUI questUIText0; //퀘스트UI(화면 왼쪽에 뜨는 퀘스트 정보)
@@ -24,13 +23,11 @@ public class QuestManager : SingleTon<QuestManager>
 
     [SerializeField] private TextMeshProUGUI questUIText2; 
     [SerializeField] private TextMeshProUGUI count2;
-
+    
     
 
-    protected override void Awake() { base.Awake(); }
-
-    public void Start()
-    {
+    protected override void Awake() { 
+        base.Awake();
         questController = new List<QuestController>(); int i = 0;
 
         // QuestController 초기값 num = 0 몬스터처치, num = 1 보스 처치, num = 2 방 클리어, num = 3 퍼즐 해결

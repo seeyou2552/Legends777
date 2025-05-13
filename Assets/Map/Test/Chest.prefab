@@ -116,6 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8620225652491299016}
   - component: {fileID: 4494169280165410590}
+  - component: {fileID: 7266820676592076885}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -184,3 +185,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7266820676592076885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064183575077674007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc10130217f2474db4c33ba6bbc9d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp_Potion: {fileID: 2493610895752925749, guid: fde24e51d6586864d9886b3da968fb47, type: 3}
+  power_Potion: {fileID: 6856268188932940575, guid: f7047972bfb93754f9b7d92e07989605, type: 3}
+  attackSpeed_Potion: {fileID: 4663507180038099203, guid: d7b478d3770abb049b0a70e1ee5fbc37, type: 3}
+  interChest: 0
