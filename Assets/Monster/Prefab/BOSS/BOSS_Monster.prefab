@@ -226,9 +226,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3276f5af935498f49a64b189acb291ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnSound: {fileID: 8300000, guid: 6d79c9ddcb7d8694cb780e5fd15bb48c, type: 3}
+  deathSound: {fileID: 8300000, guid: b014eb326ffd6464e99d78bc5285c010, type: 3}
   initialHealth: 300
   bossSpeed: 3
   redBackGround: {fileID: 2747213633161331068, guid: b06b4fb5eabdc3d46812013ba790cece, type: 3}
+  firstHp: 0
 --- !u!114 &-6838238381144533660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,12 +248,6 @@ MonoBehaviour:
   EffectText: {fileID: 0}
   fireRate: 3
   defaultBulletSpeed: 10
-  sHowEffect:
-  - "\uCCB4\uB825 x 2"
-  - "\uACF5\uACA9\uB825 x 2"
-  - "\uC18D\uB3C4 x 2"
-  - "\uACF5\uC18D x 2"
-  - "\uCCB4\uB825 / 2"
-  - "\uACF5\uACA9\uB825 / 2"
-  - "\uC18D\uB3C4 / 2"
-  - "\uACF5\uC18D / 2"
+  playerSpeed: 0
+  playerAtkSpeed: 0
+  playerPower: 0
