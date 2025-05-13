@@ -22,6 +22,7 @@ public class BossSkillManager : MonoBehaviour
 
     private List<Func<IEnumerator>> skillFuncs = new List<Func<IEnumerator>>();
     private int currentSkillIndex = 0;
+    private int currentskillIndex2 = 0;
 
     private List<GameObject> activeSkillObjects = new List<GameObject>(); // ?°ë¡œ ?ì„±?˜ëŠ” ?¤ë¸Œ?íŠ¸ë¥?ë³´ìŠ¤ê°€ ì£½ì„???? œ?˜ê¸° ?„í•´ ?€?¥í•´?ëŠ” ë¦¬ìŠ¤??
     public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ?¸ìŠ¤?™í„° ì°½ì—???ˆë³´?´ê³  ?¤í¬ë¦½íŠ¸?ì„œ ì°¸ì¡°? ìˆ˜?ˆê²Œ
@@ -70,13 +71,13 @@ public class BossSkillManager : MonoBehaviour
         skillFuncs.Clear();
 
         // ?¬ìš©???¤í‚¬???±ë¡
-        if (gameManager.Stage < 4)
+        if (gameManager.Stage < 3)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(LazerPatten2);
             skillFuncs.Add(MakeMonster);
         }
-        else if (gameManager.Stage < 6)
+        else if (gameManager.Stage < 5)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -85,7 +86,7 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(ShootFast);
             skillFuncs.Add(Teleport);
         }
-        else if (gameManager.Stage < 8)
+        else if (gameManager.Stage < 9)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -158,17 +159,28 @@ public class BossSkillManager : MonoBehaviour
         {
             if (skillFuncs.Count > 0)
             {
+                int num = UnityEngine.Random.Range(0, skillFuncs.Count);
+                currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
                 var nextSkill = skillFuncs[currentSkillIndex];
-
                 if (CanUseSkill(nextSkill))
                 {
                     yield return StartCoroutine(nextSkill());
+                    if (bossManager.Health <= bossManager.firstHp / 2)
+                    {
+                        do
+                        {
+                            int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
+                            currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
+
+                        } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
+                        var nextskill2 = skillFuncs[currentskillIndex2];
+                        if (CanUseSkill(nextskill2))
+                        {
+                            yield return StartCoroutine(nextskill2());
+                        }
+                    }
                 }
-
-                int num = UnityEngine.Random.Range(0, skillFuncs.Count);
-                currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
             }
-
             yield return new WaitForSeconds(2f);
         }
     }

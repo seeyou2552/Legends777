@@ -53,7 +53,7 @@ public class BossManager : MonoBehaviour
     private bool isHalf = false;
     public GameObject redBackGround;
     private Camera Boss_Camera;
-    private int firstHp;
+    public int firstHp;
 
     public static BossManager instance;
 
