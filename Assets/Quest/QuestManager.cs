@@ -37,7 +37,7 @@ public class QuestManager : SingleTon<QuestManager>
         // QuestController(int num, string text, int goal, int gold)
         questController.Add(new QuestController(i, "Kill the monster", 1, 100)); i++;
         questController.Add(new QuestController(i, "Kill the boss", 1, 200)); i++;
-        questController.Add(new QuestController(i, "Clear the room", 1, 400)); i++;
+        questController.Add(new QuestController(i, "Clear the room", 3, 400)); i++;
         //questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
 
         QuestCanvas.gameObject.SetActive(false);
