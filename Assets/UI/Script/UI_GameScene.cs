@@ -10,6 +10,7 @@ public class UI_GameScene : MonoBehaviour
     public TextMeshProUGUI stageText;
     public Button optionButton;
     //public Button statusButton;
+    public TextMeshProUGUI goldText;
 
     [Header("Skill Icons")]
     public RectTransform skillsContainer;
@@ -36,6 +37,8 @@ public class UI_GameScene : MonoBehaviour
         skillManager = FindObjectOfType<SkillManager>();
 
         GameManager.instance.OnSkillUpgraded += OnSkillUpgraded;
+        PlayerController.Instance.OnGoldChanged += UpdateGoldUI;
+        UpdateGoldUI(PlayerController.Instance.Gold);
     }
 
     private void Start()
@@ -169,6 +172,11 @@ public class UI_GameScene : MonoBehaviour
 
         grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
         grid.constraintCount = maxColumns;
+    }
+
+    private void UpdateGoldUI(int gold)
+    {
+        goldText.text = $"Gold: {gold}";
     }
 
 }
