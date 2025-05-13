@@ -24,7 +24,7 @@ public class QuestManager : SingleTon<QuestManager>
 
     [SerializeField] private TextMeshProUGUI questUIText2; 
     [SerializeField] private TextMeshProUGUI count2;
-
+    
     
 
     protected override void Awake() { 

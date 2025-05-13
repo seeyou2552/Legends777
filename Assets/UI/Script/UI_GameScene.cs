@@ -32,6 +32,17 @@ public class UI_GameScene : MonoBehaviour
     public Slider healthSlider;
     public TextMeshProUGUI healthText;
     private PlayerManager player;
+    private PlayerController playerController;
+
+    [Header("Dash Icon")]
+    public TextMeshProUGUI coolTimeText;
+    public Image dashIcon;
+    public Image dashImage;
+    public Animator dashIconAnim;
+
+    [Header("Potion Status Form")]
+    public TextMeshProUGUI potionStatusText;
+    public Animator potionStatusAnim;
 
     private void Awake()
     {
@@ -86,12 +97,12 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: ?�른 UI ?�소 리프?�시 ?�출
+        // TODO: ?¤ë¥¸ UI ?”ì†Œ ë¦¬í”„?ˆì‹œ ?¸ì¶œ
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "�������� " + GameManager.instance.Stage.ToString();
+        stageText.text = "½ºÅ×ÀÌÁö " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()
@@ -199,20 +210,47 @@ public class UI_GameScene : MonoBehaviour
         goldText.text = $"Gold: {gold}";
     }
 
-    //void Update()
-    //{
-    //    if(playerController.dashCool > 0f) // 쿨�???????
-    //    {
-    //        coolTimeText.text = playerController.dashCool.ToString("N1");
-    //        dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-    //        dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
-    //        dashIconAnim.Play("DashIconState", -1, 0f);
-    //    }
-    //    else if(playerController.dashCool < 0) // 쿨이 ?�났????
-    //    {
-    //        coolTimeText.text = "";
-    //        dashIcon.color = new Color(1f, 1f, 1f, 1f);
-    //        dashImage.color = new Color(1f, 1f, 1f, 1f);
-    //    }
-    //}
+    void Update()
+    {
+        if(playerController.dashCool > 0f) // ì¿¨íƒ€ìž„ ì¼ ë•Œ
+        {
+            coolTimeText.text = playerController.dashCool.ToString("N1");
+            dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+            dashIconAnim.Play("DashIconState", -1, 0f);
+        }
+        else if(playerController.dashCool < 0) // ì¿¨ì´ ëë‚¬ì„ ë–„
+        {
+            coolTimeText.text = "";
+            dashIcon.color = new Color(1f, 1f, 1f, 1f);
+            dashImage.color = new Color(1f, 1f, 1f, 1f);
+        }
+    }
+
+    public void SetStatus(string name, float status)
+    {
+        if(name.StartsWith("HP_Potion"))
+        {
+            potionStatusText.text = "ì²´ë ¥ì´ " + status.ToString() +" ë§Œí¼ íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤."; 
+        }
+        else if(name.StartsWith("Power_Potion"))
+        {
+            potionStatusText.text = "ê³µê²©ë ¥ì´ " + status.ToString() +" ë§Œí¼ ìƒìŠ¹í•˜ì˜€ìŠµë‹ˆë‹¤."; 
+        }
+        else if(name.StartsWith("AttackSpeed_Potion"))
+        {
+            potionStatusText.text = "ê³µê²© ì†ë„ê°€ " + status.ToString() +" ë§Œí¼ ìƒìŠ¹í•˜ì˜€ìŠµë‹ˆë‹¤."; 
+        }
+
+        potionStatusText.gameObject.SetActive(true);
+        StartCoroutine(OutPutStatus());
+    }
+
+    IEnumerator OutPutStatus()
+    {
+        potionStatusAnim.Play("StatusForm", -1, 0f);
+        yield return new WaitForSeconds(1f);
+        potionStatusText.gameObject.SetActive(false);
+    }
+
 }
