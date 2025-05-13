@@ -16,7 +16,7 @@ public class PotionManager : Potion
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player"))
         {
             if (this.gameObject.name.StartsWith("HP_Potion"))
             {
@@ -36,7 +36,6 @@ public class PotionManager : Potion
                 PlayerController.Instance.power += power;
                 ui.SetStatus(this.gameObject.name, power);
             }
-
             Destroy(this.gameObject);
         }
     }

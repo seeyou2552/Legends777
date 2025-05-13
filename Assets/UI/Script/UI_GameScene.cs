@@ -57,7 +57,6 @@ public class UI_GameScene : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<PlayerManager>();
-        playerController = player.GetComponent<PlayerController>();
         if (player == null)
         {
             Debug.LogError("PlayerManager not found in the scene.");
@@ -98,12 +97,12 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: 다른 UI 요소 리프레시 호출
+        // TODO: ?¤ë¥¸ UI ?”ì†Œ ë¦¬í”„?ˆì‹œ ?¸ì¶œ
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "스테이지 " + GameManager.instance.Stage.ToString();
+        stageText.text = "½ºÅ×ÀÌÁö " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()
@@ -135,17 +134,17 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnSkillUpgraded -= OnSkillUpgraded;
     }
 
-    private void OnSkillUpgraded(string label)
+    private void OnSkillUpgraded(SkillOption option)
     {
-        AddSkillIcon(label);
+        AddSkillIcon(option);
         UpdateGridConstraint();
     }
 
-    private void AddSkillIcon(string label)
+    private void AddSkillIcon(SkillOption option)
     {
-        string key = label.Split(' ')[0];
+        string key = option.Name;
 
-        string value = GetSkillValue(key);
+        string value = GetSkillValue(option.Id);
 
         if(skillIconMap.TryGetValue(key, out var existingText))
         {
@@ -154,10 +153,16 @@ public class UI_GameScene : MonoBehaviour
         else
         {
             var icon = Instantiate(skillIconPrefab, skillsContainer, false);
+
             var rt = icon.GetComponent<RectTransform>();
             rt.localScale = Vector3.one;
+
+            var iconImage = icon.transform.Find("Skillicon/SkillImage")?.GetComponent<Image>();
+            iconImage.sprite = option.Icon;
+
             var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
             iconText.text = $"{key}: \n{value}";
+
             skillIconMap[key] = iconText;
         }
 
@@ -182,6 +187,8 @@ public class UI_GameScene : MonoBehaviour
                 return skillManager.addSpread.ToString();
             case "addChase":
                 return skillManager.addChase ? "True" : "False";
+            case "addFreeze":
+                return skillManager.addFreeze ? "True" : "False";
             default:
                 return "";
         }
@@ -205,14 +212,14 @@ public class UI_GameScene : MonoBehaviour
 
     void Update()
     {
-        if(playerController.dashCool > 0f) // 쿨타임 일 때
+        if(playerController.dashCool > 0f) // ì¿¨íƒ€ìž„ ì¼ ë•Œ
         {
             coolTimeText.text = playerController.dashCool.ToString("N1");
             dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
             dashIconAnim.Play("DashIconState", -1, 0f);
         }
-        else if(playerController.dashCool < 0) // 쿨이 끝났을 떄
+        else if(playerController.dashCool < 0) // ì¿¨ì´ ëë‚¬ì„ ë–„
         {
             coolTimeText.text = "";
             dashIcon.color = new Color(1f, 1f, 1f, 1f);
@@ -224,15 +231,15 @@ public class UI_GameScene : MonoBehaviour
     {
         if(name.StartsWith("HP_Potion"))
         {
-            potionStatusText.text = "체력이 " + status.ToString() +" 만큼 회복되었습니다."; 
+            potionStatusText.text = "ì²´ë ¥ì´ " + status.ToString() +" ë§Œí¼ íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤."; 
         }
         else if(name.StartsWith("Power_Potion"))
         {
-            potionStatusText.text = "공격력이 " + status.ToString() +" 만큼 상승하였습니다."; 
+            potionStatusText.text = "ê³µê²©ë ¥ì´ " + status.ToString() +" ë§Œí¼ ìƒìŠ¹í•˜ì˜€ìŠµë‹ˆë‹¤."; 
         }
         else if(name.StartsWith("AttackSpeed_Potion"))
         {
-            potionStatusText.text = "공격 속도가 " + status.ToString() +" 만큼 상승하였습니다."; 
+            potionStatusText.text = "ê³µê²© ì†ë„ê°€ " + status.ToString() +" ë§Œí¼ ìƒìŠ¹í•˜ì˜€ìŠµë‹ˆë‹¤."; 
         }
 
         potionStatusText.gameObject.SetActive(true);

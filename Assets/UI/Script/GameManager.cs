@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
     public Action OnDungeonTypeDefaultUpdated;
-    public Action<String> OnSkillUpgraded;
+    public Action<SkillOption> OnSkillUpgraded;
 
     public int KillCount { get; set; } = 0;
     private bool OnStageResult = false;
@@ -80,6 +80,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ShowStageResult();
+        }
+    }
 
     int currentWaveIndex;
 
