@@ -1169,6 +1169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageText: {fileID: 4529756615446748084}
   optionButton: {fileID: 8228789426783586751}
+  goldText: {fileID: 4833919102995696821}
   skillsContainer: {fileID: 3421874813457661980}
   skillIconPrefab: {fileID: 7380345996966019860, guid: 9f72d89c554325448ac2ea3a78c03bc0, type: 3}
   questListName: UI_QuestList
