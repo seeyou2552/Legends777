@@ -12,7 +12,7 @@ public class ShowStoryAnimation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI StoryText;
     private string[] storyLines = 
         { "“...여긴 어디지?”\n차가운 돌바닥, 축축한 공기.",
-        "“기억나지 않아. 아무것도.”\n 하지만... 이대로 가만히 있을 수는 없어",
+        "아무것도 기억나지 않아\n 하지만... 이대로 가만히 있을 수는 없어",
         "무언가… 나를 이끌고 있다. 앞을 향해서\n이 통로 끝에는 무엇이 있을까.",
         "빛...?",
         "빛이 점점 강해지고 내 숨소리도 빨라진다.\n“저 문 너머엔… 어디가 있는거지?”" };

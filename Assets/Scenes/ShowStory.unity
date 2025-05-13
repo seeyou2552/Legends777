@@ -337,6 +337,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9035926990366900010, guid: dcb1187bdf4c18342a7c70b616e89325, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035926990366900010, guid: dcb1187bdf4c18342a7c70b616e89325, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035926990366900010, guid: dcb1187bdf4c18342a7c70b616e89325, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -350,6 +362,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1639333050707643, guid: 28f99af93d161cb408d0535e8a9fbded, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 862115790122098757, guid: 28f99af93d161cb408d0535e8a9fbded, type: 3}
       propertyPath: m_Name
       value: ShowStoryText
@@ -433,6 +449,18 @@ PrefabInstance:
     - target: {fileID: 7270820099398393214, guid: 28f99af93d161cb408d0535e8a9fbded, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860478837170099549, guid: 28f99af93d161cb408d0535e8a9fbded, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860478837170099549, guid: 28f99af93d161cb408d0535e8a9fbded, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860478837170099549, guid: 28f99af93d161cb408d0535e8a9fbded, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
