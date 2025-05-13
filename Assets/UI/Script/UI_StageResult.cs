@@ -17,41 +17,40 @@ public class UI_StageResult : UI_Popup
 
     public void Init()
     {
-        if(skill == null)
-        {
-            skill = GameObject.Find("Weapon_Bow").GetComponent<SkillManager>();
-        }
+    
+        skill = GameObject.Find("Weapon_Bow").GetComponent<SkillManager>();
+        
         var candidates = new Dictionary<string, System.Action>();
         if (skill.shootSpeed < 50f)
-            candidates[$"?”ì‚´ ?ë„ +1 ({skill.shootSpeed} ??{skill.shootSpeed + 1})"] =
+            candidates[$"shootSpeed +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})"] =
                 () => skill.shootSpeed += 1f;
 
         // ?”ì‚´ ê°œìˆ˜ +1 (ìµœë? 5)
         if (skill.arrowCount < 5)
-            candidates[$"?”ì‚´ ê°œìˆ˜ +1 ({skill.arrowCount} ??{skill.arrowCount + 1})"] =
+            candidates[$"arrowCount +1 ({skill.arrowCount} -> {skill.arrowCount + 1})"] =
                 () => skill.arrowCount += 1;
 
         // ? ë ¹ ???œì„±??(??ë²ˆë§Œ)
         if (!skill.addGhost)
-            candidates["? ë ¹ ???œì„±??"] = () => skill.addGhost = true;
+            candidates["addGhost"] = () => skill.addGhost = true;
 
         // ??ƒ„ ì¶”ê? +1 (?„ìš”?˜ë‹¤ë©?
         if (skill.addBomb < 3) // ?ˆì‹œ ?í•œ 3
-            candidates[$"??ƒ„ +1 ({skill.addBomb} ??{skill.addBomb + 1})"] =
+            candidates[$"addBomb +1 ({skill.addBomb} -> {skill.addBomb + 1})"] =
                 () => skill.addBomb += 1;
 
         // ê´€???œì„±??
         if (!skill.addPenetrates)
-            candidates["ê´€???”ì‚´ ?œì„±??"] = () => skill.addPenetrates = true;
+            candidates["addPenetrates"] = () => skill.addPenetrates = true;
 
         // ?•ì‚° +1 (ìµœë? 5)
         if (skill.addSpread < 5)
-            candidates[$"?•ì‚° +1 ({skill.addSpread} ??{skill.addSpread + 1})"] =
+            candidates[$"addSpread +1 ({skill.addSpread} -> {skill.addSpread + 1})"] =
                 () => skill.addSpread += 1;
 
         // ? ë„ ?œì„±??
         if (!skill.addChase)
-            candidates["? ë„ ?”ì‚´ ?œì„±??"] = () => skill.addChase = true;
+            candidates["addChase"] = () => skill.addChase = true;
 
 
         var keys = new List<string>(candidates.Keys);
