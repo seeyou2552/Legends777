@@ -44,6 +44,10 @@ public class UI_GameScene : MonoBehaviour
     public TextMeshProUGUI potionStatusText;
     public Animator potionStatusAnim;
 
+    [Header("Tutorial")]
+    public GameObject tutorialPrefab;
+    private GameObject tutorialInstance;
+
     private void Awake()
     {
         grid = skillsContainer.GetComponent<GridLayoutGroup>();
@@ -52,6 +56,14 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnSkillUpgraded += OnSkillUpgraded;
         PlayerController.Instance.OnGoldChanged += UpdateGoldUI;
         UpdateGoldUI(PlayerController.Instance.Gold);
+
+        GameManager.instance.OnTutorialUpdated += ShowTutorialUI;
+        GameManager.instance.OnDungeonTypeMonsterUpdated += HideTutorialUI;
+        GameManager.instance.OnDungeonTypeBossUpdated += HideTutorialUI;
+        GameManager.instance.OnDungeonTypeDefaultUpdated += HideTutorialUI;
+        if (GameManager.instance.DungeonType == DungeonType.Lobby)
+            ShowTutorialUI();
+
     }
 
     private void Start()
@@ -67,6 +79,8 @@ public class UI_GameScene : MonoBehaviour
         SetHealth(player.CurrentHealth, player.MaxHealth);
 
         SetInfo();
+
+
     }
 
     public void Init()
@@ -132,6 +146,10 @@ public class UI_GameScene : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.instance.OnSkillUpgraded -= OnSkillUpgraded;
+        GameManager.instance.OnTutorialUpdated -= ShowTutorialUI;
+        GameManager.instance.OnDungeonTypeMonsterUpdated -= HideTutorialUI;
+        GameManager.instance.OnDungeonTypeBossUpdated -= HideTutorialUI;
+        GameManager.instance.OnDungeonTypeDefaultUpdated -= HideTutorialUI;
     }
 
     private void OnSkillUpgraded(SkillOption option)
@@ -252,5 +270,24 @@ public class UI_GameScene : MonoBehaviour
         yield return new WaitForSeconds(1f);
         potionStatusText.gameObject.SetActive(false);
     }
+
+    private void ShowTutorialUI()
+    {
+        if (tutorialInstance == null && tutorialPrefab != null)
+        {
+            tutorialInstance = Instantiate(tutorialPrefab);
+            tutorialInstance.transform.SetParent(transform);
+        }
+    }
+
+    private void HideTutorialUI()
+    {
+        if (tutorialInstance != null)
+        {
+            Destroy(tutorialInstance);
+            tutorialInstance = null;
+        }
+    }
+
 
 }
