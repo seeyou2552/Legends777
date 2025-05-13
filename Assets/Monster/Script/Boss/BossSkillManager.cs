@@ -187,7 +187,7 @@ public class BossSkillManager : MonoBehaviour
                         yield return new WaitForSeconds(5f);
                     }
                 }
-                else if (CanUseSkill(nextSkill))
+                if (CanUseSkill(nextSkill))
                 {
                     yield return StartCoroutine(nextSkill());
                     yield return new WaitForSeconds(2f);
@@ -205,7 +205,20 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator MakeMonster()
     {
-        MonsterManager.Instance.SpawnRandomMonster();
+        // 랜덤한 적 프리팹 선택
+        GameObject randomPrefab = MonsterManager.Instance.enemyPrefabs[UnityEngine.Random.Range(0, MonsterManager.Instance.enemyPrefabs.Count)];
+
+        // 랜덤한 영역 선택
+        Vector2 randomPosition = new Vector2(
+            UnityEngine.Random.Range(-8, 9),
+            UnityEngine.Random.Range(-4, 3.5f)
+        );
+
+        // 적 생성 및 리스트에 추가
+        GameObject spawnedEnemy = Instantiate(randomPrefab, randomPosition, Quaternion.identity, this.transform);
+        MonsterController enemyController = spawnedEnemy.GetComponent<MonsterController>();
+        enemyController.Init();
+
         yield return null;
     }
 
