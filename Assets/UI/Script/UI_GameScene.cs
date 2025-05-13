@@ -141,7 +141,7 @@ public class UI_GameScene : MonoBehaviour
     {
         string key = option.Name;
 
-        string value = GetSkillValue(key);
+        string value = GetSkillValue(option.Id);
 
         if(skillIconMap.TryGetValue(key, out var existingText))
         {
@@ -184,6 +184,8 @@ public class UI_GameScene : MonoBehaviour
                 return skillManager.addSpread.ToString();
             case "addChase":
                 return skillManager.addChase ? "True" : "False";
+            case "addFreeze":
+                return skillManager.addFreeze ? "True" : "False";
             default:
                 return "";
         }

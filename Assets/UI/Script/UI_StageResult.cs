@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SkillOption
 {
+    public string Id;
     public string Name;         // 예: "차징 속도 증가"
     public string Description;  // 예: "화살 차징 속도 +1 (5 -> 6)"
     public Sprite Icon;
@@ -40,9 +41,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "shootSpeed",
                 Name = "빠른 사격",
                 Description = $"화살 차징 속도 +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number0"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/shootSpeed"),
                 ApplyAction = () => skill.shootSpeed += 1f
             });
         }
@@ -51,9 +53,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "arrowCount",
                 Name = "화살 개수",
                 Description = $"발사되는 화살 개수 +1 ({skill.arrowCount} -> {skill.arrowCount + 1})",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number1"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/arrowCount"),
                 ApplyAction = () => skill.arrowCount += 1
             });
         }
@@ -62,9 +65,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "addGhost",
                 Name = "분신 활",
                 Description = "캐릭터가 보유하고 있는 활의 분신이 생성된다.",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number2"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addGhost"),
                 ApplyAction = () => skill.addGhost = true
             });
         }
@@ -73,9 +77,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "addBomb",
                 Name = "지뢰 화살",
                 Description = $"폭발한 후 생성되는 화살 개수 +1 ({skill.addBomb} -> {skill.addBomb + 1})",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number3"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addBomb"),
                 ApplyAction = () => skill.addBomb += 1
             });
         }
@@ -84,9 +89,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "addPenetrates",
                 Name = "관통 화살",
                 Description = "여러 적을 한 번에 꿰뚫는다.",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number4"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addPenetrates"),
                 ApplyAction = () => skill.addPenetrates = true
             });
         }
@@ -95,9 +101,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "addSpread",
                 Name = "칼날 분열",
                 Description = $"분열될 칼날 개수 +1 ({skill.addSpread} -> {skill.addSpread + 1})",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number5"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addSpread"),
                 ApplyAction = () => skill.addSpread += 1
             });
         }
@@ -106,9 +113,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "addChase",
                 Name = "추적 화살",
                 Description = "화살이 적을 추적할 수 있도록 한다.",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number6"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addChase"),
                 ApplyAction = () => skill.addChase = true
             });
         }
@@ -117,9 +125,10 @@ public class UI_StageResult : UI_Popup
         {
             skillOptions.Add(new SkillOption
             {
+                Id = "addFreeze",
                 Name = "빙결 화살",
                 Description = "적을 느리게 만드는 냉기를 부여한다.",
-                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/number7"),
+                Icon = Resources.Load<Sprite>("Sprites/SkillIcons/addFreeze"),
                 ApplyAction = () => skill.addFreeze = true
             });
         }
