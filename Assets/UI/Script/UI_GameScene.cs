@@ -40,15 +40,9 @@ public class UI_GameScene : MonoBehaviour
     public Image dashImage;
     public Animator dashIconAnim;
 
-    private void Awake()
-    {
-        grid = skillsContainer.GetComponent<GridLayoutGroup>();
-        skillManager = FindObjectOfType<SkillManager>();
-
-        GameManager.instance.OnSkillUpgraded += OnSkillUpgraded;
-        PlayerController.Instance.OnGoldChanged += UpdateGoldUI;
-        UpdateGoldUI(PlayerController.Instance.Gold);
-    }
+    [Header("Potion Status Form")]
+    public TextMeshProUGUI potionStatusText;
+    public Animator potionStatusAnim;
 
     private void Awake()
     {
@@ -224,6 +218,32 @@ public class UI_GameScene : MonoBehaviour
             dashIcon.color = new Color(1f, 1f, 1f, 1f);
             dashImage.color = new Color(1f, 1f, 1f, 1f);
         }
+    }
+
+    public void SetStatus(string name, float status)
+    {
+        if(name.StartsWith("HP_Potion"))
+        {
+            potionStatusText.text = "체력이 " + status.ToString() +" 만큼 회복되었습니다."; 
+        }
+        else if(name.StartsWith("Power_Potion"))
+        {
+            potionStatusText.text = "공격력이 " + status.ToString() +" 만큼 상승하였습니다."; 
+        }
+        else if(name.StartsWith("AttackSpeed_Potion"))
+        {
+            potionStatusText.text = "공격 속도가 " + status.ToString() +" 만큼 상승하였습니다."; 
+        }
+
+        potionStatusText.gameObject.SetActive(true);
+        StartCoroutine(OutPutStatus());
+    }
+
+    IEnumerator OutPutStatus()
+    {
+        potionStatusAnim.Play("StatusForm", -1, 0f);
+        yield return new WaitForSeconds(1f);
+        potionStatusText.gameObject.SetActive(false);
     }
 
 }

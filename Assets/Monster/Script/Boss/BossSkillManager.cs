@@ -73,27 +73,27 @@ public class BossSkillManager : MonoBehaviour
         // ?ъ슜???ㅽ궗???깅줉
         if (gameManager.Stage < 3)
         {
-            skillFuncs.Add(MoveFast);
+            //skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
-            skillFuncs.Add(LazerPatten2);
-            skillFuncs.Add(CameraReversal);
-            skillFuncs.Add(ShootFast);
-            skillFuncs.Add(Teleport);
-            skillFuncs.Add(MakeBossItem);
-            skillFuncs.Add(LazerPattern);
-            skillFuncs.Add(RedGround);
+            //skillFuncs.Add(LazerPatten2);
+            //skillFuncs.Add(CameraReversal);
+            //skillFuncs.Add(ShootFast);
+            //skillFuncs.Add(Teleport);
+            //skillFuncs.Add(MakeBossItem);
+            //skillFuncs.Add(LazerPattern);
+            //skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 5)
         {
-            skillFuncs.Add(MoveFast);
+            //skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
-            skillFuncs.Add(LazerPatten2);
-            skillFuncs.Add(CameraReversal);
-            skillFuncs.Add(ShootFast);
-            skillFuncs.Add(Teleport);
-            skillFuncs.Add(MakeBossItem);
-            skillFuncs.Add(LazerPattern);
-            skillFuncs.Add(RedGround);
+            //skillFuncs.Add(LazerPatten2);
+            //skillFuncs.Add(CameraReversal);
+            //skillFuncs.Add(ShootFast);
+            //skillFuncs.Add(Teleport);
+            //skillFuncs.Add(MakeBossItem);
+            //skillFuncs.Add(LazerPattern);
+            //skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 9)
         {
@@ -171,23 +171,23 @@ public class BossSkillManager : MonoBehaviour
                 int num = UnityEngine.Random.Range(0, skillFuncs.Count);
                 currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
                 var nextSkill = skillFuncs[currentSkillIndex];
-                if (bossManager.Health <= bossManager.firstHp / 2 && CanUseSkill(nextSkill))
-                {
-                    do
-                    {
-                        int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
-                        currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
+                //if (bossManager.Health <= bossManager.firstHp / 2 && CanUseSkill(nextSkill))
+                //{
+                //    do
+                //    {
+                //        int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
+                //        currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
 
-                    } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
-                    var nextskill2 = skillFuncs[currentskillIndex2];
-                    if (CanUseSkill(nextskill2))
-                    {
-                        StartCoroutine(nextSkill());
-                        StartCoroutine(nextskill2());
-                        yield return new WaitForSeconds(5f);
-                    }
-                }
-                else if (CanUseSkill(nextSkill))
+                //    } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
+                //    var nextskill2 = skillFuncs[currentskillIndex2];
+                //    if (CanUseSkill(nextskill2))
+                //    {
+                //        StartCoroutine(nextSkill());
+                //        StartCoroutine(nextskill2());
+                //        yield return new WaitForSeconds(5f);
+                //    }
+                //}
+                if (CanUseSkill(nextSkill))
                 {
                     yield return StartCoroutine(nextSkill());
                     yield return new WaitForSeconds(2f);
@@ -205,7 +205,20 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator MakeMonster()
     {
-        MonsterManager.Instance.SpawnRandomMonster();
+        // 랜덤한 적 프리팹 선택
+        GameObject randomPrefab = MonsterManager.Instance.enemyPrefabs[UnityEngine.Random.Range(0, MonsterManager.Instance.enemyPrefabs.Count)];
+
+        // 랜덤한 영역 선택
+        Vector2 randomPosition = new Vector2(
+            UnityEngine.Random.Range(-8, 9),
+            UnityEngine.Random.Range(-4, 3.5f)
+        );
+
+        // 적 생성 및 리스트에 추가
+        GameObject spawnedEnemy = Instantiate(randomPrefab, randomPosition, Quaternion.identity, this.transform);
+        MonsterController enemyController = spawnedEnemy.GetComponent<MonsterController>();
+        enemyController.Init();
+
         yield return null;
     }
 
