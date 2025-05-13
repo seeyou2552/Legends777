@@ -15,8 +15,6 @@ public class QuestManager : SingleTon<QuestManager>
 
     [SerializeField] public Canvas QuestCanvas;
 
-    public void Start()
-    {
     [SerializeField] private TextMeshProUGUI questUIText0; //퀘스트UI(화면 왼쪽에 뜨는 퀘스트 정보)
     [SerializeField] private TextMeshProUGUI count0;
 
@@ -25,7 +23,7 @@ public class QuestManager : SingleTon<QuestManager>
 
     [SerializeField] private TextMeshProUGUI questUIText2; 
     [SerializeField] private TextMeshProUGUI count2;
-
+    
     
 
     protected override void Awake() { 

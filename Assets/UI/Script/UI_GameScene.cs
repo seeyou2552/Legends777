@@ -49,17 +49,7 @@ public class UI_GameScene : MonoBehaviour
         PlayerController.Instance.OnGoldChanged += UpdateGoldUI;
         UpdateGoldUI(PlayerController.Instance.Gold);
     }
-
-    private void Awake()
-    {
-        grid = skillsContainer.GetComponent<GridLayoutGroup>();
-        skillManager = FindObjectOfType<SkillManager>();
-
-        GameManager.instance.OnSkillUpgraded += OnSkillUpgraded;
-        PlayerController.Instance.OnGoldChanged += UpdateGoldUI;
-        UpdateGoldUI(PlayerController.Instance.Gold);
-    }
-
+    
     private void Start()
     {
         player = FindObjectOfType<PlayerManager>();
