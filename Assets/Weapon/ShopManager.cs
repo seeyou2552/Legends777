@@ -21,16 +21,11 @@ public class ShopManager : MonoBehaviour
         inventory = new List<bool>();
 
         //num, atk, price
-        weapons.Add(new WeaponController(0, 1, 0)); inventory.Add(true);   //기본무기 지급상태로 시작
-        weapons.Add(new WeaponController(1, 3, 2)); inventory.Add(false); 
-        weapons.Add(new WeaponController(2, 5, 4)); inventory.Add(false);
-        weapons.Add(new WeaponController(3, 7, 6)); inventory.Add(false);
-        weapons.Add(new WeaponController(4, 9, 8)); inventory.Add(false); 
-
-        for (int j = 0; j < 5; j++)
-        { 
-            inventory[j] = false; 
-        }
+        weapons.Add(new WeaponController(0, 1, 0)); inventory.Add(true); i++;  //기본무기 지급상태로 시작
+        weapons.Add(new WeaponController(1, 3, 2)); inventory.Add(false); i++;
+        weapons.Add(new WeaponController(2, 5, 4)); inventory.Add(false); i++;
+        weapons.Add(new WeaponController(3, 7, 6)); inventory.Add(false); i++;
+        weapons.Add(new WeaponController(4, 9, 8)); inventory.Add(false); i++;
     }
 
     private void Start()
@@ -85,7 +80,6 @@ public class ShopManager : MonoBehaviour
     private void EquipWeapon(int num)// 무기 장착
     {
         if (inventory[num]) {
-
             PlayerController.Instance.EquipWeapon(weapons[num]);
             Debug.Log(PlayerController.Instance.Equip.Num());
         }
