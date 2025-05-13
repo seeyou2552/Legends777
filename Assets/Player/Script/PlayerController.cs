@@ -93,7 +93,6 @@ public class PlayerController : Player
     public void EquipWeapon(WeaponController weaponController)  //무기 장착, 무기 공격력 -> weaponController.Atk();
     {
         Equip = weaponController;   //무기 장착
-
         weaponRenderer.sprite = ShopManager.Instance.weaponSprites[Equip.Num()];
         if (Equip.Num() == 2)
         {

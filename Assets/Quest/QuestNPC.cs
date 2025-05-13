@@ -13,7 +13,7 @@ public class QuestNPC : MonoBehaviour
     [SerializeField] private Button ExitButton;
     [SerializeField] private TextMeshProUGUI questText;
 
-    private void Awake()
+    private void Awake()    
     {
         UICanvas.gameObject.SetActive(false);
 
