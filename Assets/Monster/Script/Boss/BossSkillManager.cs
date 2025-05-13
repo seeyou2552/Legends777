@@ -73,27 +73,27 @@ public class BossSkillManager : MonoBehaviour
         // ?¨Ïö©???§ÌÇ¨???±Î°ù
         if (gameManager.Stage < 3)
         {
-            //skillFuncs.Add(MoveFast);
+            skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
-            //skillFuncs.Add(LazerPatten2);
-            //skillFuncs.Add(CameraReversal);
-            //skillFuncs.Add(ShootFast);
-            //skillFuncs.Add(Teleport);
-            //skillFuncs.Add(MakeBossItem);
-            //skillFuncs.Add(LazerPattern);
-            //skillFuncs.Add(RedGround);
+            skillFuncs.Add(LazerPatten2);
+            skillFuncs.Add(CameraReversal);
+            skillFuncs.Add(ShootFast);
+            skillFuncs.Add(Teleport);
+            skillFuncs.Add(MakeBossItem);
+            skillFuncs.Add(LazerPattern);
+            skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 5)
         {
-            //skillFuncs.Add(MoveFast);
+            skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
-            //skillFuncs.Add(LazerPatten2);
-            //skillFuncs.Add(CameraReversal);
-            //skillFuncs.Add(ShootFast);
-            //skillFuncs.Add(Teleport);
-            //skillFuncs.Add(MakeBossItem);
-            //skillFuncs.Add(LazerPattern);
-            //skillFuncs.Add(RedGround);
+            skillFuncs.Add(LazerPatten2);
+            skillFuncs.Add(CameraReversal);
+            skillFuncs.Add(ShootFast);
+            skillFuncs.Add(Teleport);
+            skillFuncs.Add(MakeBossItem);
+            skillFuncs.Add(LazerPattern);
+            skillFuncs.Add(RedGround);
         }
         else if (gameManager.Stage < 9)
         {
@@ -171,22 +171,22 @@ public class BossSkillManager : MonoBehaviour
                 int num = UnityEngine.Random.Range(0, skillFuncs.Count);
                 currentSkillIndex = (currentSkillIndex + num) % skillFuncs.Count;
                 var nextSkill = skillFuncs[currentSkillIndex];
-                //if (bossManager.Health <= bossManager.firstHp / 2 && CanUseSkill(nextSkill))
-                //{
-                //    do
-                //    {
-                //        int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
-                //        currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
+                if (bossManager.Health <= bossManager.firstHp / 2 && CanUseSkill(nextSkill))
+                {
+                    do
+                    {
+                        int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
+                        currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
 
-                //    } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
-                //    var nextskill2 = skillFuncs[currentskillIndex2];
-                //    if (CanUseSkill(nextskill2))
-                //    {
-                //        StartCoroutine(nextSkill());
-                //        StartCoroutine(nextskill2());
-                //        yield return new WaitForSeconds(5f);
-                //    }
-                //}
+                    } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
+                    var nextskill2 = skillFuncs[currentskillIndex2];
+                    if (CanUseSkill(nextskill2))
+                    {
+                        StartCoroutine(nextSkill());
+                        StartCoroutine(nextskill2());
+                        yield return new WaitForSeconds(5f);
+                    }
+                }
                 if (CanUseSkill(nextSkill))
                 {
                     yield return StartCoroutine(nextSkill());
