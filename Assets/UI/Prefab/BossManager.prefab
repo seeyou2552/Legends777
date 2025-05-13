@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 235457665964125503}
   - component: {fileID: 8826923457615680157}
   - component: {fileID: 5254141153635476592}
+  - component: {fileID: 4623746020884421918}
   m_Layer: 0
   m_Name: BossManager
   m_TagString: Untagged
@@ -74,10 +75,23 @@ MonoBehaviour:
     size: 1
   - tag: rLazer
     prefab: {fileID: 2526082647480330863, guid: db0dab620b3b94b429dfa792733e6a21, type: 3}
-    size: 10
+    size: 9
   - tag: item
     prefab: {fileID: 6848506248765371469, guid: 854bc9c02eaf27343987d047a4b21f81, type: 3}
     size: 3
   - tag: Teleport
     prefab: {fileID: 6624941901174875307, guid: a921185b8b483df4594f1194dd7fb4e2, type: 3}
     size: 2
+--- !u!114 &4623746020884421918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4974948671224549436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c5e2f0b4b856e34d90f6c900ae43d2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolTag: 
