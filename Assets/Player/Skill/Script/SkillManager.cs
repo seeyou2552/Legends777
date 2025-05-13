@@ -96,7 +96,7 @@ public class SkillManager : Skill
     {
         ShootArrow();
         addGhost = false;
-        yield return new WaitForSeconds(Player.Instance.attackSpeed);
+        yield return new WaitForSeconds(PlayerController.Instance.attackSpeed);
         Destroy(bow);
         addGhost = true;
         createBow = false;
