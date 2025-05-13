@@ -131,15 +131,15 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnSkillUpgraded -= OnSkillUpgraded;
     }
 
-    private void OnSkillUpgraded(string label)
+    private void OnSkillUpgraded(SkillOption option)
     {
-        AddSkillIcon(label);
+        AddSkillIcon(option);
         UpdateGridConstraint();
     }
 
-    private void AddSkillIcon(string label)
+    private void AddSkillIcon(SkillOption option)
     {
-        string key = label.Split(' ')[0];
+        string key = option.Name;
 
         string value = GetSkillValue(key);
 
@@ -150,10 +150,16 @@ public class UI_GameScene : MonoBehaviour
         else
         {
             var icon = Instantiate(skillIconPrefab, skillsContainer, false);
+
             var rt = icon.GetComponent<RectTransform>();
             rt.localScale = Vector3.one;
+
+            var iconImage = icon.transform.Find("Skillicon/SkillImage")?.GetComponent<Image>();
+            iconImage.sprite = option.Icon;
+
             var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
             iconText.text = $"{key}: \n{value}";
+
             skillIconMap[key] = iconText;
         }
 

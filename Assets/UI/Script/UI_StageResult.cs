@@ -161,7 +161,7 @@ public class UI_StageResult : UI_Popup
                 btn.onClick.AddListener(() =>
                 {
                     opt.ApplyAction();
-                    GameManager.instance.OnSkillUpgraded?.Invoke(opt.Name);
+                    GameManager.instance.OnSkillUpgraded?.Invoke(opt);
                     GameManager.instance.IsStageClear = true;
                     Destroy(popupRoot);
                 });
