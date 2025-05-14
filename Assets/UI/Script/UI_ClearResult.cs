@@ -13,7 +13,7 @@ public class UI_ClearResult : UI_Popup
 
     public void Init()
     {
-        
+        SoundManager.Instance.StopBGM();
         restartButton.onClick.AddListener(() =>
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

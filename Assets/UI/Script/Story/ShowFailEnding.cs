@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +12,7 @@ public class ShowFailEnding : MonoBehaviour
 
     public IEnumerator Start()
     {
+        SoundManager.Instance.StopBGM();
         yield return new WaitForSeconds(5f);
         yield return StartCoroutine(FadeIn(new[] { fadeImage}));
         yield return new WaitForSeconds(1f);
@@ -23,7 +24,7 @@ public class ShowFailEnding : MonoBehaviour
 
     private IEnumerator FadeIn(SpriteRenderer[] sprites)
     {
-        // ¸ğµç ½ºÇÁ¶óÀÌÆ® ÃÊ±â Åõ¸íµµ ¼³Á¤
+        // ëª¨ë“  ìŠ¤í”„ë¼ì´íŠ¸ ì´ˆê¸° íˆ¬ëª…ë„ ì„¤ì •
         foreach (var sprite in sprites)
         {
             Color c = sprite.color;
@@ -31,7 +32,7 @@ public class ShowFailEnding : MonoBehaviour
             sprite.color = c;
         }
 
-        // ÆäÀÌµåÀÎ
+        // í˜ì´ë“œì¸
         for (int i = 0; i <= 10; i++)
         {
             foreach (var sprite in sprites)
@@ -46,7 +47,7 @@ public class ShowFailEnding : MonoBehaviour
 
     private IEnumerator FadeIn2(Image[] sprites)
     {
-        // ¸ğµç ½ºÇÁ¶óÀÌÆ® ÃÊ±â Åõ¸íµµ ¼³Á¤
+        // ëª¨ë“  ìŠ¤í”„ë¼ì´íŠ¸ ì´ˆê¸° íˆ¬ëª…ë„ ì„¤ì •
         foreach (var sprite in sprites)
         {
             Color c = sprite.color;
@@ -54,7 +55,7 @@ public class ShowFailEnding : MonoBehaviour
             sprite.color = c;
         }
 
-        // ÆäÀÌµåÀÎ
+        // í˜ì´ë“œì¸
         for (int i = 0; i <= 10; i++)
         {
             foreach (var sprite in sprites)

@@ -42,7 +42,6 @@ public class SoundManager : MonoBehaviour
         sfxSource.volume = sfxVolume;
     }
 
-    // BGM 재생
     public void PlayBGM(AudioClip clip)
     {
         if (clip == null) return;
@@ -51,20 +50,17 @@ public class SoundManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    // BGM 정지
     public void StopBGM()
     {
         bgmSource.Stop();
     }
 
-    // 효과음 재생
     public void PlaySFX(AudioClip clip)
     {
         if (clip == null) return;
         sfxSource.PlayOneShot(clip, sfxVolume);
     }
 
-    // 볼륨 설정
     public void SetVolume(float bgmVol, float sfxVol)
     {
         bgmVolume = bgmVol;

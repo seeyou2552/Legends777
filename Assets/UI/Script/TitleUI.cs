@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +12,11 @@ public class TitleUI : MonoBehaviour
     {
         StartButton.onClick.AddListener(OnStartButtonClicked);
         ExitButton.onClick.AddListener(OnExitButtonClicked);
+    }
+
+    private void Start()
+    {
+        SoundManager.Instance.StopBGM();
     }
 
     private void OnStartButtonClicked()
