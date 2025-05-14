@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnSound: {fileID: 8300000, guid: 6d79c9ddcb7d8694cb780e5fd15bb48c, type: 3}
   deathSound: {fileID: 8300000, guid: b014eb326ffd6464e99d78bc5285c010, type: 3}
-  initialHealth: 500
+  initialHealth: 5000
   bossSpeed: 3
   bossObject: {fileID: 0}
   redBackGround: {fileID: 2747213633161331068, guid: b06b4fb5eabdc3d46812013ba790cece, type: 3}
