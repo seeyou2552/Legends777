@@ -295,10 +295,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TitleUI
       objectReference: {fileID: 0}
-    - target: {fileID: 6308139122974143095, guid: 3ade504e8c0e5a64d8a43a3e64eaefae, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -540.3
-      objectReference: {fileID: 0}
     - target: {fileID: 6473566141389603054, guid: 3ade504e8c0e5a64d8a43a3e64eaefae, type: 3}
       propertyPath: m_Pivot.x
       value: 0

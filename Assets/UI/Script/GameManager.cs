@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
@@ -142,12 +143,9 @@ public class GameManager : MonoBehaviour
 
     void ShowClearResult()
     {
-
-        var popup = UIManager.Instance.ShowPopup<UI_ClearResult>("UI_ClearResult");
-        popup.Init();
         SoundManager.Instance.StopBGM();
         SoundManager.Instance.PlaySFX(GameClearBgm);
-
+        SceneManager.LoadScene("Ending");
     }
 
     private IEnumerator SubscribeToBossDeath()
