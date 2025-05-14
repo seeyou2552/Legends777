@@ -85,11 +85,11 @@
 
 ## 🧩 트러블슈팅
 
-> 📄 [슈팅 중 화면 버벅임 문제](./TroubleShooting/Screenstutters.md)
-> 📄 [오브젝트 풀링 및 보스 스킬 반환 문제](./TroubleShooting/ObectpoolingBossSkillReturn.md)
-> 📄 [StageResult 중복 팝업 문제](./TroubleShooting/StageResultDuplicatePopup.md)
-> 📄 [장애물 중복 생성 시 겹침 문제](./TroubleShooting/ObstacleOverlap.md)
-> 📄 [투명 벽에서 이동 불가 문제](./TroubleShooting/CantMoveThroughTransparentWalls.md)
+- 📄 [슈팅 중 화면 버벅임 문제](./TroubleShooting/Screenstutters.md)
+- 📄 [오브젝트 풀링 및 보스 스킬 반환 문제](./TroubleShooting/ObectpoolingBossSkillReturn.md)
+- 📄 [StageResult 중복 팝업 문제](./TroubleShooting/StageResultDuplicatePopup.md)
+- 📄 [장애물 중복 생성 시 겹침 문제](./TroubleShooting/ObstacleOverlap.md)
+- 📄 [투명 벽에서 이동 불가 문제](./TroubleShooting/CantMoveThroughTransparentWalls.md)
 
 ---
 
