@@ -10,7 +10,7 @@ public class MonsterController : MonoBehaviour
 
     //?��??�인
     public Rigidbody2D target;
-    //?�겟을 쫓아�?최�? 거리
+    //?�겟??쫓아�?최�? 거리
     private float followRange = 15f;
 
     private Vector2 lookDirection = Vector2.zero;
@@ -23,12 +23,12 @@ public class MonsterController : MonoBehaviour
     private Vector2 knockback = Vector2.zero;   //?�백 방향
     private float knockbackDuration = 0.0f;     //?�백 지???�간3
 
-    protected bool isAttacking;                                 //공격 �??��?
-    private float timeSinceLastAttack = 0;         //마�?�?공격 ?�후 경과 ?�간
+    protected bool isAttacking;                                 //공격 �??��?
+    private float timeSinceLastAttack = 0;         //마�?�?공격 ?�후 경과 ?�간
 
     //무기
     [SerializeField] public Transform weaponPivot;
-    [SerializeField] public MonsterWeaponHandler WeaponPrefab;         //?�착??무기 ?�리???�으�??�식?�서 찾아???�용)
+    [SerializeField] public MonsterWeaponHandler WeaponPrefab;         //?�착??무기 ?�리???�으�??�식?�서 찾아???�용)
     [SerializeField] protected MonsterWeaponHandler weaponHandler;                      //?�착??무기
 
     Rigidbody2D rigid;
@@ -64,7 +64,7 @@ public class MonsterController : MonoBehaviour
         HandleAction();
         //?�전 처리
         Rotate(lookDirection);
-        //공격 ?�력 �?쿨�???관�?
+        //공격 ?�력 �?쿨�???관�?
         HandleAttackDelay();
     }
 
@@ -87,7 +87,7 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        //?�겟까지 거리
+        //?�겟까�? 거리
         float distance = DistanceToTarget();
         //?��?방향 (무기)
         Vector2 direction = DirectionToTarget();
@@ -100,32 +100,25 @@ public class MonsterController : MonoBehaviour
             //방향
             lookDirection = direction;
 
-            //공격 ?�거�??�으�??�어?�을 경우
+            //공격 ?�거�??�으�??�어?�을 경우
             if (distance < weaponHandler.AttackRange)
             {
                 isAttacking = true;
-                //공격 범위 ?�이므�??��?
+                //공격 범위 ?�이므�??��?
                 rigid.velocity = Vector2.zero;
                 return;
             }
 
-            //공격 범위 ?�이 ?�니�??�문???�동
-            // ?�레?�어?�게 ?�하???�직임
+            //공격 범위 ?�이 ?�니�??�문???�동
+            // ?�레?�어?�게 ?�하???�직??
             Vector2 nextDir = direction * monsterStatHandler.Speed * Time.fixedDeltaTime;
-            // ?�직임 구현 - ?�거리는 ?�직이지 ?�게
-            if (gameObject.name.Contains("Far"))
-            {
-                rigid.velocity = Vector2.zero;
-            }
-            else
-            {
-                rigid.MovePosition(rigid.position + nextDir);
-                animator.SetBool("IsRun", true);
-            }
+
+            rigid.MovePosition(rigid.position + nextDir);
+            animator.SetBool("IsRun", true);
         }
         else
         {
-            //?�레?�어가 추적 범위 밖에 ?�다�?가만히 ?�어????
+            //?�레?�어가 추적 범위 밖에 ?�다�?가만히 ?�어????
             rigid.velocity = Vector2.zero;
             animator.SetBool("IsRun", false);
         }
@@ -134,14 +127,14 @@ public class MonsterController : MonoBehaviour
     private void Rotate(Vector2 direction)
     {
         float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        bool isLeft = Mathf.Abs(rotZ) > 90f; //90?�보???�다�??�쪽??바라보는 것임
+        bool isLeft = Mathf.Abs(rotZ) > 90f; //90?�보???�다�??�쪽??바라보는 것임
 
-        //캐릭?��? 보는 방향?��??��?지 ?�집�?
+        //캐릭?��? 보는 방향?��??��?지 ?�집�?
         spriter.flipX = isLeft;
 
         if (weaponPivot != null)
         {
-            //weaponPivot??z�?기�??�로 rotZ만큼 ?�전
+            //weaponPivot??z�?기�??�로 rotZ만큼 ?�전
             //무기 ?�전 처리
             weaponPivot.rotation = Quaternion.Euler(0f, 0f, rotZ);
         }
@@ -158,14 +151,14 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        //공격??쿨다??중이�??�간 ?�적
+        //공격??쿨다??중이�??�간 ?�적
         if (timeSinceLastAttack <= weaponHandler.Delay)
         {
             timeSinceLastAttack += Time.deltaTime;
         }
 
         //?�정 ?�간마다 발사
-        //공격???�력 중이�?쿨�??�이 ?�났?�면 공격 ?�행
+        //공격???�력 중이�?쿨�??�이 ?�났?�면 공격 ?�행
         if (isAttacking && timeSinceLastAttack > weaponHandler.Delay)
         {
             timeSinceLastAttack = 0;
@@ -198,7 +191,7 @@ public class MonsterController : MonoBehaviour
         GameManager.instance.KillCount++;
         //monsterManager.RemoveActiveMonster(this);
 
-        //?�직임 ?��?
+        //?�직???��?
         rigid.velocity = Vector2.zero;
 
         //모든 SpriteRenderer???�명????��??죽�? ?�과 ?�출
@@ -218,17 +211,17 @@ public class MonsterController : MonoBehaviour
         QuestManager.Instance.QuestCheck(0);
         monsterManager.RemoveActiveMonster(this);
 
-        //2�????�브?�트 ?�괴
+        //2�????�브?�트 ?�괴
         Destroy(gameObject, 2f);
     }
     #endregion
 
     public void ShootBullet(RangeWeaponHandler rangeWeaponHandler, Vector2 startPosition, Vector2 direction)
     {
-        //?�당 무기?�서 ?�용???�사�??�리??가?�오�?
+        //?�당 무기?�서 ?�용???�사�??�리??가?�오�?
         GameObject origin = monsterManager.projectilePrefabs[rangeWeaponHandler.BulletIndex];
 
-        //지?�된 ?�치???�사�??�성
+        //지?�된 ?�치???�사�??�성
         GameObject obj = Instantiate(origin, startPosition, Quaternion.identity);
 
         //?�사체에 초기 ?�보 ?�달 (방향, 무기 ?�이??
