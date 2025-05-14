@@ -43,7 +43,7 @@ public class ArrowManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // 몬스터 적중 시
+        // 몬스???�중 ??
         if (other.gameObject.CompareTag("Monster"))
         {
             MonsterController monster = other.GetComponent<MonsterController>();
