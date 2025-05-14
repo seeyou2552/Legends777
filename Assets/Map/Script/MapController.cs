@@ -174,6 +174,7 @@ public class MapController : MonoBehaviour
     {
         Transform mapContent = Root.transform;
         QuestManager.Instance.QuestCheck(2);
+        SoundManager.Instance.StopBGM();
         foreach (Transform child in mapContent)
         {
             Destroy(child.gameObject);

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +16,7 @@ public class EndingPopup : MonoBehaviour
 
     public void ShowScore()
     {
+        SoundManager.Instance.StopBGM();
         int killCount = GameManager.instance.KillCount;
         killCountText.text = $"Kill Count: {killCount}";
     }
