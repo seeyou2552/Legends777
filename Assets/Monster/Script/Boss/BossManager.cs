@@ -49,6 +49,8 @@ public class BossManager : MonoBehaviour
     private GameObject playerTarget;
     public GameObject PlayerTarget => playerTarget;
 
+    public GameObject bossObject;
+
     SpriteRenderer spriter;
     Animator animator;
 
@@ -65,6 +67,9 @@ public class BossManager : MonoBehaviour
         Health = MaxHealth;
 
         if (instance == null) instance = this;
+
+        bossObject = this.gameObject;
+
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();

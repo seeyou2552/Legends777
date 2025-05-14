@@ -73,7 +73,7 @@ public class ShowStoryAnimation : MonoBehaviour
         for (int i = 0; i < line.Length; i++)
         {
             StoryText.text += line[i];
-            yield return new WaitForSeconds(0.01f); ;
+            yield return new WaitForSeconds(0.1f); ;
         }
     }
 }
