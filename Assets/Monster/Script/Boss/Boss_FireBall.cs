@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boss_FireBall : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Boss_FireBall : MonoBehaviour
     // Îß??ÑÎ†à???¥Îèô Ï≤òÎ¶¨
     private void Update()
     {
+
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
@@ -25,10 +27,9 @@ public class Boss_FireBall : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerManager.Instance.ApplyDamage(5);
-            Debug.Log("Player HP: " + PlayerController.Instance.hp);
             if(PlayerController.Instance.hp <= 0)
             {
-                Destroy(BossManager.instance.PlayerTarget);
+                Destroy(BossManager.instance.bossObject);
             }
             bReturnToPool();
         }

@@ -59,7 +59,6 @@ public class MapController : MonoBehaviour
     public void CreateRandomMap()
     {
         int type = GetRandomType();
-        type = 1;
         GameManager.instance.Stage++;
         Init((DungeonType)type);
     }
