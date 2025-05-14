@@ -113,7 +113,7 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: ?¤ë¥¸ UI ??�ì†�?ë¦¬í?��??ì?��??¸ì¶œ
+        // TODO: ?¤ë¥¸ UI ??�ì†�?ë¦¬í?��??ì?��??¸ì¶œ
     }
 
     void OnStageUpdated()
@@ -233,14 +233,14 @@ public class UI_GameScene : MonoBehaviour
 
     void Update()
     {
-        if (playerController.dashCool > 0f) // 쿨�???????
+        if (playerController.dashCool > 0f) // 쿨�???????
         {
             coolTimeText.text = playerController.dashCool.ToString("N1");
             dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
             dashIconAnim.Play("DashIconState", -1, 0f);
         }
-        else if (playerController.dashCool < 0) // 쿨이 ?�났????
+        else if (playerController.dashCool < 0) // 쿨이 ?�났????
         {
             coolTimeText.text = "";
             dashIcon.color = new Color(1f, 1f, 1f, 1f);
@@ -252,15 +252,15 @@ public class UI_GameScene : MonoBehaviour
     {
         if (name.StartsWith("HP_Potion"))
         {
-            potionStatusText.text = "체력??" + status.ToString() + " 만큼 ?�복?�었?�니??";
+            potionStatusText.text = "체력이" + status.ToString() + " 만큼 회복되었습니다.";
         }
         else if (name.StartsWith("Power_Potion"))
         {
-            potionStatusText.text = "공격?�이 " + status.ToString() + " 만큼 ?�승?��??�니??";
+            potionStatusText.text = "공격력이 " + status.ToString() + " 만큼 상승하였습니다.";
         }
         else if (name.StartsWith("AttackSpeed_Potion"))
         {
-            potionStatusText.text = "공격 ?�도가 " + status.ToString() + " 만큼 ?�승?��??�니??";
+            potionStatusText.text = "공격 속도가 " + status.ToString() + " 만큼 상승하였습니다.";
         }
 
         potionStatusText.gameObject.SetActive(true);
