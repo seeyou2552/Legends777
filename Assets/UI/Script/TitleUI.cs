@@ -16,7 +16,10 @@ public class TitleUI : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.Instance.StopBGM();
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopBGM();
+        }
     }
 
     private void OnStartButtonClicked()
