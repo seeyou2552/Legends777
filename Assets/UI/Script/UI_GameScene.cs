@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_GameScene : MonoBehaviour
@@ -140,8 +141,9 @@ public class UI_GameScene : MonoBehaviour
 
     private void ShowFailPopup()
     {
-        var popup = UIManager.Instance.ShowPopup<UI_StageFailPopup>("UI_StageFailPopup");
-        popup.Init();
+        //var popup = UIManager.Instance.ShowPopup<UI_StageFailPopup>("UI_StageFailPopup");
+        //popup.Init();
+        SceneManager.LoadScene("FailEnding");
     }
 
     private void OnDestroy()

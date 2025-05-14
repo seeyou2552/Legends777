@@ -65,13 +65,18 @@ public class BossSkillManager : MonoBehaviour
             nextFireTime = Time.time + 1f / fireRate;
         }
     }
-    private void SkillsForStage() // ?毄???ろ偓?彪?垬
+    private void SkillsForStage()
     {
         int stage = gameManager.Stage;
         skillFuncs.Clear();
 
-        // ?毄???ろ偓???彪
-        if (gameManager.Stage < 3)
+        if (gameManager.Stage < 2)
+        {
+            skillFuncs.Add(MoveFast);
+            skillFuncs.Add(MakeMonster);
+            skillFuncs.Add(LazerPatten2);
+        }
+        else if (gameManager.Stage < 3)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -79,23 +84,8 @@ public class BossSkillManager : MonoBehaviour
             skillFuncs.Add(CameraReversal);
             skillFuncs.Add(ShootFast);
             skillFuncs.Add(Teleport);
-            skillFuncs.Add(MakeBossItem);
-            skillFuncs.Add(LazerPattern);
-            skillFuncs.Add(RedGround);
         }
-        else if (gameManager.Stage < 5)
-        {
-            skillFuncs.Add(MoveFast);
-            skillFuncs.Add(MakeMonster);
-            skillFuncs.Add(LazerPatten2);
-            skillFuncs.Add(CameraReversal);
-            skillFuncs.Add(ShootFast);
-            skillFuncs.Add(Teleport);
-            skillFuncs.Add(MakeBossItem);
-            skillFuncs.Add(LazerPattern);
-            skillFuncs.Add(RedGround);
-        }
-        else if (gameManager.Stage < 9)
+        else if (gameManager.Stage < 50)
         {
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
@@ -114,7 +104,7 @@ public class BossSkillManager : MonoBehaviour
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
         // ?る笇?濏姼 ?�?愳劀 ?岇澊?措臣 旰茧偞旮?
-        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity/*, this.transform*/);
+        GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity);
         if (fireball == null) // ?岅创???る笇?濏姼??瓴届毎
         {
             return; // ?措嫻 ?る笇?濏姼?????挫儊 ?毄?????嗢溂氙�搿?膦呺
@@ -178,7 +168,7 @@ public class BossSkillManager : MonoBehaviour
                         int num2 = UnityEngine.Random.Range(0, skillFuncs.Count);
                         currentskillIndex2 = (currentSkillIndex + num2) % skillFuncs.Count;
 
-                    } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2]);
+                    } while (skillFuncs[currentSkillIndex] == skillFuncs[currentskillIndex2] || !CanUseSkill(nextSkill));
                     var nextskill2 = skillFuncs[currentskillIndex2];
                     if (CanUseSkill(nextskill2))
                     {
@@ -187,7 +177,7 @@ public class BossSkillManager : MonoBehaviour
                         yield return new WaitForSeconds(5f);
                     }
                 }
-                if (CanUseSkill(nextSkill))
+                else if (CanUseSkill(nextSkill))
                 {
                     yield return StartCoroutine(nextSkill());
                     yield return new WaitForSeconds(2f);
