@@ -141,6 +141,7 @@ public class BossManager : MonoBehaviour
                     }
                 }
                 BossSkillManager.Instance.ActiveSkillObjects.Clear();
+                QuestManager.Instance.QuestCheck(1);
 
                 PlayerController.Instance.attackSpeed =  BossSkillManager.Instance.playerAtkSpeed;
                 PlayerController.Instance.speed = BossSkillManager.Instance.playerSpeed;
@@ -151,7 +152,6 @@ public class BossManager : MonoBehaviour
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
                 Destroy(gameObject);  // ���� ������Ʈ �ı�
                 SoundManager.Instance.PlaySFX(deathSound);
-                QuestManager.Instance.QuestCheck(1);
             }
         }
     }

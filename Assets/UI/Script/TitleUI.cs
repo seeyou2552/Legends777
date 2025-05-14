@@ -14,7 +14,7 @@ public class TitleUI : MonoBehaviour
         ExitButton.onClick.AddListener(OnExitButtonClicked);
     }
 
-    private void Start()
+    private void Update()
     {
         if (SoundManager.Instance != null)
         {

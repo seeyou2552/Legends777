@@ -33,8 +33,8 @@ public class QuestManager : SingleTon<QuestManager>
 
         // QuestController 초기값 num = 0 몬스터처치, num = 1 보스 처치, num = 2 방 클리어, num = 3 퍼즐 해결
         // QuestController(int num, string text, int goal, int gold)
-        questController.Add(new QuestController(i, "Kill the monster", 1, 100)); i++;
-        questController.Add(new QuestController(i, "Kill the boss", 1, 200)); i++;
+        questController.Add(new QuestController(i, "Kill the monster", 1, 500)); i++;
+        questController.Add(new QuestController(i, "Kill the boss", 1, 500)); i++;
         questController.Add(new QuestController(i, "Clear the room", 3, 400)); i++;
         //questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
 
@@ -45,10 +45,20 @@ public class QuestManager : SingleTon<QuestManager>
     private void Update()      //퀘스트 진행사항을 퀘스트UI에 반영
     {
         if (questController == null) { return; }
-
-        count0.text = (questController[0].PlusCount).ToString() + "/" + (questController[0].Goal).ToString(); 
-        count1.text = (questController[1].PlusCount).ToString() + "/" + (questController[1].Goal).ToString();
-        count2.text = (questController[2].PlusCount).ToString() + "/" + (questController[2].Goal).ToString();
+        if (!questController[0].Clear)
+        {
+            count0.text = (questController[0].PlusCount).ToString() + "/" + (questController[0].Goal).ToString();
+        }
+        if (!questController[1].Clear)
+        {
+            count1.text = (questController[1].PlusCount).ToString() + "/" + (questController[1].Goal).ToString();
+        }
+        if (!questController[2].Clear)
+        {
+            count2.text = (questController[2].PlusCount).ToString() + "/" + (questController[2].Goal).ToString();
+        }
+        
+        
 
         if (Input.GetKeyDown(KeyCode.M))   //테스트용 퀘스트 클리어 버튼
         {
@@ -90,6 +100,19 @@ public class QuestManager : SingleTon<QuestManager>
             if (questController[num].PlusCount == questController[num].Goal)
             {
                 questController[num].QuestClear(true);
+                switch (num)
+                {
+                    case 0:
+                        count0.text = "Quest Clear!!!";
+                        break;
+                    case 1:
+                        count1.text = "Quest Clear!!!";
+                        break;
+                    case 2:
+                        count2.text = "Quest Clear!!!";
+                        break;
+                }
+                QuestClear(num);
             }
         }
     }
@@ -99,10 +122,12 @@ public class QuestManager : SingleTon<QuestManager>
         if (questController[num].Clear)
         {
             PlayerController.Instance.QuestClear(questController[num].Gold); //클리어보상 주기
-            questController[num].QuestReset();        //퀘스트 객체 리셋
+            //questController[num].QuestReset();        //퀘스트 객체 리셋
         }
 
         Debug.Log("플레이어의 골드 : " + PlayerController.Instance.Gold);
+
+        
     }
 
     public bool QuestClearCheck()// 클리어한 퀘스트가 있는지 확인
