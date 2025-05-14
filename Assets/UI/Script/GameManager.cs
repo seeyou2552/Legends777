@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -12,8 +13,11 @@ public class GameManager : MonoBehaviour
     public Action OnDungeonTypeMonsterUpdated;
     public Action OnDungeonTypeBossUpdated;
     public Action OnDungeonTypeDefaultUpdated;
-    public Action<String> OnSkillUpgraded;
+    public Action<SkillOption> OnSkillUpgraded;
+    public Action OnTutorialUpdated;
+
     [SerializeField] private AudioClip GameClearBgm;
+
     public int KillCount { get; set; } = 0;
     private bool OnStageResult = false;
 
@@ -58,11 +62,17 @@ public class GameManager : MonoBehaviour
                 IsStageClear = false;
                 OnDungeonTypeBossUpdated?.Invoke();
             }
+            else if (dungeonType == DungeonType.Lobby)
+            {
+                IsStageClear = true;
+                OnTutorialUpdated?.Invoke();
+            }
             else
             {
                 IsStageClear = true;
                 OnDungeonTypeDefaultUpdated?.Invoke();
             }
+            
         }
     }
 
@@ -80,6 +90,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ShowStageResult();
+        }
+    }
 
     int currentWaveIndex;
 

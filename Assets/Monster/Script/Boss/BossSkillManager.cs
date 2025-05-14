@@ -8,7 +8,7 @@ public class BossSkillManager : MonoBehaviour
 {
     public static BossSkillManager Instance;
 
-    public Transform firePoint; // 보스 ?�치 가?�오�?
+    public Transform firePoint; // 氤挫姢 ?勳箻 臧�?胳槫旮?
     private Transform target;
     private Camera Boss_Camera;
     public TextMeshProUGUI EffectText;
@@ -24,8 +24,8 @@ public class BossSkillManager : MonoBehaviour
     private int currentSkillIndex = 0;
     private int currentskillIndex2 = 0;
 
-    private List<GameObject> activeSkillObjects = new List<GameObject>(); // ?�로 ?�성?�는 ?�브?�트�?보스가 죽을????��?�기 ?�해 ?�?�해?�는 리스??
-    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ?�스?�터 창에???�보?�고 ?�크립트?�서 참조?�수?�게
+    private List<GameObject> activeSkillObjects = new List<GameObject>(); // ?半 ?濎劚?橂姅 ?る笇?濏姼毳?氤挫姢臧� 欤届潉????牅?橁赴 ?勴暣 ?�?ロ暣?愲姅 毽姢??
+    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ?胳姢?欗劙 彀届棎???堧炒?搓碃 ?ろ伂毽巾姼?愳劀 彀胳“?犾垬?堦矊
     public float playerSpeed;
     public float playerAtkSpeed;
     public int playerPower;
@@ -52,7 +52,7 @@ public class BossSkillManager : MonoBehaviour
         playerAtkSpeed = player.attackSpeed;
 
         SkillsForStage();
-        gameManager.OnStageUpdated += SkillsForStage; // ?�테?��? ?�벤???�용
+        gameManager.OnStageUpdated += SkillsForStage; // ?ろ厡?挫? ?措菠???毄
 
         StartCoroutine(UseSkillsRoutine());
     }
@@ -65,12 +65,12 @@ public class BossSkillManager : MonoBehaviour
             nextFireTime = Time.time + 1f / fireRate;
         }
     }
-    private void SkillsForStage() // ?�용???�킬?�록?�수
+    private void SkillsForStage() // ?毄???ろ偓?彪?垬
     {
         int stage = gameManager.Stage;
         skillFuncs.Clear();
 
-        // ?�용???�킬???�록
+        // ?毄???ろ偓???彪
         if (gameManager.Stage < 3)
         {
             skillFuncs.Add(MoveFast);
@@ -113,14 +113,14 @@ public class BossSkillManager : MonoBehaviour
     {
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
-        // ?�브?�트 ?�?�서 ?�이?�볼 꺼내�?
+        // ?る笇?濏姼 ?�?愳劀 ?岇澊?措臣 旰茧偞旮?
         GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity/*, this.transform*/);
-        if (fireball == null) // ?�괴???�브?�트??경우
+        if (fireball == null) // ?岅创???る笇?濏姼??瓴届毎
         {
-            return; // ?�당 ?�브?�트?????�상 ?�용?????�으므�?종료
+            return; // ?措嫻 ?る笇?濏姼?????挫儊 ?毄?????嗢溂氙�搿?膦呺
         }
 
-        // 충돌 처리 - 보스?� ?�이?�볼??충돌?��? ?�도�??�정
+        // 於╇弻 觳橂Μ - 氤挫姢?� ?岇澊?措臣??於╇弻?橃? ?婋弰搿??れ爼
         Collider2D bossCol = GetComponent<Collider2D>();
         Collider2D fireballCol = fireball.GetComponent<Collider2D>();
         if (fireballCol != null && bossCol != null)
@@ -128,7 +128,7 @@ public class BossSkillManager : MonoBehaviour
             Physics2D.IgnoreCollision(fireballCol, bossCol);
         }
 
-        // ?�이?�볼???�크립트 ?�결 �?방향, ?�도 ?�정
+        // ?岇澊?措臣???ろ伂毽巾姼 ?瓣舶 氚?氚╉枼, ?嶋弰 ?れ爼
         Boss_FireBall fireballScript = fireball.GetComponent<Boss_FireBall>();
         fireballScript.SetDirection(direction.normalized);
         fireballScript.speed = currentBulletSpeed;
@@ -145,19 +145,19 @@ public class BossSkillManager : MonoBehaviour
         else
         {
             attackCount = 1;
-            int bulletCount = 8; // 발사???�이?�볼??개수
-            float angleStep = 360f / bulletCount; //�?360?��? bulletCount�??�누?�서 45??간격?�로 발사
+            int bulletCount = 8; // 氚滌偓???岇澊?措臣??臧滌垬
+            float angleStep = 360f / bulletCount; //齑?360?勲? bulletCount搿??橂垊?挫劀 45??臧勱博?茧 氚滌偓
 
             for (int i = 0; i < bulletCount; i++)
             {
-                float angle = i * angleStep * Mathf.Deg2Rad; //?�디??각도�?변??
-                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos??x�?방향, Sin?� y�?방향 ?�걸�?unit circle?�의 방향??계산
+                float angle = i * angleStep * Mathf.Deg2Rad; //?茧敂??臧侂弰搿?氤�??
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos??x於?氚╉枼, Sin?� y於?氚╉枼 ?搓备搿?unit circle?侅潣 氚╉枼??瓿勳偘
                 ShootFireball(direction);
             }
         }
     }
 
-    //?�레?�어가 존재?�는지 체크?�고 ?�킬?�용 ?�무 ?�단
+    //?岆爤?挫柎臧� 臁挫灛?橂姅歆� 觳错伂?橁碃 ?ろ偓?毄 ?犽 ?愲嫧
     private bool CanUseSkill(Func<IEnumerator> _) => BossManager.instance.PlayerTarget != null;
 
     private IEnumerator UseSkillsRoutine()
@@ -205,16 +205,16 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator MakeMonster()
     {
-        // ������ �� ������ ����
+        // 罚待茄 利 橇府普 急琶
         GameObject randomPrefab = MonsterManager.Instance.enemyPrefabs[UnityEngine.Random.Range(0, MonsterManager.Instance.enemyPrefabs.Count)];
 
-        // ������ ���� ����
+        // 罚待茄 康开 急琶
         Vector2 randomPosition = new Vector2(
             UnityEngine.Random.Range(-8, 9),
             UnityEngine.Random.Range(-4, 3.5f)
         );
 
-        // �� ���� �� ����Ʈ�� �߰�
+        // 利 积己 棺 府胶飘俊 眠啊
         GameObject spawnedEnemy = Instantiate(randomPrefab, randomPosition, Quaternion.identity, this.transform);
         MonsterController enemyController = spawnedEnemy.GetComponent<MonsterController>();
         enemyController.Init();

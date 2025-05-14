@@ -39,7 +39,7 @@ public class MonsterManager : MonoBehaviour
     private void Start()
     {
         //Stage Type이 Monster로 변경되면 몬스터 스폰 (웨이브 시작)
-        waveMonsterCount = 5;
+        waveMonsterCount = 100;
     }
 
     public void StartWave(int waveIdx)
@@ -87,8 +87,8 @@ public class MonsterManager : MonoBehaviour
 
         // 랜덤한 영역 선택
         Vector2 randomPosition = new Vector2(
-            Random.Range(-8, 9),
-            Random.Range(-4, 3.5f)
+            Random.Range(-24f, 24f),
+            Random.Range(-11f, 11f)
         );
 
         // 적 생성 및 리스트에 추가

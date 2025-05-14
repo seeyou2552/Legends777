@@ -23,7 +23,7 @@ public class UI_GameScene : MonoBehaviour
 
 
     [Header("UI Prefabs (Resources/UI)")]
-    
+
     public string questListName = "UI_QuestList";
     public string healthBarName = "UI_HealthBar";
 
@@ -32,6 +32,21 @@ public class UI_GameScene : MonoBehaviour
     public Slider healthSlider;
     public TextMeshProUGUI healthText;
     private PlayerManager player;
+    private PlayerController playerController;
+
+    [Header("Dash Icon")]
+    public TextMeshProUGUI coolTimeText;
+    public Image dashIcon;
+    public Image dashImage;
+    public Animator dashIconAnim;
+
+    [Header("Potion Status Form")]
+    public TextMeshProUGUI potionStatusText;
+    public Animator potionStatusAnim;
+
+    [Header("Tutorial")]
+    public GameObject tutorialPrefab;
+    private GameObject tutorialInstance;
 
     private void Awake()
     {
@@ -41,11 +56,20 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnSkillUpgraded += OnSkillUpgraded;
         PlayerController.Instance.OnGoldChanged += UpdateGoldUI;
         UpdateGoldUI(PlayerController.Instance.Gold);
+
+        GameManager.instance.OnTutorialUpdated += ShowTutorialUI;
+        GameManager.instance.OnDungeonTypeMonsterUpdated += HideTutorialUI;
+        GameManager.instance.OnDungeonTypeBossUpdated += HideTutorialUI;
+        GameManager.instance.OnDungeonTypeDefaultUpdated += HideTutorialUI;
+        if (GameManager.instance.DungeonType == DungeonType.Lobby)
+            ShowTutorialUI();
+
     }
 
     private void Start()
     {
         player = FindObjectOfType<PlayerManager>();
+        playerController = player.GetComponent<PlayerController>();
         if (player == null)
         {
             Debug.LogError("PlayerManager not found in the scene.");
@@ -56,6 +80,8 @@ public class UI_GameScene : MonoBehaviour
         SetHealth(player.CurrentHealth, player.MaxHealth);
 
         SetInfo();
+
+
     }
 
     public void Init()
@@ -86,17 +112,17 @@ public class UI_GameScene : MonoBehaviour
     void Refresh()
     {
         OnStageUpdated();
-        // TODO: 다른 UI 요소 리프레시 호출
+        // TODO: ?¤ë¥¸ UI ??�ì†�?ë¦¬í?��??ì?��??¸ì¶œ
     }
 
     void OnStageUpdated()
     {
-        stageText.text = "스테이지 " + GameManager.instance.Stage.ToString();
+        stageText.text = "Stage " + GameManager.instance.Stage.ToString();
     }
 
     void OnClickOptionButton()
     {
-        UI_OptionPopup optionPopup =  UIManager.Instance.ShowPopup<UI_OptionPopup>("UI_OptionPopup");
+        UI_OptionPopup optionPopup = UIManager.Instance.ShowPopup<UI_OptionPopup>("UI_OptionPopup");
         optionPopup.Init();
     }
 
@@ -121,31 +147,41 @@ public class UI_GameScene : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.instance.OnSkillUpgraded -= OnSkillUpgraded;
+        GameManager.instance.OnTutorialUpdated -= ShowTutorialUI;
+        GameManager.instance.OnDungeonTypeMonsterUpdated -= HideTutorialUI;
+        GameManager.instance.OnDungeonTypeBossUpdated -= HideTutorialUI;
+        GameManager.instance.OnDungeonTypeDefaultUpdated -= HideTutorialUI;
     }
 
-    private void OnSkillUpgraded(string label)
+    private void OnSkillUpgraded(SkillOption option)
     {
-        AddSkillIcon(label);
+        AddSkillIcon(option);
         UpdateGridConstraint();
     }
 
-    private void AddSkillIcon(string label)
+    private void AddSkillIcon(SkillOption option)
     {
-        string key = label.Split(' ')[0];
+        string key = option.Name;
 
-        string value = GetSkillValue(key);
+        string value = GetSkillValue(option.Id);
 
-        if(skillIconMap.TryGetValue(key, out var existingText))
+        if (skillIconMap.TryGetValue(key, out var existingText))
         {
             existingText.text = $"{key}: \n{value}";
         }
         else
         {
             var icon = Instantiate(skillIconPrefab, skillsContainer, false);
+
             var rt = icon.GetComponent<RectTransform>();
             rt.localScale = Vector3.one;
+
+            var iconImage = icon.transform.Find("Skillicon/SkillImage")?.GetComponent<Image>();
+            iconImage.sprite = option.Icon;
+
             var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
             iconText.text = $"{key}: \n{value}";
+
             skillIconMap[key] = iconText;
         }
 
@@ -170,6 +206,8 @@ public class UI_GameScene : MonoBehaviour
                 return skillManager.addSpread.ToString();
             case "addChase":
                 return skillManager.addChase ? "True" : "False";
+            case "addFreeze":
+                return skillManager.addFreeze ? "True" : "False";
             default:
                 return "";
         }
@@ -190,5 +228,67 @@ public class UI_GameScene : MonoBehaviour
     {
         goldText.text = $"Gold: {gold}";
     }
+
+    void Update()
+    {
+        if (playerController.dashCool > 0f) // 쿨�???????
+        {
+            coolTimeText.text = playerController.dashCool.ToString("N1");
+            dashIcon.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            dashImage.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+            dashIconAnim.Play("DashIconState", -1, 0f);
+        }
+        else if (playerController.dashCool < 0) // 쿨이 ?�났????
+        {
+            coolTimeText.text = "";
+            dashIcon.color = new Color(1f, 1f, 1f, 1f);
+            dashImage.color = new Color(1f, 1f, 1f, 1f);
+        }
+    }
+
+    public void SetStatus(string name, float status)
+    {
+        if (name.StartsWith("HP_Potion"))
+        {
+            potionStatusText.text = "체력??" + status.ToString() + " 만큼 ?�복?�었?�니??";
+        }
+        else if (name.StartsWith("Power_Potion"))
+        {
+            potionStatusText.text = "공격?�이 " + status.ToString() + " 만큼 ?�승?��??�니??";
+        }
+        else if (name.StartsWith("AttackSpeed_Potion"))
+        {
+            potionStatusText.text = "공격 ?�도가 " + status.ToString() + " 만큼 ?�승?��??�니??";
+        }
+
+        potionStatusText.gameObject.SetActive(true);
+        StartCoroutine(OutPutStatus());
+    }
+
+    IEnumerator OutPutStatus()
+    {
+        potionStatusAnim.Play("StatusForm", -1, 0f);
+        yield return new WaitForSeconds(1f);
+        potionStatusText.gameObject.SetActive(false);
+    }
+
+    private void ShowTutorialUI()
+    {
+        if (tutorialInstance == null && tutorialPrefab != null)
+        {
+            tutorialInstance = Instantiate(tutorialPrefab);
+            tutorialInstance.transform.SetParent(transform);
+        }
+    }
+
+    private void HideTutorialUI()
+    {
+        if (tutorialInstance != null)
+        {
+            Destroy(tutorialInstance);
+            tutorialInstance = null;
+        }
+    }
+
 
 }
