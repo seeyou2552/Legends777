@@ -70,5 +70,6 @@ public class SoundManager : MonoBehaviour
         bgmVolume = bgmVol;
         sfxVolume = sfxVol;
         bgmSource.volume = bgmVol;
+        sfxSource.volume = sfxVol;
     }
 }

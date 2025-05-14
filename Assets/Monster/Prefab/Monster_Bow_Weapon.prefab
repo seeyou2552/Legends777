@@ -49,7 +49,7 @@ MonoBehaviour:
   delay: 0.5
   weaponSize: 0.7
   speed: 10
-  attackRange: 5
+  attackRange: 10
   isOnKnockback: 0
   knockbackPower: 0.1
   knockbackTime: 0.5
