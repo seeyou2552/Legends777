@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using TMPro;
@@ -91,18 +91,6 @@ public class UI_GameScene : MonoBehaviour
         GameManager.instance.OnStageUpdated += OnStageUpdated;
 
         optionButton.onClick.AddListener(OnClickOptionButton);
-        //statusButton.onClick.AddListener(OnClickStatusButton);
-
-        //questList = UIManager.Instance.ShowPopup<UI_QuestList>(questListName);
-        //questList.Init();      
-
-        //var stat = PlayerStat.Instance;
-        //healthBar.SetHealth(stat.CurrentHealth, statMaxHealth: stat.MaxHealth);
-        //stat.OnHealthChanged += (cur, max) =>
-        //{
-        //    healthBar.SetHealth(cur, max);
-        //};
-
     }
 
     public void SetInfo()
@@ -126,12 +114,7 @@ public class UI_GameScene : MonoBehaviour
         UI_OptionPopup optionPopup = UIManager.Instance.ShowPopup<UI_OptionPopup>("UI_OptionPopup");
         optionPopup.Init();
     }
-
-    //void OnClickStatusButton()
-    //{
-    //    UI_StatsPopup statusPopup = UIManager.Instance.ShowPopup<UI_StatsPopup>("UI_StatsPopup");
-    //    statusPopup.Init();
-    //}
+ 
     public void SetHealth(int current, int max)
     {
         healthSlider.maxValue = max;
@@ -141,8 +124,6 @@ public class UI_GameScene : MonoBehaviour
 
     private void ShowFailPopup()
     {
-        //var popup = UIManager.Instance.ShowPopup<UI_StageFailPopup>("UI_StageFailPopup");
-        //popup.Init();
         SceneManager.LoadScene("FailEnding");
     }
 

@@ -85,14 +85,14 @@ public class BossManager : MonoBehaviour
     private void FixedUpdate()
     {
         if(target == null) return;
-        Vector2 direction = target.position - rigid.position; // Ÿ�ٰ� ������ ��ġ ���� ���ϱ�
+        Vector2 direction = target.position - rigid.position; // 플레이어와 보스 사이에 거리
 
-        float stopDistance = 1.5f; // Ÿ�ٰ��� �ּ� �Ÿ�
+        float stopDistance = 1.5f; // 멈출 거리
 
         if (direction.magnitude >= stopDistance)
         {
-            Vector2 nextDir = direction.normalized * bossSpeed * Time.fixedDeltaTime; // �÷��̾�� ���ϴ� ������
-            rigid.MovePosition(rigid.position + nextDir); // ������ ����
+            Vector2 nextDir = direction.normalized * bossSpeed * Time.fixedDeltaTime; // 보스 이동 속도 관리
+            rigid.MovePosition(rigid.position + nextDir); // 보스 움직임
             animator.SetBool("isRun", true);
         }
         else
@@ -104,7 +104,7 @@ public class BossManager : MonoBehaviour
     private void LateUpdate()
     {
         if (target == null) return;
-        spriter.flipX = target.position.x < rigid.position.x; // ���Ͱ� �÷��̾�� x��ġ�� �ٸ��� ���� ����
+        spriter.flipX = target.position.x < rigid.position.x; // x축 flip회전 관리
     }
 
     private void OnEnable()
@@ -150,7 +150,7 @@ public class BossManager : MonoBehaviour
                 GameManager.instance.IsStageClear = true;
 
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
-                Destroy(gameObject);  // ���� ������Ʈ �ı�
+                Destroy(gameObject);  // 보스 사망
                 SoundManager.Instance.PlaySFX(deathSound);
             }
         }

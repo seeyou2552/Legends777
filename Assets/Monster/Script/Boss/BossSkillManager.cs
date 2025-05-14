@@ -8,7 +8,7 @@ public class BossSkillManager : MonoBehaviour
 {
     public static BossSkillManager Instance;
 
-    public Transform firePoint; // 氤挫姢 ?勳箻 臧�?胳槫旮?
+    public Transform firePoint; // 보스 기본 공격 생성 위치 구하기
     private Transform target;
     private Camera Boss_Camera;
     public TextMeshProUGUI EffectText;
@@ -24,8 +24,8 @@ public class BossSkillManager : MonoBehaviour
     private int currentSkillIndex = 0;
     private int currentskillIndex2 = 0;
 
-    private List<GameObject> activeSkillObjects = new List<GameObject>(); // ?半 ?濎劚?橂姅 ?る笇?濏姼毳?氤挫姢臧� 欤届潉????牅?橁赴 ?勴暣 ?�?ロ暣?愲姅 毽姢??
-    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // ?胳姢?欗劙 彀届棎???堧炒?搓碃 ?ろ伂毽巾姼?愳劀 彀胳“?犾垬?堦矊
+    private List<GameObject> activeSkillObjects = new List<GameObject>(); // 보스가 사용한 스킬을 저장하는 리스트
+    public List<GameObject> ActiveSkillObjects => activeSkillObjects; // 참조는 가능하지만 인스펙터 창에서 보이지 않게 하기위한것
     public float playerSpeed;
     public float playerAtkSpeed;
     public int playerPower;
@@ -52,7 +52,7 @@ public class BossSkillManager : MonoBehaviour
         playerAtkSpeed = player.attackSpeed;
 
         SkillsForStage();
-        gameManager.OnStageUpdated += SkillsForStage; // ?ろ厡?挫? ?措菠???毄
+        gameManager.OnStageUpdated += SkillsForStage; // 게임 매니저의 이벤트 활용
 
         StartCoroutine(UseSkillsRoutine());
     }
@@ -148,7 +148,7 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
-    //?岆爤?挫柎臧� 臁挫灛?橂姅歆� 觳错伂?橁碃 ?ろ偓?毄 ?犽 ?愲嫧
+    //보스가 스킬을 사용할수있는 상태인지 체크
     private bool CanUseSkill(Func<IEnumerator> _) => BossManager.instance.PlayerTarget != null;
 
     private IEnumerator UseSkillsRoutine()

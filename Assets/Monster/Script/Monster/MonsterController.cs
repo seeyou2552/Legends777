@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -8,28 +8,28 @@ public class MonsterController : MonoBehaviour
     private MonsterStatHandler monsterStatHandler;
 
 
-    //?��??�인
+    //?占쏙옙??占쎌씤
     public Rigidbody2D target;
-    //?�겟??쫓아�?최�? 거리
+    //?占쎄쿊??已볦븘占?理쒙옙? 嫄곕━
     private float followRange = 15f;
 
     private Vector2 lookDirection = Vector2.zero;
     public Vector2 LookDirection { get { return lookDirection; } }
 
 
-    //죽음 ?�무
+    //二쎌쓬 ?占쎈Т
     private bool isDead;
 
-    private Vector2 knockback = Vector2.zero;   //?�백 방향
-    private float knockbackDuration = 0.0f;     //?�백 지???�간3
+    private Vector2 knockback = Vector2.zero;   //?占쎈갚 諛⑺뼢
+    private float knockbackDuration = 0.0f;     //?占쎈갚 吏???占쎄컙3
 
-    protected bool isAttacking;                                 //공격 �??��?
-    private float timeSinceLastAttack = 0;         //마�?�?공격 ?�후 경과 ?�간
+    protected bool isAttacking;                                 //怨듦꺽 占??占쏙옙?
+    private float timeSinceLastAttack = 0;         //留덌옙?占?怨듦꺽 ?占쏀썑 寃쎄낵 ?占쎄컙
 
-    //무기
+    //臾닿린
     [SerializeField] public Transform weaponPivot;
-    [SerializeField] public MonsterWeaponHandler WeaponPrefab;         //?�착??무기 ?�리???�으�??�식?�서 찾아???�용)
-    [SerializeField] protected MonsterWeaponHandler weaponHandler;                      //?�착??무기
+    [SerializeField] public MonsterWeaponHandler WeaponPrefab;         //?占쎌갑??臾닿린 ?占쎈━???占쎌쑝占??占쎌떇?占쎌꽌 李얠븘???占쎌슜)
+    [SerializeField] protected MonsterWeaponHandler weaponHandler;                      //?占쎌갑??臾닿린
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
@@ -62,9 +62,9 @@ public class MonsterController : MonoBehaviour
     private void Update()
     {
         HandleAction();
-        //?�전 처리
+        //?占쎌쟾 泥섎━
         Rotate(lookDirection);
-        //공격 ?�력 �?쿨�???관�?
+        //怨듦꺽 ?占쎈젰 占?荑⑨옙???愿占?
         HandleAttackDelay();
     }
 
@@ -87,30 +87,30 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        //?�겟까�? 거리
+        //?占쎄쿊源뚯? 嫄곕━
         float distance = DistanceToTarget();
-        //?��?방향 (무기)
+        //?占쏙옙?諛⑺뼢 (臾닿린)
         Vector2 direction = DirectionToTarget();
 
         isAttacking = false;
 
-        //?�레?�어가 ?�정 거리 ?�에 ?�을 ?�만 추적 ?�작
+        //?占쎈젅?占쎌뼱媛 ?占쎌젙 嫄곕━ ?占쎌뿉 ?占쎌쓣 ?占쎈쭔 異붿쟻 ?占쎌옉
         if (distance <= followRange)
         {
-            //방향
+            //諛⑺뼢
             lookDirection = direction;
 
-            //공격 ?�거�??�으�??�어?�을 경우
+            //怨듦꺽 ?占쎄굅占??占쎌쑝占??占쎌뼱?占쎌쓣 寃쎌슦
             if (distance < weaponHandler.AttackRange)
             {
                 isAttacking = true;
-                //공격 범위 ?�이므�??��?
+                //怨듦꺽 踰붿쐞 ?占쎌씠誘占??占쏙옙?
                 rigid.velocity = Vector2.zero;
                 return;
             }
 
-            //공격 범위 ?�이 ?�니�??�문???�동
-            // ?�레?�어?�게 ?�하???�직??
+            //怨듦꺽 踰붿쐞 ?占쎌씠 ?占쎈땲占??占쎈Ц???占쎈룞
+            // ?占쎈젅?占쎌뼱?占쎄쾶 ?占쏀븯???占쎌쭅??
             Vector2 nextDir = direction * monsterStatHandler.Speed * Time.fixedDeltaTime;
 
             rigid.MovePosition(rigid.position + nextDir);
@@ -118,7 +118,7 @@ public class MonsterController : MonoBehaviour
         }
         else
         {
-            //?�레?�어가 추적 범위 밖에 ?�다�?가만히 ?�어????
+            //?占쎈젅?占쎌뼱媛 異붿쟻 踰붿쐞 諛뽰뿉 ?占쎈떎占?媛留뚰엳 ?占쎌뼱????
             rigid.velocity = Vector2.zero;
             animator.SetBool("IsRun", false);
         }
@@ -127,19 +127,19 @@ public class MonsterController : MonoBehaviour
     private void Rotate(Vector2 direction)
     {
         float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        bool isLeft = Mathf.Abs(rotZ) > 90f; //90?�보???�다�??�쪽??바라보는 것임
+        bool isLeft = Mathf.Abs(rotZ) > 90f; //90?占쎈낫???占쎈떎占??占쎌そ??諛붾씪蹂대뒗 寃껋엫
 
-        //캐릭?��? 보는 방향?��??��?지 ?�집�?
+        //罹먮┃?占쏙옙? 蹂대뒗 諛⑺뼢?占쏙옙??占쏙옙?吏 ?占쎌쭛占?
         spriter.flipX = isLeft;
 
         if (weaponPivot != null)
         {
-            //weaponPivot??z�?기�??�로 rotZ만큼 ?�전
-            //무기 ?�전 처리
+            //weaponPivot??z占?湲곤옙??占쎈줈 rotZ留뚰겮 ?占쎌쟾
+            //臾닿린 ?占쎌쟾 泥섎━
             weaponPivot.rotation = Quaternion.Euler(0f, 0f, rotZ);
         }
 
-        //무기??좌우 반전 처리
+        //臾닿린??醫뚯슦 諛섏쟾 泥섎━
         weaponHandler?.Rotate(isLeft);
     }
 
@@ -151,30 +151,30 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        //공격??쿨다??중이�??�간 ?�적
+        //怨듦꺽??荑⑤떎??以묒씠占??占쎄컙 ?占쎌쟻
         if (timeSinceLastAttack <= weaponHandler.Delay)
         {
             timeSinceLastAttack += Time.deltaTime;
         }
 
-        //?�정 ?�간마다 발사
-        //공격???�력 중이�?쿨�??�이 ?�났?�면 공격 ?�행
+        //?占쎌젙 ?占쎄컙留덈떎 諛쒖궗
+        //怨듦꺽???占쎈젰 以묒씠占?荑⑨옙??占쎌씠 ?占쎈궗?占쎈㈃ 怨듦꺽 ?占쏀뻾
         if (isAttacking && timeSinceLastAttack > weaponHandler.Delay)
         {
             timeSinceLastAttack = 0;
-            //?�제 공격 ?�행
+            //?占쎌젣 怨듦꺽 ?占쏀뻾
             Attack();
         }
     }
 
     protected virtual void Attack()
     {
-        //바라보는 방향???�을 ?�만 공격
+        //諛붾씪蹂대뒗 諛⑺뼢???占쎌쓣 ?占쎈쭔 怨듦꺽
         if (lookDirection != Vector2.zero)
             weaponHandler.Attack();
     }
 
-    #region Damage 처리
+    #region Damage 泥섎━
     public void OnDamaged(int damage)
     {
         monsterStatHandler.Health -= damage;
@@ -191,10 +191,10 @@ public class MonsterController : MonoBehaviour
         GameManager.instance.KillCount++;
         //monsterManager.RemoveActiveMonster(this);
 
-        //?�직???��?
+        //?占쎌쭅???占쏙옙?
         rigid.velocity = Vector2.zero;
 
-        //모든 SpriteRenderer???�명????��??죽�? ?�과 ?�출
+        //紐⑤뱺 SpriteRenderer???占쎈챸????占쏙옙??二쏙옙? ?占쎄낵 ?占쎌텧
         foreach (SpriteRenderer renderer in transform.GetComponentsInChildren<SpriteRenderer>())
         {
             Color color = renderer.color;
@@ -202,7 +202,7 @@ public class MonsterController : MonoBehaviour
             renderer.color = color;
         }
 
-        //모든 컴포?�트(?�크립트 ?�함) 비활?�화
+        //紐⑤뱺 而댄룷?占쏀듃(?占쏀겕由쏀듃 ?占쏀븿) 鍮꾪솢?占쏀솕
         foreach (Behaviour component in transform.GetComponentsInChildren<Behaviour>())
         {
             component.enabled = false;
@@ -211,20 +211,20 @@ public class MonsterController : MonoBehaviour
         QuestManager.Instance.QuestCheck(0);
         monsterManager.RemoveActiveMonster(this);
 
-        //2�????�브?�트 ?�괴
+        //2占????占쎈툕?占쏀듃 ?占쎄눼
         Destroy(gameObject, 2f);
     }
     #endregion
 
     public void ShootBullet(RangeWeaponHandler rangeWeaponHandler, Vector2 startPosition, Vector2 direction)
     {
-        //?�당 무기?�서 ?�용???�사�??�리??가?�오�?
+        //?占쎈떦 臾닿린?占쎌꽌 ?占쎌슜???占쎌궗占??占쎈━??媛?占쎌삤占?
         GameObject origin = monsterManager.projectilePrefabs[rangeWeaponHandler.BulletIndex];
 
-        //지?�된 ?�치???�사�??�성
+        //吏?占쎈맂 ?占쎌튂???占쎌궗占??占쎌꽦
         GameObject obj = Instantiate(origin, startPosition, Quaternion.identity);
 
-        //?�사체에 초기 ?�보 ?�달 (방향, 무기 ?�이??
+        //?占쎌궗泥댁뿉 珥덇린 ?占쎈낫 ?占쎈떖 (諛⑺뼢, 臾닿린 ?占쎌씠??
         ProjectileController projectileController = obj.GetComponent<ProjectileController>();
         projectileController.Init(direction, rangeWeaponHandler, this);
     }
