@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -28,6 +28,7 @@ public class UI_ClearResult : UI_Popup
 
     void OnExitButtonClicked()
     {
+        SoundManager.Instance.StopBGM();
         SceneManager.LoadScene("TitleScene");
     }
 

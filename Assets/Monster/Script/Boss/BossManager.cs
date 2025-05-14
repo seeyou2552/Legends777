@@ -112,7 +112,11 @@ public class BossManager : MonoBehaviour
     {
         if (collision.CompareTag("Arrow"))
         {
-            Health -= PlayerController.Instance.power+ PlayerController.Instance.Equip.Atk();
+            if(PlayerController.Instance.Equip != null) { 
+                Health -= PlayerController.Instance.power + PlayerController.Instance.Equip.Atk(); }
+            else { 
+                Health -= PlayerController.Instance.power + 5; }
+            
             animator.SetTrigger("isHit");
 
             if (Health <= firstHp / 2 && !isHalf)

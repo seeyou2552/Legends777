@@ -114,10 +114,7 @@ public class PlayerController : Player
         {
             weaponRenderer.material.color = Color.red;
         }
-        //Equip.Num
-        //무기 프리팹 부착 코드 자리
-        //if (weaponPivot != null) { Destroy(weaponPivot); }
-        //weaponPivot = Instantiate(gameObject, transform.position, Quaternion.identity);
+        Debug.Log(Equip.Atk());
     }
 
     public void QuestClear(int gold) { Gold += gold; }  //퀘스트 클리어시 골드 획득
@@ -182,6 +179,7 @@ public class PlayerController : Player
 
     void PlayerDash(Vector2 direction)
     {
+
         isDashing = true;
         dashTime = dashDuration;
         rigid.velocity = Vector2.zero;
