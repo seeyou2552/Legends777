@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public Action OnDungeonTypeDefaultUpdated;
     public Action<SkillOption> OnSkillUpgraded;
     public Action OnTutorialUpdated;
+
+    [SerializeField] private AudioClip GameClearBgm;
 
     public int KillCount { get; set; } = 0;
     private bool OnStageResult = false;
@@ -143,6 +145,8 @@ public class GameManager : MonoBehaviour
 
         var popup = UIManager.Instance.ShowPopup<UI_ClearResult>("UI_ClearResult");
         popup.Init();
+        SoundManager.Instance.StopBGM();
+        SoundManager.Instance.PlaySFX(GameClearBgm);
 
     }
 
