@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -11,13 +11,13 @@ public class ShowStoryAnimation : MonoBehaviour
     [SerializeField] private GameObject Ima;
     [SerializeField] private TextMeshProUGUI StoryText;
     private string[] storyLines = 
-        { "¡°...¿©±ä ¾îµğÁö?¡±\nÂ÷°¡¿î µ¹¹Ù´Ú, ÃàÃàÇÑ °ø±â.",
-        "¾Æ¹«°Íµµ ±â¾ï³ªÁö ¾Ê¾Æ\n ÇÏÁö¸¸... ÀÌ´ë·Î °¡¸¸È÷ ÀÖÀ» ¼ö´Â ¾ø¾î",
-        "¹«¾ğ°¡¡¦ ³ª¸¦ ÀÌ²ø°í ÀÖ´Ù.",
-        "Àú°Ç¡¦ ºû?",
-        "´À²¸Áø´Ù, Àú ¹® ³Ê¸Ó¿¡ ¹«¾ğ°¡ ÀÖ´Ù." };
+        { "â€œ...ì—¬ê¸´ ì–´ë””ì§€?â€\nì°¨ê°€ìš´ ëŒë°”ë‹¥, ì¶•ì¶•í•œ ê³µê¸°.",
+        "ì•„ë¬´ê²ƒë„ ê¸°ì–µë‚˜ì§€ ì•Šì•„\n í•˜ì§€ë§Œ... ì´ëŒ€ë¡œ ê°€ë§Œíˆ ìˆì„ ìˆ˜ëŠ” ì—†ì–´",
+        "ë¬´ì–¸ê°€â€¦ ë‚˜ë¥¼ ì´ëŒê³  ìˆë‹¤.",
+        "ì €ê±´â€¦ ë¹›?",
+        "ëŠê»´ì§„ë‹¤, ì € ë¬¸ ë„ˆë¨¸ì— ë¬´ì–¸ê°€ ìˆë‹¤." };
 
-    //[SerializeField] private float typeSpeed = 0.005f; // Å¸ÀÌÇÎ ¼Óµµ
+    //[SerializeField] private float typeSpeed = 0.005f; // íƒ€ì´í•‘ ì†ë„
 
     private IEnumerator Start()
     {
@@ -28,12 +28,12 @@ public class ShowStoryAnimation : MonoBehaviour
         {
             sr.sprite = StoryImages[i];
 
-            // ÀÌ¹ÌÁö ÃÊ±âÈ­
+            // ì´ë¯¸ì§€ ì´ˆê¸°í™”
             Color imageColor = sr.color;
             imageColor.a = 0f;
             sr.color = imageColor;
 
-            // ÅØ½ºÆ®µµ ÃÊ±âÈ­
+            // í…ìŠ¤íŠ¸ë„ ì´ˆê¸°í™”
             StoryText.text = "";
             Color textColor = StoryText.color;
             textColor.a = 1f;
@@ -48,10 +48,10 @@ public class ShowStoryAnimation : MonoBehaviour
             }
             yield return StartCoroutine(TypeText(storyLines[i]));
 
-            // À¯Áö ½Ã°£
+            // ìœ ì§€ ì‹œê°„
             yield return new WaitForSeconds(0.5f);
 
-            // ÆäÀÌµå ¾Æ¿ô
+            // í˜ì´ë“œ ì•„ì›ƒ
             for (int j = 0; j < 10; j++)
             {
                 imageColor.a -= 0.1f;
@@ -73,7 +73,7 @@ public class ShowStoryAnimation : MonoBehaviour
         for (int i = 0; i < line.Length; i++)
         {
             StoryText.text += line[i];
-            yield return new WaitForSeconds(0.1f); ;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

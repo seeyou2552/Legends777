@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -7,17 +7,8 @@ public class CameraController : MonoBehaviour
 {
     public Transform target;
 
-    //private float offsetX;
-    //private float offsetY;
-
     private Vector3 shakeOffset = Vector3.zero;
     private Coroutine shakeCoroutine;
-
-    //void Start()
-    //{
-    //    offsetX = transform.position.x - target.position.x;
-    //    offsetY = transform.position.y - target.position.y;
-    //}
 
     private void FixedUpdate()
     {
@@ -25,7 +16,7 @@ public class CameraController : MonoBehaviour
 
         Vector3 pos = transform.position;
         Vector3 targetPos = target.position;
-        pos.x = Mathf.Clamp(targetPos.x, -15.4f, 15.4f); // Ä«¸Ş¶ó ¿òÁ÷ÀÓ Á¦ÇÑ
+        pos.x = Mathf.Clamp(targetPos.x, -15.4f, 15.4f); // ì¹´ë©”ë¼ ì›€ì§ì„ ì œí•œ
         pos.y = Mathf.Clamp(targetPos.y, -8f, 7.25f);
 
         transform.position = pos + shakeOffset;

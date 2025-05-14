@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -105,14 +105,13 @@ public class BossSkillManager : MonoBehaviour
     {
         Vector2 spawnPos = firePoint.position + (Vector3)(direction * 0.5f);
 
-        // ?る笇?濏姼 ?�?愳劀 ?岇澊?措臣 旰茧偞旮?
         GameObject fireball = BossObjectPoolManager.Instance.GetFromPool("Fireball", spawnPos, Quaternion.identity);
-        if (fireball == null) // ?岅创???る笇?濏姼??瓴届毎
+        if (fireball == null) // 파이어볼이 없으면 리턴
         {
-            return; // ?措嫻 ?る笇?濏姼?????挫儊 ?毄?????嗢溂氙�搿?膦呺
+            return;
         }
 
-        // 於╇弻 觳橂Μ - 氤挫姢?� ?岇澊?措臣??於╇弻?橃? ?婋弰搿??れ爼
+        //
         Collider2D bossCol = GetComponent<Collider2D>();
         Collider2D fireballCol = fireball.GetComponent<Collider2D>();
         if (fireballCol != null && bossCol != null)
@@ -120,7 +119,7 @@ public class BossSkillManager : MonoBehaviour
             Physics2D.IgnoreCollision(fireballCol, bossCol);
         }
 
-        // ?岇澊?措臣???ろ伂毽巾姼 ?瓣舶 氚?氚╉枼, ?嶋弰 ?れ爼
+        // 
         Boss_FireBall fireballScript = fireball.GetComponent<Boss_FireBall>();
         fireballScript.SetDirection(direction.normalized);
         fireballScript.speed = currentBulletSpeed;
@@ -137,13 +136,13 @@ public class BossSkillManager : MonoBehaviour
         else
         {
             attackCount = 1;
-            int bulletCount = 8; // 氚滌偓???岇澊?措臣??臧滌垬
-            float angleStep = 360f / bulletCount; //齑?360?勲? bulletCount搿??橂垊?挫劀 45??臧勱博?茧 氚滌偓
+            int bulletCount = 8; // 발사할 파이어볼 개수
+            float angleStep = 360f / bulletCount; //각도 구하기
 
             for (int i = 0; i < bulletCount; i++)
             {
-                float angle = i * angleStep * Mathf.Deg2Rad; //?茧敂??臧侂弰搿?氤�??
-                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); //Cos??x於?氚╉枼, Sin?� y於?氚╉枼 ?搓备搿?unit circle?侅潣 氚╉枼??瓿勳偘
+                float angle = i * angleStep * Mathf.Deg2Rad;// 각도를 라디안으로 변환
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)); // 방향 벡터 계산
                 ShootFireball(direction);
             }
         }
@@ -188,7 +187,7 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveFast()
+    private IEnumerator MoveFast() // 보스 이동 속도 증가
     {
         bossManager.MonsterSpeed = 6;
         yield return new WaitForSeconds(5f);
@@ -197,16 +196,16 @@ public class BossSkillManager : MonoBehaviour
 
     private IEnumerator MakeMonster()
     {
-        // 罚待茄 利 橇府普 急琶
+        // 몬스터 프리팹 가져오기
         GameObject randomPrefab = MonsterManager.Instance.enemyPrefabs[UnityEngine.Random.Range(0, MonsterManager.Instance.enemyPrefabs.Count)];
 
-        // 罚待茄 康开 急琶
+        // 생성 위치 정하기
         Vector2 randomPosition = new Vector2(
             UnityEngine.Random.Range(-8, 9),
             UnityEngine.Random.Range(-4, 3.5f)
         );
 
-        // 利 积己 棺 府胶飘俊 眠啊
+        // 몬스터 생성
         GameObject spawnedEnemy = Instantiate(randomPrefab, randomPosition, Quaternion.identity, this.transform);
         MonsterController enemyController = spawnedEnemy.GetComponent<MonsterController>();
         enemyController.Init();
@@ -214,14 +213,14 @@ public class BossSkillManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator CameraReversal()
+    private IEnumerator CameraReversal() // 카메라 180도 회전
     {
         Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 180);
         yield return new WaitForSeconds(5f);
         Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
-    private IEnumerator ShootFast()
+    private IEnumerator ShootFast() // 보스 공격 속도 증가
     {
         fireRate = 6;
         currentBulletSpeed = 25f;
@@ -230,9 +229,9 @@ public class BossSkillManager : MonoBehaviour
         fireRate = 3;
     }
 
-    private IEnumerator RedGround()
+    private IEnumerator RedGround() // 빨간 장판 설치 
     {
-        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", new Vector2(0,-0.6f), Quaternion.identity/*, this.transform*/);
+        GameObject red = BossObjectPoolManager.Instance.GetFromPool("redGround", new Vector2(0,-0.6f), Quaternion.identity);
         if (!activeSkillObjects.Contains(red))
         {
             activeSkillObjects.Add(red);
@@ -241,11 +240,11 @@ public class BossSkillManager : MonoBehaviour
         BossObjectPoolManager.Instance.ReturnToPool("redGround", red);
     }
 
-    private IEnumerator LazerPattern()
+    private IEnumerator LazerPattern() // x, + 레이저 패턴 
     {
         for (int i = 0; i < 2; i++)
         {
-            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity/*, this.transform*/);
+            GameObject lazer1 = BossObjectPoolManager.Instance.GetFromPool("redLazer1", Vector2.zero, Quaternion.identity);
             if(!activeSkillObjects.Contains(lazer1))
             {
                 activeSkillObjects.Add(lazer1);
@@ -253,7 +252,7 @@ public class BossSkillManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             BossObjectPoolManager.Instance.ReturnToPool("redLazer1", lazer1);
 
-            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity/*, this.transform*/);
+            GameObject lazer2 = BossObjectPoolManager.Instance.GetFromPool("redLazer2", Vector2.zero, Quaternion.identity);
             if (!activeSkillObjects.Contains(lazer2))
             {
                 activeSkillObjects.Add(lazer2);
@@ -270,7 +269,7 @@ public class BossSkillManager : MonoBehaviour
             float x = UnityEngine.Random.Range(-9, 9.1f);
             float y = UnityEngine.Random.Range(-4, 4.1f);
             float z = UnityEngine.Random.Range(-180, 180);
-            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z)/*, this.transform*/);
+            GameObject rLazer = BossObjectPoolManager.Instance.GetFromPool("rLazer", new Vector2(x, y), Quaternion.Euler(0, 0, z));
             if (!activeSkillObjects.Contains(rLazer))
             {
                 activeSkillObjects.Add(rLazer);
@@ -297,7 +296,7 @@ public class BossSkillManager : MonoBehaviour
         {
             float x = UnityEngine.Random.Range(-22, 22.1f);
             float y = UnityEngine.Random.Range(-10, 10.1f);
-            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity/*, this.transform*/);
+            teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity);
             if (!activeSkillObjects.Contains(teleport[i]))
             {
                 activeSkillObjects.Add(teleport[i]);
@@ -310,14 +309,14 @@ public class BossSkillManager : MonoBehaviour
         }
     }
 
-    private IEnumerator MakeBossItem()
+    private IEnumerator MakeBossItem() // 랜덤 효과 아이템 패턴
     {
         GameObject[] item = new GameObject[3];
         for(int i = 0;i < 3;i++)
         {
             float x = UnityEngine.Random.Range(-22, 22.1f);
             float y = UnityEngine.Random.Range(-10, 10.1f);
-            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity/*, this.transform*/);
+            item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity);
             if (!activeSkillObjects.Contains(item[i]))
             {
                 activeSkillObjects.Add(item[i]);
