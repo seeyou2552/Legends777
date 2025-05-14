@@ -143,12 +143,9 @@ public class GameManager : MonoBehaviour
 
     void ShowClearResult()
     {
-
-        var popup = UIManager.Instance.ShowPopup<UI_ClearResult>("UI_ClearResult");
-        popup.Init();
         SoundManager.Instance.StopBGM();
         SoundManager.Instance.PlaySFX(GameClearBgm);
-
+        SceneManager.LoadScene("Ending");
     }
 
     private IEnumerator SubscribeToBossDeath()
