@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
 
     [Header("臾댁쟻")]
     [SerializeField] float invincibilityDuration = 0.2f;
-    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip attackedSound;
 
     float invincibilityTimer;
 
@@ -107,7 +107,7 @@ public class PlayerManager : MonoBehaviour
         if (currentHealth <= 0)
             OnPlayerDie?.Invoke();
 
-        SoundManager.Instance.PlaySFX(attackSound);
+        SoundManager.Instance.PlaySFX(attackedSound);
     }
 
     IEnumerator EndInvincibility()

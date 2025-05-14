@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,8 +14,18 @@ public class UI_OptionPopup : UI_Popup
 
     public void Init()
     {
-        //bgmSlider.onValueChanged.AddListener(AudioManager.Instance.SetBGMVolume);
-        //sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
+        bgmSlider.value = SoundManager.Instance.bgmVolume;
+        sfxSlider.value = SoundManager.Instance.sfxVolume;
+
+        bgmSlider.onValueChanged.AddListener((value) =>
+        {
+            SoundManager.Instance.SetVolume(value, SoundManager.Instance.sfxVolume);
+        });
+
+        sfxSlider.onValueChanged.AddListener((value) =>
+        {
+            SoundManager.Instance.SetVolume(SoundManager.Instance.bgmVolume, value);
+        });
 
         restartButton.onClick.AddListener(() =>
         {

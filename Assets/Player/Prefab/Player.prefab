@@ -200,6 +200,7 @@ MonoBehaviour:
   dashTrailPrefab: {fileID: 7887855799961801403, guid: 204d632dd9a2b5c4ebd1b68ecc233b2d, type: 3}
   rigid: {fileID: 145079921637700777}
   render: {fileID: 0}
+  weaponRenderer: {fileID: 6736594487994161059}
 --- !u!114 &1288119784805007813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invincibilityDuration: 0.2
+  attackedSound: {fileID: 8300000, guid: 74333b4717671f64190c6f59fa84ef43, type: 3}
 --- !u!95 &1433732445528377322
 Animator:
   serializedVersion: 5
@@ -249,6 +251,10 @@ PrefabInstance:
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: addBomb
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+      propertyPath: addSpread
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2592667142371225606, guid: 8c099809777a3e2499486c2b364766de, type: 3}
       propertyPath: arrowCount
@@ -318,6 +324,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6530444558524179842}
   m_SourcePrefab: {fileID: 100100000, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+--- !u!212 &6736594487994161059 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1977774993663544124, guid: 8c099809777a3e2499486c2b364766de, type: 3}
+  m_PrefabInstance: {fileID: 5048331903263333535}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8137554515041620810 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3954478961486385109, guid: 8c099809777a3e2499486c2b364766de, type: 3}
