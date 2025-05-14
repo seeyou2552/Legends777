@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int maxStage = 8;
     [SerializeField] private int stage;
-
+    [SerializeField] private AudioClip rewardSound;
     public int Stage
     {
         get { return stage; }
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 
         var popup = UIManager.Instance.ShowPopup<UI_StageResult>("UI_StageResult");
         popup.Init();
-
+        SoundManager.Instance.PlaySFX(rewardSound);
     }
 
     void ShowClearResult()

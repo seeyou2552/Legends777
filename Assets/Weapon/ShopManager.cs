@@ -26,6 +26,7 @@ public class ShopManager : MonoBehaviour
         weapons.Add(new WeaponController(2, 15, 4)); inventory.Add(false); i++;
         weapons.Add(new WeaponController(3, 20, 6)); inventory.Add(false); i++;
         weapons.Add(new WeaponController(4, 25, 8)); inventory.Add(false); i++;
+        BuyOrEquipWeapon(0);
     }
 
     private void Start()
@@ -81,7 +82,6 @@ public class ShopManager : MonoBehaviour
     {
         if (inventory[num]) {
             PlayerController.Instance.EquipWeapon(weapons[num]);
-            Debug.Log(PlayerController.Instance.Equip.Num());
         }
     }
 }

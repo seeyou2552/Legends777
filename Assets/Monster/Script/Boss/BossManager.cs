@@ -110,6 +110,8 @@ public class BossManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(PlayerController.Instance.power);
+        Debug.Log(PlayerController.Instance.Equip.Atk());
         if (collision.CompareTag("Arrow"))
         {
             Health -= PlayerController.Instance.power+ PlayerController.Instance.Equip.Atk();
