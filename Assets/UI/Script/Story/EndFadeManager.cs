@@ -9,7 +9,7 @@ public class EndFadeManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Text;
     private string[] storyLines =
-        { "“이곳은...?","아무것도 모르겠다...", "하지만... ","느껴진다...","저 성으로 가야 한다는 것을..." };
+        { "이곳은...?","아무것도 모르겠다...", "하지만... ","느껴진다...","저 성으로 가야 한다는 것을..." };
 
     public SpriteRenderer fadeImage;
     public Image ClearImage;
@@ -22,7 +22,9 @@ public class EndFadeManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(ShowStory());
         yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(FadeIn2(new[] { ClearImage, MenuImage, RestartImage }));
+        yield return StartCoroutine(FadeIn2(new[] { ClearImage }));
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(FadeIn2(new[] { MenuImage, RestartImage }));
         EndingPopup.Instance.ShowScore();
     }
 

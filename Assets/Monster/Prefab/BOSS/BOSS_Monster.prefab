@@ -135,7 +135,7 @@ Transform:
   m_GameObject: {fileID: 8465360537213919076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -230,6 +230,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: b014eb326ffd6464e99d78bc5285c010, type: 3}
   initialHealth: 500
   bossSpeed: 3
+  bossObject: {fileID: 0}
   redBackGround: {fileID: 2747213633161331068, guid: b06b4fb5eabdc3d46812013ba790cece, type: 3}
   firstHp: 0
 --- !u!114 &-6838238381144533660

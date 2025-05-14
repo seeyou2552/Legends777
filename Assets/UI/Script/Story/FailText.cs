@@ -7,7 +7,7 @@ public class FailText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Text;
     private string[] storyLines =
-        { "“...이렇게 죽는건가","이곳은 어디인걸까..." };
+        { "...이렇게 죽는건가","이곳은 어디인걸까..." };
 
     private IEnumerator Start()
     {

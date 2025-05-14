@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShowFailEnding : MonoBehaviour
 {
     public SpriteRenderer fadeImage;
+    public Image FAILImage;
     public Image MenuImage;
     public Image RestartImage;
 
@@ -14,7 +15,9 @@ public class ShowFailEnding : MonoBehaviour
         yield return new WaitForSeconds(5f);
         yield return StartCoroutine(FadeIn(new[] { fadeImage}));
         yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(FadeIn2(new[] { MenuImage, RestartImage }));
+        yield return StartCoroutine(FadeIn2(new[] {FAILImage }));
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(FadeIn2(new[] { MenuImage, RestartImage}));
         EndingPopup.Instance.ShowScore();
     }
 

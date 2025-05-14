@@ -497,6 +497,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 139133084713171945, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492742706837525629, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2863097266239928662, guid: 88661f4d979649e41973a58c21507b20, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -577,6 +585,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3272078104832535015, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 3272078104832535015, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 350
+      objectReference: {fileID: 0}
     - target: {fileID: 3640515061162543251, guid: 88661f4d979649e41973a58c21507b20, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -593,9 +609,41 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: GoMenuButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4131679895687745088, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4206674603686437221, guid: 88661f4d979649e41973a58c21507b20, type: 3}
       propertyPath: m_Name
       value: AllUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461614715088568518, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461614715088568518, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461614715088568518, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5461614715088568518, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909566096767950715, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369536491712087918, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 8369536491712087918, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 189
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -611,6 +659,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1391574092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7909566096767950715, guid: 88661f4d979649e41973a58c21507b20, type: 3}
+  m_PrefabInstance: {fileID: 1170085922}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &2035235889 stripped
@@ -674,6 +733,10 @@ PrefabInstance:
       propertyPath: Text
       value: 
       objectReference: {fileID: 1238964207}
+    - target: {fileID: 8319369678714587562, guid: ec3913339a7ca394da7ebd0c9e099aed, type: 3}
+      propertyPath: FAILImage
+      value: 
+      objectReference: {fileID: 1391574092}
     - target: {fileID: 8319369678714587562, guid: ec3913339a7ca394da7ebd0c9e099aed, type: 3}
       propertyPath: MenuImage
       value: 

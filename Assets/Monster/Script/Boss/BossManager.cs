@@ -126,7 +126,7 @@ public class BossManager : MonoBehaviour
 
             if (Health <= firstHp / 2 && !isHalf)
             {
-                CameraShake.instance.StartShake();
+                FindObjectOfType<CameraController>().StartShake();
                 Instantiate(redBackGround, transform);
                 isHalf = true;
             }

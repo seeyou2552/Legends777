@@ -72,12 +72,14 @@ public class BossSkillManager : MonoBehaviour
 
         if (gameManager.Stage < 2)
         {
+            skillFuncs.Add(RedGround);
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
             skillFuncs.Add(LazerPatten2);
         }
         else if (gameManager.Stage < 3)
         {
+            skillFuncs.Add(RedGround);
             skillFuncs.Add(MoveFast);
             skillFuncs.Add(MakeMonster);
             skillFuncs.Add(LazerPatten2);
@@ -293,8 +295,8 @@ public class BossSkillManager : MonoBehaviour
         GameObject[] teleport = new GameObject[2];
         for (int i = 0; i < 2; i++)
         {
-            float x = UnityEngine.Random.Range(-9, 9f);
-            float y = UnityEngine.Random.Range(-4, 4f);
+            float x = UnityEngine.Random.Range(-22, 22.1f);
+            float y = UnityEngine.Random.Range(-10, 10.1f);
             teleport[i] = BossObjectPoolManager.Instance.GetFromPool("Teleport", new Vector2(x, y), Quaternion.identity/*, this.transform*/);
             if (!activeSkillObjects.Contains(teleport[i]))
             {
@@ -313,8 +315,8 @@ public class BossSkillManager : MonoBehaviour
         GameObject[] item = new GameObject[3];
         for(int i = 0;i < 3;i++)
         {
-            float x = UnityEngine.Random.Range(-9, 9f);
-            float y = UnityEngine.Random.Range(-4, 4f);
+            float x = UnityEngine.Random.Range(-22, 22.1f);
+            float y = UnityEngine.Random.Range(-10, 10.1f);
             item[i] = BossObjectPoolManager.Instance.GetFromPool("item", new Vector2(x, y), Quaternion.identity/*, this.transform*/);
             if (!activeSkillObjects.Contains(item[i]))
             {
