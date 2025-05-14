@@ -33,9 +33,9 @@ public class QuestManager : SingleTon<QuestManager>
 
         // QuestController 초기값 num = 0 몬스터처치, num = 1 보스 처치, num = 2 방 클리어, num = 3 퍼즐 해결
         // QuestController(int num, string text, int goal, int gold)
-        questController.Add(new QuestController(i, "Kill the monster", 1, 500)); i++;
-        questController.Add(new QuestController(i, "Kill the boss", 1, 500)); i++;
-        questController.Add(new QuestController(i, "Clear the room", 3, 400)); i++;
+        questController.Add(new QuestController(i, "Kill the monster", 50, 300)); i++;
+        questController.Add(new QuestController(i, "Kill the boss", 1, 300)); i++;
+        questController.Add(new QuestController(i, "Clear the room", 3, 300)); i++;
         //questController.Add(new QuestController(i, "Solve the puzzle", 1, 300)); i++;
 
         QuestCanvas.gameObject.SetActive(false);

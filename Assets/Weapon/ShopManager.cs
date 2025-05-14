@@ -22,10 +22,10 @@ public class ShopManager : MonoBehaviour
 
         //num, atk, price
         weapons.Add(new WeaponController(0, 5, 0)); inventory.Add(true); i++;  //기본무기 지급상태로 시작
-        weapons.Add(new WeaponController(1, 10, 2)); inventory.Add(false); i++;
-        weapons.Add(new WeaponController(2, 15, 4)); inventory.Add(false); i++;
-        weapons.Add(new WeaponController(3, 20, 6)); inventory.Add(false); i++;
-        weapons.Add(new WeaponController(4, 25, 8)); inventory.Add(false); i++;
+        weapons.Add(new WeaponController(1, 10, 100)); inventory.Add(false); i++;
+        weapons.Add(new WeaponController(2, 15, 200)); inventory.Add(false); i++;
+        weapons.Add(new WeaponController(3, 20, 300)); inventory.Add(false); i++;
+        weapons.Add(new WeaponController(4, 25, 400)); inventory.Add(false); i++;
         BuyOrEquipWeapon(0);
     }
 

@@ -24,7 +24,7 @@ public class PlayerController : Player
     public SpriteRenderer render;
     protected Animator animation;
     private Camera mainCamera;
-    private int gold = 1000;
+    private int gold = 100;
 
     private WeaponController weapon;
     private GameObject weaponPivot;
