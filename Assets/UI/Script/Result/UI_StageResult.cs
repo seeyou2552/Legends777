@@ -37,7 +37,7 @@ public class UI_StageResult : UI_Popup
 
         List<SkillOption> skillOptions = new List<SkillOption>();
 
-        if (skill.shootSpeed < 50f)
+        if (skill.shootSpeed < 10f)
         {
             skillOptions.Add(new SkillOption
             {
@@ -45,11 +45,11 @@ public class UI_StageResult : UI_Popup
                 Name = "빠른 사격",
                 Description = $"화살 차징 속도 +1 ({skill.shootSpeed} -> {skill.shootSpeed + 1})",
                 Icon = Resources.Load<Sprite>("Sprites/SkillIcons/shootSpeed"),
-                ApplyAction = () => skill.shootSpeed += 1f
+                ApplyAction = () => skill.shootSpeed += 3f
             });
         }
 
-        if (skill.arrowCount < 5)
+        if (skill.arrowCount < 6)
         {
             skillOptions.Add(new SkillOption
             {
