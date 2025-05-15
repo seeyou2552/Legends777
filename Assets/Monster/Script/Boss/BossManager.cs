@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -151,7 +151,7 @@ public class BossManager : MonoBehaviour
                 GameManager.instance.IsStageClear = true;
 
                 Boss_Camera.transform.eulerAngles = new Vector3(0, 0, 0);
-                Destroy(gameObject);  // ���� ������Ʈ �ı�
+                Destroy(gameObject);
             }
         }
     }
