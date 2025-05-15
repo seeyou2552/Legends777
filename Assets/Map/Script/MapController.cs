@@ -21,12 +21,12 @@ public class MapController : MonoBehaviour
     #endregion
 
     #region Obstacle Info
-    [SerializeField] private float minX = -8.8f;
-    [SerializeField] private float maxX = 8.8f;
-    [SerializeField] private float minY = -3.9f;
-    [SerializeField] private float maxY = 3.7f;
+    [SerializeField] private float minX = -24f;
+    [SerializeField] private float maxX = 24f;
+    [SerializeField] private float minY = -11f;
+    [SerializeField] private float maxY = 11f;
 
-    [SerializeField] private Vector2 obstacleSize = new Vector2(1.7f, 1.7f);
+    [SerializeField] private Vector2 obstacleSize = new Vector2(1.3f, 1.3f);
     [SerializeField] private LayerMask obstacleLayer;
 
     [SerializeField] private float minDistance = 2.0f;
@@ -59,7 +59,6 @@ public class MapController : MonoBehaviour
     public void CreateRandomMap()
     {
         int type = GetRandomType();
-
         GameManager.instance.Stage++;
         Init((DungeonType)type);
     }
@@ -110,31 +109,46 @@ public class MapController : MonoBehaviour
 
     private void InitLobbyMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //quest npc 생성
         SpawnNpcOrBox();
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.mainBgm);
     }
 
     private void InitMonsterMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //장애물 랜덤으로 생성
         CreateObstacle(stage);
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.battleBgm);
     }
 
     private void InitBossMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //아무것도 없는 상태
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.battleBgm);
     }
 
     private void InitItemMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //아이템 생성
         SpawnNpcOrBox();
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.mainBgm);
     }
 
     private void InitStoreMap()
     {
+        SoundManager.Instance.StopBGM();
+
         //store npc 생성
         SpawnNpcOrBox();
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.mainBgm);
     }
 
     private void SpawnNpcOrBox()
@@ -159,6 +173,8 @@ public class MapController : MonoBehaviour
     private void ClearMap()
     {
         Transform mapContent = Root.transform;
+        QuestManager.Instance.QuestCheck(2);
+        SoundManager.Instance.StopBGM();
         foreach (Transform child in mapContent)
         {
             Destroy(child.gameObject);
@@ -168,8 +184,10 @@ public class MapController : MonoBehaviour
     //장애물 랜덤으로 생성
     private void CreateObstacle(int stage)
     {
+        spawnedPositions.Clear();
+
         //랜덤 개수
-        int obstacleNum = Random.Range(stage - 1, stage + 1);
+        int obstacleNum = Random.Range(stage + 10, stage + 15);
 
         //랜덤 위치
         for (int i = 0; i < obstacleNum; i++)
@@ -178,8 +196,6 @@ public class MapController : MonoBehaviour
             GameObject go = GameObject.Instantiate(obstaclePrefab, Root.transform);
             go.transform.position = spawnPos;
         }
-
-        spawnedPositions.Clear();
     }
 
     private Vector3 GetRandomNonOverlappingPosition(int i)
@@ -213,7 +229,6 @@ public class MapController : MonoBehaviour
             //시도 반복
             attempts++;
         }
-
         //최대 시도 횟수까지 반복했는데도 안 되면 그냥 랜덤 위치 반환 (겹쳐도 어쩔 수 없지?)
         return new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
     }

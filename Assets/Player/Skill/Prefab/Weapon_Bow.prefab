@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7547859015724896614}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
@@ -160,15 +160,15 @@ MonoBehaviour:
   arrowCount: 1
   addGhost: 0
   addBomb: 0
-  addChase: 0
-  addBurn: 0
+  addFreeze: 0
   addPenetrates: 0
   addSpread: 0
+  addChase: 0
   arrowPrefab: {fileID: 3232422438051106584, guid: 858266ffb3ffed94691ea163491dcc20, type: 3}
   bowPrefab: {fileID: 7547859015724896614}
   bombPrefab: {fileID: 7547859015724896614}
   target: {fileID: 0}
-  shootInterval: 2
   chaseRadius: 0
   timer: 0
   createBow: 0
+  attackSound: {fileID: 8300000, guid: 6a3e015e0f6ad8a4e90e8c62174327eb, type: 3}

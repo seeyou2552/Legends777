@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a445a9b1049b16a4fbcbc038b64302a7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - arrowPrefab: {instanceID: 0}
+  - bowPrefab: {instanceID: 0}
+  - bombPrefab: {instanceID: 0}
+  - target: {instanceID: 0}
+  - attackSound: {fileID: 8300000, guid: 6a3e015e0f6ad8a4e90e8c62174327eb, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
