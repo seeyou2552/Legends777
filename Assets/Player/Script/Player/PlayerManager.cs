@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -64,32 +64,7 @@ public class PlayerManager : MonoBehaviour
             var ms = go.GetComponent<MonsterStatHandler>();
             if (ms != null) ApplyDamage(ms.Atk);
         }
-        //else if (go.CompareTag("FireBall"))
-        //{
-        //    // 蹂댁뒪 FireBall
-        //    ApplyDamage(10);
-        //    Destroy(go);
-        //}
     }
-
-    /*
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (invincibilityTimer > 0f) return;
-
-        var go = col.gameObject;
-        //if (go.CompareTag("Projectile"))
-        //{
-        //    var proj = go.GetComponent<ProjectileController>();
-        //    if (proj?.monsterController != null)
-        //    {
-        //        var ms = proj.monsterController.GetComponent<MonsterStatHandler>();
-        //        if (ms != null) ApplyDamage(ms.Atk);
-        //    }
-        //    Destroy(go);
-        //}
-    }
-    */
 
     public void ApplyDamage(int damage)
     {

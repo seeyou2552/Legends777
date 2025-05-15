@@ -7,7 +7,7 @@ public class FailText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Text;
     private string[] storyLines =
-        { "...ÀÌ·¸°Ô Á×´Â°Ç°¡","ÀÌ°÷Àº ¾îµğÀÎ°É±î..." };
+        { "...ì´ë ‡ê²Œ ì£½ëŠ”ê±´ê°€","ì´ê³³ì€ ì–´ë””ì¸ê±¸ê¹Œ..." };
 
     private IEnumerator Start()
     {
@@ -15,7 +15,7 @@ public class FailText : MonoBehaviour
         for (int i = 0; i < storyLines.Length; i++)
         {
 
-            // ÅØ½ºÆ®µµ ÃÊ±âÈ­
+            // í…ìŠ¤íŠ¸ë„ ì´ˆê¸°í™”
             Text.text = "";
             Color textColor = Text.color;
             textColor.a = 1f;
@@ -23,10 +23,10 @@ public class FailText : MonoBehaviour
 
             yield return StartCoroutine(TypeText(storyLines[i]));
 
-            // À¯Áö ½Ã°£
+            // ìœ ì§€ ì‹œê°„
             yield return new WaitForSeconds(0.5f);
 
-            // ÆäÀÌµå ¾Æ¿ô
+            // í˜ì´ë“œ ì•„ì›ƒ
             for (int j = 0; j < 10; j++)
             {
                 textColor.a -= 0.1f;
@@ -44,7 +44,7 @@ public class FailText : MonoBehaviour
         for (int i = 0; i < line.Length; i++)
         {
             Text.text += line[i];
-            yield return new WaitForSeconds(0.1f); ;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
