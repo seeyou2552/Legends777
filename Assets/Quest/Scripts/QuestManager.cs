@@ -46,9 +46,18 @@ public class QuestManager : SingleTon<QuestManager>
     {
         if (questController == null) { return; }
 
-        count0.text = (questController[0].PlusCount).ToString() + "/" + (questController[0].Goal).ToString(); 
-        count1.text = (questController[1].PlusCount).ToString() + "/" + (questController[1].Goal).ToString();
-        count2.text = (questController[2].PlusCount).ToString() + "/" + (questController[2].Goal).ToString();
+        if (!questController[0].Clear)
+        {
+            count0.text = (questController[0].PlusCount).ToString() + "/" + (questController[0].Goal).ToString();
+        }
+        if (!questController[1].Clear)
+        {
+            count1.text = (questController[1].PlusCount).ToString() + "/" + (questController[1].Goal).ToString();
+        }
+        if (!questController[2].Clear)
+        {
+            count2.text = (questController[2].PlusCount).ToString() + "/" + (questController[2].Goal).ToString();
+        }
 
         if (Input.GetKeyDown(KeyCode.M))   //테스트용 퀘스트 클리어 버튼
         {
@@ -90,6 +99,19 @@ public class QuestManager : SingleTon<QuestManager>
             if (questController[num].PlusCount == questController[num].Goal)
             {
                 questController[num].QuestClear(true);
+                switch (num)
+                {
+                    case 0:
+                        count0.text = "Quest Clear!!!";
+                        break;
+                    case 1:
+                        count1.text = "Quest Clear!!!";
+                        break;
+                    case 2:
+                        count2.text = "Quest Clear!!!";
+                        break;
+                }
+                QuestClear(num);
             }
         }
     }
@@ -99,7 +121,6 @@ public class QuestManager : SingleTon<QuestManager>
         if (questController[num].Clear)
         {
             PlayerController.Instance.QuestClear(questController[num].Gold); //클리어보상 주기
-            questController[num].QuestReset();        //퀘스트 객체 리셋
         }
 
         Debug.Log("플레이어의 골드 : " + PlayerController.Instance.Gold);
